@@ -1,0 +1,17 @@
+{
+    "name": "NOS.GameplayManagers",
+    "rootNamespace": "NOS.GameplayManagers",
+    "references": [
+        "GUID:851e821717d3aeb488aca7ada38d7ac1",
+        "GUID:4307f53044263cf4b835bd812fc161a4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

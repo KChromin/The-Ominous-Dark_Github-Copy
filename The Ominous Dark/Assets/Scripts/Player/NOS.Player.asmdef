@@ -1,0 +1,20 @@
+{
+    "name": "NOS.Player",
+    "rootNamespace": "NOS.Player",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:b1bb8180fe94b6c4b9c0bdfcbede7c6b",
+        "GUID:851e821717d3aeb488aca7ada38d7ac1",
+        "GUID:72aa6fe789c379e4d99eae077f2f2ed7",
+        "GUID:c98f570c8c3aeca439647f9f15a413a5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

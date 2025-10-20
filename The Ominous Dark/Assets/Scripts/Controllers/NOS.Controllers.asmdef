@@ -1,0 +1,16 @@
+{
+    "name": "NOS.Controllers",
+    "rootNamespace": "NOS.Controllers",
+    "references": [
+        "GUID:851e821717d3aeb488aca7ada38d7ac1"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

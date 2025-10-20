@@ -1,0 +1,194 @@
+using System;
+using UnityEngine;
+
+namespace NOS.Controllers
+{
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(CapsuleCollider))]
+    public class RigidbodyFloatingCapsule : MonoBehaviour
+    {
+        #region Variables
+
+        #region Parameters
+
+        [Header("Parameters")]
+        [SerializeField]
+        private RigidbodyFloatingCapsuleScriptableObject parameters;
+
+        #endregion Parameters
+
+        //Local
+        private Rigidbody _rigidBody;
+        private Vector3 _currentRigidbodyVelocity;
+        private bool _isGoingDown;
+
+        private float _floatingLenght; //Half height + floating height
+
+        private float _checkRadius;
+        private float _checkLenght; //Half height + floating height + grounding
+        private float _checkLenghtSphere;
+        private Vector3 _originCenter;
+
+        private RaycastHit _groundCheckHit;
+        private bool _didGroundCheckSpherecastHit;
+
+        #endregion Variables
+
+        private void Awake()
+        {
+            _rigidBody = GetComponent<Rigidbody>();
+
+            CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
+            float halfCapsuleHeight = capsuleCollider.height / 2;
+            _originCenter = capsuleCollider.center + parameters.checkOriginOffset;
+            float distanceToCheckFromOriginToGround = halfCapsuleHeight + parameters.floatHeight + parameters.checkOriginOffset.y;;
+
+            //Radius
+            _checkRadius = capsuleCollider.radius + parameters.groundCastRadiusOffset;
+
+            //Lenght
+            _floatingLenght = distanceToCheckFromOriginToGround;
+            _checkLenght = _floatingLenght + parameters.groundingLenght;
+            _checkLenghtSphere = _checkLenght - _checkRadius;
+        }
+
+        private void FixedUpdate()
+        {
+            if (DoesGroundCheckHit())
+            {
+                _currentRigidbodyVelocity = _rigidBody.linearVelocity;
+                CheckIfGoingDown();
+                ExecuteSpringForce();
+            }
+        }
+
+        private void CheckIfGoingDown()
+        {
+            _isGoingDown = _currentRigidbodyVelocity.y <= parameters.goingDownVelocityThreshold;
+        }
+
+        private void ExecuteSpringForce()
+        {
+            Vector3 hitObjectLinearVelocity = Vector3.zero;
+            Rigidbody hitObjectRigidBody = _groundCheckHit.rigidbody;
+            float checkHitDistance;
+
+            #region Assign by Check Type
+
+            Vector3 checkHitPoint = _groundCheckHit.point;
+
+            if (_didGroundCheckSpherecastHit)
+            {
+                checkHitDistance = _groundCheckHit.distance + _checkRadius;
+            }
+            else //Raycast
+            {
+                checkHitDistance = _groundCheckHit.distance;
+            }
+
+            #endregion Assign by Check Type
+
+            if (hitObjectRigidBody)
+            {
+                hitObjectLinearVelocity = hitObjectRigidBody.linearVelocity;
+            }
+
+            float checkDirectionVelocity = Vector3.Dot(Vector3.down, _currentRigidbodyVelocity);
+            float hitObjectDirectionVelocity = Vector3.Dot(Vector3.down, hitObjectLinearVelocity);
+
+            float relativeVelocity = checkDirectionVelocity - hitObjectDirectionVelocity;
+
+            float x = checkHitDistance - _floatingLenght;
+
+            float dampingForce = parameters.springDampingForceUp;
+
+            if (_isGoingDown)
+            {
+                dampingForce = parameters.springDampingForceDown;
+            }
+
+            float springForce = x * parameters.springStrength - relativeVelocity * dampingForce;
+
+            springForce = Mathf.Clamp(springForce, -parameters.maximalForceAcceleration, parameters.maximalForceAcceleration);
+
+            _rigidBody.AddForce(Vector3.down * springForce, ForceMode.Acceleration);
+
+            //Apply force to objects under//
+            if (hitObjectRigidBody)
+            {
+                springForce = Mathf.Clamp(springForce, -parameters.maximalForceObjectsUnder, 0);
+                hitObjectRigidBody.AddForceAtPosition(Vector3.up * springForce, checkHitPoint, ForceMode.Force);
+            }
+        }
+
+        private bool DoesGroundCheckHit()
+        {
+            Vector3 checkOriginPosition = transform.position + _originCenter;
+
+            _didGroundCheckSpherecastHit = false;
+
+#if UNITY_EDITOR
+            //Spherecast
+            if (!parameters.skipSpherecast && Physics.SphereCast(checkOriginPosition, _checkRadius, Vector3.down, out _groundCheckHit, _checkLenghtSphere, parameters.groundLayers, QueryTriggerInteraction.Ignore))
+            {
+                _didGroundCheckSpherecastHit = true;
+                return true;
+            }
+#else
+            if (Physics.SphereCast(checkOriginPosition, _checkRadius, Vector3.down, out _groundCheckHit, _checkLenghtSphere, parameters.groundLayers, QueryTriggerInteraction.Ignore))
+            {
+                _didGroundCheckSpherecastHit = true;
+                return true;
+            }
+#endif
+
+            //Raycast
+            if (Physics.Raycast(checkOriginPosition, Vector3.down, out _groundCheckHit, _checkLenght, parameters.groundLayers, QueryTriggerInteraction.Ignore))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        #region Debug
+
+#if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            if (!Application.isPlaying) return;
+
+            if (parameters.drawDebugRaycast)
+            {
+                //Raycast
+                if (_didGroundCheckSpherecastHit)
+                {
+                    Gizmos.color = parameters.castColorHit;
+                    Gizmos.DrawLine(transform.position + _originCenter, _groundCheckHit.point);
+                }
+                else
+                {
+                    Gizmos.color = parameters.castColor;
+                    Gizmos.DrawLine(transform.position + _originCenter, transform.position + _originCenter + Vector3.down * _checkLenght);
+                }
+            }
+
+            if (!parameters.drawDebugSpherecast) return;
+            if (!_didGroundCheckSpherecastHit && _groundCheckHit.collider != null)
+            {
+                Gizmos.color = parameters.castColorHit;
+                Gizmos.DrawLine(transform.position + _originCenter, _groundCheckHit.point);
+                Gizmos.DrawWireSphere(transform.position + _originCenter + Vector3.down * _groundCheckHit.distance, _checkRadius);
+            }
+            else
+            {
+                Gizmos.color = parameters.castColor;
+                Gizmos.DrawLine(transform.position + _originCenter, transform.position + _originCenter + Vector3.down * _checkLenghtSphere);
+                Gizmos.DrawWireSphere(transform.position + (_originCenter + Vector3.down * _checkLenghtSphere), _checkRadius);
+            }
+        }
+#endif
+
+        #endregion Debug
+    }
+}

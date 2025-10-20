@@ -1,0 +1,158 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2110175984143664829
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8677204499945084108}
+  - component: {fileID: 970965668720388957}
+  - component: {fileID: 4151915074772349064}
+  - component: {fileID: 62021380486163480}
+  m_Layer: 0
+  m_Name: '[Game Managers]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8677204499945084108
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110175984143664829}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &970965668720388957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110175984143664829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 693a3b970dbf7394a806dd494756e6f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NOS.GameManagers::NOS.GameManagers.Settings.SettingsManager
+  <CurrentSettings>k__BackingField:
+    audio:
+      volumeMaster: 100
+      volumeSfx: 80
+      volumeMusic: 80
+      volumeVoice: 80
+      subtitles: 0
+    control:
+      lookSensitivityGeneral: 20
+      lookSeparateSensitivityAxes: 0
+      lookSensitivityXAxis: 20
+      lookSensitivityYAxis: 20
+      lookInvertYAxis: 0
+      lookSmoothing: 1
+      lookSmoothingTime: 0.002
+      inputCrouchToggle: 1
+    display:
+      fullscreenMode: 0
+      aspectRatio: 0
+      resolutionPreset16X9: 2
+      resolutionPreset16X10: 2
+      resolutionPreset21X9: 0
+      resolutionCustom: 0
+      resolutionCustomHeight: 1080
+      resolutionCustomWidth: 1920
+      vSyncMode: 1
+      framerateCustomMax: 0
+      framerateCustomMaxValue: 144
+      runInBackground: 0
+    game:
+      language: 0
+      headBobbingDisable: 0
+      headBobbingIntensity: 1
+    visual:
+      test: 0
+    accessibility:
+      cursorLockToWindow: 0
+  temporarySettings:
+    audio:
+      volumeMaster: 100
+      volumeSfx: 80
+      volumeMusic: 80
+      volumeVoice: 80
+      subtitles: 0
+    control:
+      lookSensitivityGeneral: 20
+      lookSeparateSensitivityAxes: 0
+      lookSensitivityXAxis: 20
+      lookSensitivityYAxis: 20
+      lookInvertYAxis: 0
+      lookSmoothing: 1
+      lookSmoothingTime: 0.002
+      inputCrouchToggle: 1
+    display:
+      fullscreenMode: 0
+      aspectRatio: 0
+      resolutionPreset16X9: 2
+      resolutionPreset16X10: 2
+      resolutionPreset21X9: 0
+      resolutionCustom: 0
+      resolutionCustomHeight: 1080
+      resolutionCustomWidth: 1920
+      vSyncMode: 1
+      framerateCustomMax: 0
+      framerateCustomMaxValue: 144
+      runInBackground: 0
+    game:
+      language: 0
+      headBobbingDisable: 0
+      headBobbingIntensity: 1
+    visual:
+      test: 0
+    accessibility:
+      cursorLockToWindow: 0
+  defaultSettings: {fileID: 11400000, guid: 31bc96b5428df584a84ebc81228a6798, type: 2}
+--- !u!114 &4151915074772349064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110175984143664829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd3179692c6466409c60330133e5c3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NOS.GameManagers::NOS.GameManagers.Input.InputManager
+  <CurrentInput>k__BackingField:
+    inputtingLook: 0
+    inputLook: {x: 0, y: 0}
+    inputtingMove: 0
+    inputMove: {x: 0, y: 0}
+    inputMove3D: {x: 0, y: 0, z: 0}
+    inputtingRun: 0
+    inputtingJump: 0
+    inputtingCrouch: 0
+    inputtingInteract: 0
+    inputtingAttack: 0
+--- !u!114 &62021380486163480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110175984143664829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a6e7878ed08cd54e82e765a0a9eff21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NOS.GameManagers::NOS.GameManagers.CursorManager

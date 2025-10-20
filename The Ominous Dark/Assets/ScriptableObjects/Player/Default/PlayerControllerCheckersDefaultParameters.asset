@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 597655f7ca15d0843939f81424c31e70, type: 3}
+  m_Name: PlayerControllerCheckersDefaultParameters
+  m_EditorClassIdentifier: NOS.Player::NOS.Player.Controller.Default.PlayerControllerCheckersDefaultScriptableObject
+  groundCheckDistance: 0.66
+  groundCheckRadius: 0.24
+  slopeCheckMaxSlope: 45
+  slopeCheckRaycastOffset: {x: 0, y: 0.02, z: 0}
+  cellingCheckDistance: 1.052
+  cellingCheckRadius: 0.25
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  checkPositionOffsetFromOriginForGroundCheck: {x: 0, y: 0.78, z: 0}
+  checkPositionOffsetFromOriginForCellingCheck: {x: 0, y: 0.5, z: 0}
+  debugGroundCheckDraw: 0
+  debugGroundCheckColorHit: {r: 0, g: 1, b: 0, a: 1}
+  debugGroundCheckColor: {r: 1, g: 0, b: 0, a: 1}
+  debugCellingCheckDraw: 0
+  debugCellingCheckColorHit: {r: 0.3333333, g: 0.4196079, b: 0.1843137, a: 1}
+  debugCellingCheckColor: {r: 1, g: 0.2705882, b: 0, a: 1}
