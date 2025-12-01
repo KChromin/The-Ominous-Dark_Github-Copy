@@ -15,9 +15,9 @@ MonoBehaviour:
   floatHeight: 0.3
   checkOriginOffset: {x: 0, y: -0.3, z: 0}
   springStrength: 620
-  springDampingForceUp: 30
-  springDampingForceDown: 11
-  maximalForceAcceleration: 200
+  springDampingForceUp: 35
+  springDampingForceDown: 10
+  maximalForceAcceleration: 250
   maximalForceObjectsUnder: 40
   goingDownVelocityThreshold: -0.1
   groundingLenght: 0.1

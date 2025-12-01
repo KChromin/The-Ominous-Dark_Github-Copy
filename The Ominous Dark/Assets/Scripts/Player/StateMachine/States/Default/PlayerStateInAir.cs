@@ -1,4 +1,5 @@
 using NOS.Patterns.StateMachine;
+using NOS.Player.Controller.Default;
 using NOS.Player.Data;
 
 namespace NOS.Player.StateMachine

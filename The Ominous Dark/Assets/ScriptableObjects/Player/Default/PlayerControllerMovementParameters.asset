@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: NOS.Player::NOS.Player.Controller.Default.PlayerControllerMovementScriptableObject
   idleValues:
     maxSpeed: 0
-    accelerationSpeed: 10
+    accelerationSpeed: 20
     accelerationFactorFromDot:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 2
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -48,13 +48,13 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    maxAccelerationForce: 40
+    maxAccelerationForce: 25
     maxAccelerationForceFactorFromDot:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 2
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -83,8 +83,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   walkValues:
-    maxSpeed: 3
-    accelerationSpeed: 12
+    maxSpeed: 2.8
+    accelerationSpeed: 25
     accelerationFactorFromDot:
       serializedVersion: 2
       m_Curve:
@@ -118,7 +118,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    maxAccelerationForce: 30
+    maxAccelerationForce: 15
     maxAccelerationForceFactorFromDot:
       serializedVersion: 2
       m_Curve:
@@ -153,8 +153,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   runValues:
-    maxSpeed: 6
-    accelerationSpeed: 12
+    maxSpeed: 5
+    accelerationSpeed: 60
     accelerationFactorFromDot:
       serializedVersion: 2
       m_Curve:
@@ -188,7 +188,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    maxAccelerationForce: 30
+    maxAccelerationForce: 15
     maxAccelerationForceFactorFromDot:
       serializedVersion: 2
       m_Curve:
@@ -223,8 +223,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   crouchIdleValues:
-    maxSpeed: 0.57
-    accelerationSpeed: 10
+    maxSpeed: 0
+    accelerationSpeed: 5
     accelerationFactorFromDot:
       serializedVersion: 2
       m_Curve:
@@ -258,7 +258,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    maxAccelerationForce: 40
+    maxAccelerationForce: 10
     maxAccelerationForceFactorFromDot:
       serializedVersion: 2
       m_Curve:
@@ -294,6 +294,76 @@ MonoBehaviour:
       m_RotationOrder: 4
   crouchWalkValues:
     maxSpeed: 1.8
+    accelerationSpeed: 8
+    accelerationFactorFromDot:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    maxAccelerationForce: 10
+    maxAccelerationForceFactorFromDot:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  slidingFromSteepSlopeValues:
+    maxSpeed: 2.5
     accelerationSpeed: 10
     accelerationFactorFromDot:
       serializedVersion: 2
@@ -363,6 +433,9 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   factorMoveSideways: 1
-  factorMoveBackwards: 0.9
-  slopeSlidingSpeed: 70
-  slopeSlidingMovementMultiplier: 0.1
+  factorMoveBackwards: 0.92
+  inAirControlAccelerationSpeed: 8
+  inAirMaximalMomentumAdditionBaseValue: 0.3
+  inAirMaximalMomentumAdditionJumpingInPlace: 1.4
+  inAirMomentumKeepMultiplier: 0.6
+  slidingControlMultiplier: 0.3

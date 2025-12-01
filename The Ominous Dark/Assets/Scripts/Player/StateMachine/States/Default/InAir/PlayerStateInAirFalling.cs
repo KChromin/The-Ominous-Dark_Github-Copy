@@ -47,7 +47,7 @@ namespace NOS.Player.StateMachine
         {
             if (Ctx.Values.General.rigidBodyCurrentVelocityY > 0)
             {
-                SwitchStates(Factory.DefaultInAirFalling());
+                SwitchStates(Factory.DefaultInAirRising());
             }
         }
 

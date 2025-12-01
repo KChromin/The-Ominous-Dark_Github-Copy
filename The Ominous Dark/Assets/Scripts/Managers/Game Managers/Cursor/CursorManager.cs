@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace NOS.GameManagers
 {
+    [DefaultExecutionOrder(-88)]
     public class CursorManager : SingletonPersistent<CursorManager>
     {
         public void SetCursorForUI()

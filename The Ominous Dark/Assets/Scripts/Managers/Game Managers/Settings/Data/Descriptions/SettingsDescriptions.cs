@@ -86,8 +86,7 @@ namespace NOS.GameManagers.Settings
         public static readonly string[] GameSettingsDescriptions =
         {
             "0 - English, 1 - Polish",
-
-            "true, false",
+            
             "0 - 1"
         };
 
@@ -109,7 +108,7 @@ namespace NOS.GameManagers.Settings
         [Space]
         public static readonly string[] AccessibilitySettingsDescriptions =
         {
-            "true, false"
+            "true, false",
         };
 
         #endregion Accessibility

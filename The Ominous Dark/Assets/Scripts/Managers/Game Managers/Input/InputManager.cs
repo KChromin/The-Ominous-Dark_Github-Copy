@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace NOS.GameManagers.Input
 {
+    [DefaultExecutionOrder(-89)]
     public class InputManager : SingletonPersistent<InputManager>
     {
         [field: SerializeField]

@@ -1,3 +1,5 @@
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using NOS.GameManagers.Input;
 using NOS.Patterns.Controller;
 using NOS.Player.Data;
@@ -10,6 +12,7 @@ namespace NOS.Player.Controller.Default
         private readonly InputDataContainer _input;
         private readonly PlayerConditions.DefaultConditionsClass.CasesClass _cases;
         private readonly PlayerConditions.DefaultConditionsClass.PossibilitiesClass _possibilities;
+        private readonly PlayerActions.DefaultActionsClass _actions;
 
         private readonly PlayerControllerCrouchScriptableObject _parameters;
         private readonly CapsuleCollider _collider;
@@ -22,38 +25,128 @@ namespace NOS.Player.Controller.Default
         private float _colliderHeightUpdateCalculations;
         private float _colliderCenterUpdateCalculations;
 
-        public enum CrouchStates
-        {
-            Standing,
-            Crouching
-        }
+        private bool _shouldCheckAirborneAutoStandUp;
+        private float _timeAirborne;
 
-        public PlayerControllerCrouch(InputDataContainer input, PlayerConditions conditions, PlayerReferences references)
+        public PlayerControllerCrouch(InputDataContainer input, PlayerConditions conditions, PlayerReferences references, PlayerActions actions)
         {
             _input = input;
             _cases = conditions.Default.cases;
             _possibilities = conditions.Default.possibilities;
+            _actions = actions.Default;
             _collider = references.components.collider;
             _parameters = references.scriptableObjects.Default.crouch;
             _head = references.objects.head.transform;
             SubscribeToEvents();
         }
 
-        #region Events
-
-        private void SubscribeToEvents()
+        public override void Update()
         {
-            _input.OnPerformedCrouch += OnCrouchPerformed;
-            _input.OnCancelCrouch += OnCrouchCanceled;
+            CheckCrouchCancelConditions();
+            UpdateAllValues();
+            StandUpWhenInAirForTooLongTimer();
         }
 
-        public override void OnDestroy()
+        #region Crouch Execution
+
+        private void ExecuteCrouchAction()
         {
-            _input.OnPerformedCrouch -= OnCrouchPerformed;
-            _input.OnCancelCrouch -= OnCrouchCanceled;
+            if (_cases.isCrouching) //Stand
+            {
+                if (_cases.isAbleToStandUp) //Can stand up
+                {
+                    _cases.isCrouching = false;
+
+                    _colliderUpdateIsNeeded = true;
+                    _targetValues = _parameters.standValues;
+                }
+            }
+            else //Crouch
+            {
+                if (_possibilities.canCrouch && _cases.isGrounded) //Can crouch
+                {
+                    _cases.isCrouching = true;
+
+                    _colliderUpdateIsNeeded = true;
+                    _targetValues = _parameters.crouchValues;
+                }
+            }
         }
 
-        #endregion Events
+        private void StandUp()
+        {
+            if (_cases.isCrouching) //Stand
+            {
+                if (_cases.isAbleToStandUp) //Can stand up
+                {
+                    _cases.isCrouching = false;
+
+                    _colliderUpdateIsNeeded = true;
+                    _targetValues = _parameters.standValues;
+                }
+            }
+        }
+
+        #endregion Crouch Execution
+
+        #region Crouch Cancelations
+
+        private void CheckCrouchCancelConditions()
+        {
+            if (!_cases.isCrouching) return;
+
+            //When player stops being able to crouch
+            if (!_possibilities.canCrouch)
+            {
+                StandUp();
+            }
+
+            //When player wants to start running//
+            if (_cases.wantsToMove && _possibilities.canMove && _cases.wantsToRun && _possibilities.canRun)
+            {
+                StandUp();
+            }
+        }
+
+        private void CancelCrouchOnJumpInput()
+        {
+            if (_cases.isCrouching)
+            {
+                StandUp();
+            }
+        }
+
+        #region Stand Up When In Air For Too Long
+
+        private void StandUpWhenInAirForTooLong()
+        {
+            _shouldCheckAirborneAutoStandUp = true;
+        }
+
+        private void StandUpWhenInAirForTooLongReset()
+        {
+            _shouldCheckAirborneAutoStandUp = false;
+            _timeAirborne = 0;
+        }
+
+        private void StandUpWhenInAirForTooLongTimer()
+        {
+            if (_shouldCheckAirborneAutoStandUp)
+            {
+                _timeAirborne += Time.deltaTime;
+
+                if (_timeAirborne >= _parameters.timeBeforeAutoStandUpInAirInSeconds)
+                {
+                    _shouldCheckAirborneAutoStandUp = false;
+                    _timeAirborne = 0;
+                    StandUp();
+                }
+            }
+        }
+
+        #endregion Stand Up When In Air For Too Long
+
+        #endregion Crouch Cancelations
 
         private void OnCrouchPerformed()
         {
@@ -66,84 +159,7 @@ namespace NOS.Player.Controller.Default
             _cases.wantsToDoCrouchAction = false;
         }
 
-        private void ExecuteCrouchAction()
-        {
-            if (_cases.isCrouching) //Stand
-            {
-                if (_cases.isAbleToStandUp) //Can stand up
-                {
-                    _cases.isCrouching = false;
-
-                    _colliderUpdateIsNeeded = true;
-                    SetCrouchState(CrouchStates.Standing);
-                }
-                else
-                {
-                    //Here cannot stand up info
-                }
-            }
-            else //Crouch
-            {
-                if (_possibilities.canCrouch) //Can crouch
-                {
-                    _cases.isCrouching = true;
-
-                    _colliderUpdateIsNeeded = true;
-                    SetCrouchState(CrouchStates.Crouching);
-                }
-                else
-                {
-                    //Here cannot crouch info
-                }
-            }
-        }
-
-        private void CheckCrouchCancelingActions()
-        {
-            if (!_cases.isCrouching) return;
-
-            //When player stops being able to crouch
-            if (!_possibilities.canCrouch)
-            {
-                ExecuteCrouchAction();
-            }
-
-            //When player wants to start running//
-            if (_cases.wantsToMove && _possibilities.canMove && _cases.wantsToRun && _possibilities.canRun)
-            {
-                ExecuteCrouchAction();
-            }
-
-            //When player try to jump//
-            if (_cases.wantsToJump && _possibilities.canJump)
-            {
-                ExecuteCrouchAction();
-            }
-
-            //todo When player is in air for set amount of time//
-        }
-
-        public override void Update()
-        {
-            CheckCrouchCancelingActions();
-            UpdateAllValues();
-        }
-
-        public void SetCrouchState(CrouchStates newCrouchState)
-        {
-            switch (newCrouchState)
-            {
-                default:
-                case CrouchStates.Standing:
-                    _targetValues = _parameters.standValues;
-                    break;
-                case CrouchStates.Crouching:
-                    _targetValues = _parameters.crouchValues;
-                    break;
-            }
-
-            _colliderUpdateIsNeeded = true;
-        }
+        #region Update Components
 
         private void UpdateAllValues()
         {
@@ -236,5 +252,29 @@ namespace NOS.Player.Controller.Default
             //Center is good//
             return true;
         }
+
+        #endregion Update Components
+
+        #region Events
+
+        private void SubscribeToEvents()
+        {
+            _input.OnPerformedCrouch += OnCrouchPerformed;
+            _input.OnCancelCrouch += OnCrouchCanceled;
+            _input.OnPerformedJump += CancelCrouchOnJumpInput;
+            _actions.OnInAirState += StandUpWhenInAirForTooLong;
+            _actions.OnGroundedState += StandUpWhenInAirForTooLongReset;
+        }
+
+        public override void OnDestroy()
+        {
+            _input.OnPerformedCrouch -= OnCrouchPerformed;
+            _input.OnCancelCrouch -= OnCrouchCanceled;
+            _input.OnPerformedJump -= CancelCrouchOnJumpInput;
+            _actions.OnInAirState -= StandUpWhenInAirForTooLong;
+            _actions.OnGroundedState -= StandUpWhenInAirForTooLongReset;
+        }
+
+        #endregion Events
     }
 }

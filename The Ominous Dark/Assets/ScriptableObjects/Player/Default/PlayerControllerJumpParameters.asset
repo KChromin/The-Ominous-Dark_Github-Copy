@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6096fed29314bd04ebf65a33221eb6f6, type: 3}
+  m_Name: PlayerControllerJumpParameters
+  m_EditorClassIdentifier: NOS.Player::NOS.Player.Controller.Default.PlayerControllerJumpScriptableObject
+  jumpPower: 5.2
+  jumpCooldownTime: 0.04
+  coyoteJumpTime: 0.18
+  floatingCapsuleSuspensionTime: 0.08
+  gravityBoostAfterJump: 3.8
+  gravityBoostAfterJumpTime: 0.08

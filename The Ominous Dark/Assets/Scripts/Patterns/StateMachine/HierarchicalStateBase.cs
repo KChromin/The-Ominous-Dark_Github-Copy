@@ -23,12 +23,21 @@ namespace NOS.Patterns.StateMachine
 
             InitializeSubState();
         }
+        
+        //Exits main and substates//
+        protected override void ExitStates()
+        {
+            base.ExitStates();
+            
+            //Exit State in substates//
+            CurrentSubState?.ExitStates();
+        }
 
         //Updates main and substates//
         public override void UpdateStates()
         {
             base.UpdateStates();
-
+            
             //Update All Sub States//
             CurrentSubState?.UpdateStates();
         }
@@ -37,7 +46,7 @@ namespace NOS.Patterns.StateMachine
         public override void FixedUpdateStates()
         {
             base.FixedUpdateStates();
-
+            
             //Update All Sub States//
             CurrentSubState?.FixedUpdateStates();
         }
@@ -46,17 +55,8 @@ namespace NOS.Patterns.StateMachine
         protected override void CheckSwitchStates()
         {
             base.CheckSwitchStates();
-
+            
             CurrentSubState?.CheckSwitchStates();
-        }
-
-        //Exits main and substates//
-        protected override void ExitStates()
-        {
-            base.ExitStates();
-
-            //Exit State in substates//
-            CurrentSubState?.ExitStates();
         }
 
         //Switch state//

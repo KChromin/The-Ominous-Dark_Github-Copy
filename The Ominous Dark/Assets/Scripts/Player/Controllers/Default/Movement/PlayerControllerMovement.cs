@@ -1,3 +1,4 @@
+using NOS.Controllers;
 using NOS.GameManagers.Settings;
 using NOS.GameManagers.Input;
 using NOS.Patterns.Controller;
@@ -19,6 +20,9 @@ namespace NOS.Player.Controller.Default
             _controlSettings = SettingsManager.Instance.CurrentSettings.control;
 
             _rigidBody = references.components.rigidBody;
+            _floatingCapsule = references.components.floatingCapsule;
+
+            SubscribeToEvents();
         }
 
         #region Variables
@@ -31,6 +35,7 @@ namespace NOS.Player.Controller.Default
         private readonly SettingsControlContainer _controlSettings;
 
         private readonly Rigidbody _rigidBody;
+        private readonly RigidbodyFloatingCapsule _floatingCapsule;
 
         private float _currentForce;
         private bool _applyGravitation;
@@ -81,23 +86,25 @@ namespace NOS.Player.Controller.Default
 
         public void ExecuteMovement()
         {
-            if (!_conditions.cases.isGrounded) return;
-
-            #region Speed Modifiers
-
-            float speedModifiersValue = 1;
-
-            //Steep slope modifier//
-            if (_conditions.cases.isOnTooSteepSlope)
+            //Exception for control in air
+            if (!_conditions.cases.isGrounded)
             {
-                speedModifiersValue *= _parameters.slopeSlidingMovementMultiplier;
+                _currentTargetVelocity = Vector3.zero;
+                ExecuteInAir();
+                return;
             }
 
-            #endregion Speed Modifiers
+            //Exception for slope handling
+            if (_conditions.cases.isOnTooSteepSlope)
+            {
+                ExecuteSlopeSliding();
+                return;
+            }
 
             //Input
             Vector3 input = GetProcessedInput();
-            Vector3 targetVelocity = input * (_currentMovementParameters.maxSpeed * speedModifiersValue);
+
+            Vector3 targetVelocity = input * (_currentMovementParameters.maxSpeed);
 
             //Velocity not accounting Y//
             Vector3 currentVelocityWithoutY = _values.General.rigidBodyCurrentVelocity;
@@ -127,16 +134,11 @@ namespace NOS.Player.Controller.Default
             CheckAllPlayerWants();
         }
 
-        public void ExecuteSlideFromSteepSlope()
-        {
-            if (!_conditions.cases.isOnTooSteepSlope) return;
-
-            _rigidBody.AddForce(GetSlopeSlideVector() * _values.General.rigidBodyMass, ForceMode.Force);
-        }
-
         #endregion Public Methodes
 
         #region Private Methodes
+
+        #region Updates
 
         private Vector3 GetProcessedInput()
         {
@@ -160,18 +162,129 @@ namespace NOS.Player.Controller.Default
         {
             _conditions.cases.wantsToMove = _input.inputtingMove;
             _conditions.cases.wantsToRun = _input.inputtingRun;
-            _conditions.cases.wantsToJump = _input.inputtingJump;
         }
+
+        #endregion Updates
+
+        #region In Air
+
+        private Vector3 _inAirMomentum;
+        private float _inAirMomentumMaximalMagnitude;
+
+        private void OnAirSaveMomentum()
+        {
+            _inAirMomentum = _values.General.rigidBodyCurrentVelocity;
+            float keptY = _inAirMomentum.y;
+            _inAirMomentum *= _parameters.inAirMomentumKeepMultiplier;
+            _inAirMomentum.y = keptY;
+            _rigidBody.linearVelocity = _inAirMomentum; //Reduce momentum
+            _inAirMomentum.y = 0;
+            _inAirMomentumMaximalMagnitude = _inAirMomentum.magnitude + _parameters.inAirMaximalMomentumAdditionBaseValue;
+        }
+
+        private void OnGroundingResetMomentum()
+        {
+            _inAirMomentum = Vector3.zero;
+            _inAirMomentumMaximalMagnitude = 0;
+        }
+
+        private void ExecuteInAir()
+        {
+            Vector3 inputDirection = GetProcessedInput();
+            Vector3 velocityWithoutY = _values.General.rigidBodyCurrentVelocity;
+            velocityWithoutY.y = 0;
+            float forceDirection = Vector3.Dot(inputDirection, velocityWithoutY.normalized);
+            Vector3 finalForce = Vector3.zero;
+
+            Vector3 lateralDir = inputDirection - velocityWithoutY.normalized * Vector3.Dot(inputDirection, velocityWithoutY.normalized);
+            lateralDir.Normalize();
+
+            //Jump in place//
+            if (_values.General.rigidBodyCurrentVelocityMagnitudeXZ < _parameters.inAirMaximalMomentumAdditionJumpingInPlace && _inAirMomentum.magnitude < 0.2f)
+            {
+                finalForce = inputDirection * _parameters.inAirControlAccelerationSpeed;
+            }
+            else if (_values.General.rigidBodyCurrentVelocityMagnitudeXZ < _inAirMomentumMaximalMagnitude)
+            {
+                finalForce = inputDirection * _parameters.inAirControlAccelerationSpeed;
+            }
+            else if (_values.General.rigidBodyCurrentVelocityMagnitudeXZ >= _inAirMomentumMaximalMagnitude)
+            {
+                if (forceDirection < -0.01f)
+                {
+                    finalForce = inputDirection * _parameters.inAirControlAccelerationSpeed;
+                }
+                else if (lateralDir.sqrMagnitude > 0.01f)
+                {
+                    finalForce = lateralDir * _parameters.inAirControlAccelerationSpeed;
+                }
+            }
+
+            _rigidBody.AddForce(finalForce, ForceMode.Acceleration);
+        }
+
+        #endregion In Air
+
+        #region Slopes
 
         private Vector3 GetSlopeSlideVector()
         {
             Vector3 slopeNormal = _values.Default.SlopeCheckNormal;
-            Vector3 slopeDirection = Vector3.up - slopeNormal * Vector3.Dot(Vector3.up, slopeNormal);
-            slopeDirection.y = 0;
+            Vector3 slopeDirection = (Vector3.up - slopeNormal) * Vector3.Dot(Vector3.up, slopeNormal);
+            // slopeDirection.y = 0;
+            //   slopeDirection.x = 0;
+            //  slopeDirection.z = 0;
 
-            return slopeDirection * (-_parameters.slopeSlidingSpeed * _values.General.rigidBodyMass);
+            return slopeDirection;
         }
 
+        private void ExecuteSlopeSliding()
+        {
+            //No resistance while sliding//
+            _floatingCapsule.SuspendExecutionNextFixedUpdate();
+
+            //Input
+            Vector3 input = GetProcessedInput();
+            Vector3 slopeDirection = -GetSlopeSlideVector();
+
+            Vector3 targetVelocity = (slopeDirection + input * _parameters.slidingControlMultiplier).normalized * _parameters.slidingFromSteepSlopeValues.maxSpeed;
+
+            //Velocity not accounting Y//
+            Vector3 currentVelocityWithoutY = _values.General.rigidBodyCurrentVelocity;
+            currentVelocityWithoutY.y = 0;
+
+            //For quicker turning back
+            float inputToVelocityDot = Vector3.Dot(slopeDirection, currentVelocityWithoutY);
+            float accelerationValueAfterGraph = _parameters.slidingFromSteepSlopeValues.accelerationSpeed * _parameters.slidingFromSteepSlopeValues.maxAccelerationForceFactorFromDot.Evaluate(inputToVelocityDot);
+
+            _currentTargetVelocity = Vector3.MoveTowards(_currentTargetVelocity, targetVelocity, accelerationValueAfterGraph * Time.fixedDeltaTime);
+
+            Vector3 neededAcceleration = (_currentTargetVelocity - currentVelocityWithoutY) / Time.fixedDeltaTime;
+
+            // neededAcceleration.y = 0;
+            neededAcceleration = Vector3.ClampMagnitude(neededAcceleration, _parameters.slidingFromSteepSlopeValues.maxAccelerationForce * _parameters.slidingFromSteepSlopeValues.maxAccelerationForceFactorFromDot.Evaluate(inputToVelocityDot));
+
+            _rigidBody.AddForce(neededAcceleration, ForceMode.Acceleration);
+        }
+
+        #endregion Slopes
+
         #endregion Private Methodes
+
+        #region Events
+
+        private void SubscribeToEvents()
+        {
+            _actions.OnInAirState += OnAirSaveMomentum;
+            _actions.OnGroundedState += OnGroundingResetMomentum;
+        }
+
+        public override void OnDestroy()
+        {
+            _actions.OnInAirState -= OnAirSaveMomentum;
+            _actions.OnGroundedState -= OnGroundingResetMomentum;
+        }
+
+        #endregion Events
     }
 }

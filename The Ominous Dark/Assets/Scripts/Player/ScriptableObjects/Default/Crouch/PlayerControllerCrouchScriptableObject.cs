@@ -15,6 +15,9 @@ namespace NOS.Player.Controller.Default
         [Header("Rounding Value")]
         public float roundingValue = 0.001f;
 
+        [Header("Time before auto stand up in air")]
+        public float timeBeforeAutoStandUpInAirInSeconds = 3f;
+
         [Serializable]
         public class CrouchParametersClass
         {

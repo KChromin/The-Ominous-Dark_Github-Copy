@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace NOS.Player.Controller.Default
 {
@@ -24,20 +25,34 @@ namespace NOS.Player.Controller.Default
         [Header("Crouch Walk")]
         public MovementValuesClass crouchWalkValues;
 
+        [Header("Sliding from Steep Slope")]
+        public MovementValuesClass slidingFromSteepSlopeValues;
+
+        [Space]
         [Header("Factors")]
         [Range(0f, 1f)]
         public float factorMoveSideways = 1;
         [Range(0f, 1f)]
         public float factorMoveBackwards = 1;
 
-        [Header("Slope Handling")]
+        [Space]
+        [Header("In Air Controls")]
         [Range(0f, 100f)]
-        public float slopeSlidingSpeed = 10;
+        public float inAirControlAccelerationSpeed;
+        [Range(0f, 10f)]
+        public float inAirMaximalMomentumAdditionBaseValue = 0.2f;
+        [Range(0f, 100f)]
+        public float inAirMaximalMomentumAdditionJumpingInPlace = 1;
         [Range(0f, 1f)]
-        public float slopeSlidingMovementMultiplier = 0.1f;
+        public float inAirMomentumKeepMultiplier = 0.9f;
+
+        [Space]
+        [Header("Sliding")]
+        [Range(0f, 1f)]
+        public float slidingControlMultiplier = 0.1f;
 
         #endregion Movement Values
-        
+
         #region Movement Value Class
 
         [Serializable]

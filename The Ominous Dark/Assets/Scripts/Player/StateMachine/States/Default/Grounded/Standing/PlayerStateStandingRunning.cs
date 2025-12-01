@@ -33,6 +33,9 @@ namespace NOS.Player.StateMachine
             //Set Movement Speed//
             Ctx.Controllers.Default.Movement.SetMovementParameters(PlayerControllerMovement.MovementStates.Run);
             
+            //Set Head Bobbing//
+            Ctx.Controllers.Default.HeadBobbing.SetHeadBobbingParameters(PlayerControllerHeadBobbingDefault.HeadBobbingStates.Run);
+            
             //Set Condition
             Ctx.Conditions.Default.cases.isMoving = true;
             Ctx.Conditions.Default.cases.isRunning = true;
@@ -49,6 +52,9 @@ namespace NOS.Player.StateMachine
 #endif
 
             #endregion Debug
+            
+            //Set Head Bobbing//
+            Ctx.Controllers.Default.HeadBobbing.DisableHeadBobbing();
             
             //Set Condition
             Ctx.Conditions.Default.cases.isMoving = false;

@@ -1,0 +1,184 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67c06027c530124da966e9c652004d7, type: 3}
+  m_Name: PlayerControllerHeadBobbingDefaultParameters
+  m_EditorClassIdentifier: NOS.Player::NOS.Player.Controller.Default.PlayerControllerHeadBobbingDefaultScriptableObject
+  idleValues:
+    headBobbingSpeed: 0.8
+    headBobbingMaxHeight: 0.015
+    headBobbingMaxWidth: 0
+    headBobbingHeightCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0.68337667
+        outSlope: 0.68337667
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.062713794
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  walkValues:
+    headBobbingSpeed: 6
+    headBobbingMaxHeight: 0.06
+    headBobbingMaxWidth: 0.02
+    headBobbingHeightCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  runValues:
+    headBobbingSpeed: 12
+    headBobbingMaxHeight: 0.1
+    headBobbingMaxWidth: 0.03
+    headBobbingHeightCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0.41761908
+        outSlope: 0.41761908
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.05701254
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  crouchIdleValues:
+    headBobbingSpeed: 0.8
+    headBobbingMaxHeight: 0.012
+    headBobbingMaxWidth: 0
+    headBobbingHeightCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0.5965987
+        outSlope: 0.5965987
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.063854046
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  crouchWalkValues:
+    headBobbingSpeed: 8
+    headBobbingMaxHeight: 0.02
+    headBobbingMaxWidth: 0.02
+    headBobbingHeightCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  disabledValues:
+    headBobbingSpeed: 1
+    headBobbingMaxHeight: 0.001
+    headBobbingMaxWidth: 0.001
+    headBobbingHeightCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  transitionSmoothingTime: 0.08
+  timeToFullResetInSeconds: 1

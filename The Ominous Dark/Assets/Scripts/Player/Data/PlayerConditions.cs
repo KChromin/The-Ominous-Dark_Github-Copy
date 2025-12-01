@@ -69,11 +69,14 @@ namespace NOS.Player.Data
                 public bool isRunning; //When player is in running state//
 
                 public bool wantsToJump; //Player gave input to jump//
-                public bool isJumping;
+                public bool isJumping; //Already jumped//
+                public bool jumpIsOnCooldown;
 
                 public bool wantsToDoCrouchAction; //Player gave/released/clicked again input to crouch
                 public bool isCrouching; //When player 
                 public bool isAbleToStandUp; //When player can stand up//
+
+                public bool isInteracting; //Is interacting with something//
             }
 
             #endregion Cases
@@ -92,6 +95,8 @@ namespace NOS.Player.Data
                 public bool canRun = true;
                 public bool canJump = true;
                 public bool canCrouch = true;
+                [Space]
+                public bool canInteract = true;
             }
 
             #endregion Possibilities

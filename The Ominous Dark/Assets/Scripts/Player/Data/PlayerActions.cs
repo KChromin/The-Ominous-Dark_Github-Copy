@@ -32,6 +32,8 @@ namespace NOS.Player.Data
             public Action OnInAirFallingState;
 
             #endregion State Machine
+
+            public Action OnHeadBobHalfCycle; //For footsteps
         }
 
         #endregion Default

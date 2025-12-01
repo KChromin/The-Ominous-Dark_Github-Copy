@@ -57,7 +57,7 @@ namespace NOS.Patterns.StateMachine
             CheckSwitchState();
         }
 
-        //Exits main and sub states//
+        //Exits main and substates//
         protected virtual void ExitStates()
         {
             //Call exit state//

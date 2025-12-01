@@ -184,6 +184,9 @@ namespace NOS.Player.StateMachine
         DefaultInAirRising,
         DefaultInAirFalling,
 
+        //Sliding//
+        DefaultSliding,
+
         #endregion Default
 
         Dead

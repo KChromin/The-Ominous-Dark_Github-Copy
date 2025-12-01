@@ -14,7 +14,7 @@ namespace NOS.Player.Controller
         public PlayerControllers(InputDataContainer input, PlayerActions actions, PlayerConditions conditions, PlayerValues values, PlayerReferences references, SettingsContainers settings)
         {
             General = new GeneralControllersClass(actions, values, references);
-            Default = new DefaultControllersClass(input, actions, conditions, values, references, settings);
+            Default = new DefaultControllersClass(input, actions, conditions, values, references, General, settings);
         }
 
         #region General
@@ -26,12 +26,13 @@ namespace NOS.Player.Controller
             public GeneralControllersClass(PlayerActions actions, PlayerValues values, PlayerReferences references)
             {
                 ValuesUpdater = new PlayerControllerGeneralValuesUpdater(values, references);
+                Head = new PlayerControllerGeneralHead(references);
             }
 
             //Values Updater//
             public readonly PlayerControllerGeneralValuesUpdater ValuesUpdater;
 
-            //Collider resizer//
+            public readonly PlayerControllerGeneralHead Head;
         }
 
         #endregion General
@@ -42,12 +43,15 @@ namespace NOS.Player.Controller
 
         public class DefaultControllersClass
         {
-            public DefaultControllersClass(InputDataContainer input, PlayerActions actions, PlayerConditions conditions, PlayerValues values, PlayerReferences references, SettingsContainers settings)
+            public DefaultControllersClass(InputDataContainer input, PlayerActions actions, PlayerConditions conditions, PlayerValues values, PlayerReferences references, GeneralControllersClass generalControllers, SettingsContainers settings)
             {
                 Look = new PlayerControllerLook(input, conditions, references, settings);
                 Checkers = new PlayerControllerCheckersDefault(conditions, values, references);
                 Movement = new PlayerControllerMovement(input, actions, conditions, values, references);
-                Crouch = new PlayerControllerCrouch(input, conditions, references);
+                Crouch = new PlayerControllerCrouch(input, conditions, references, actions);
+                Jump = new PlayerControllerJump(input, conditions, references, actions);
+                HeadBobbing = new PlayerControllerHeadBobbingDefault(references, generalControllers, settings, actions);
+                Interaction = new PlayerControllerDefaultInteraction(input, conditions, references);
             }
 
             //Look//
@@ -62,7 +66,14 @@ namespace NOS.Player.Controller
             //Crouch//
             public readonly PlayerControllerCrouch Crouch;
 
+            //Jump//
+            public readonly PlayerControllerJump Jump;
+
+            //Head Bobbing//
+            public readonly PlayerControllerHeadBobbingDefault HeadBobbing;
+
             //Interaction//
+            public readonly PlayerControllerDefaultInteraction Interaction;
         }
 
         #endregion Default

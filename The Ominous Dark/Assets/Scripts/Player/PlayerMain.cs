@@ -5,6 +5,7 @@ using NOS.Player.StateMachine;
 using NOS.GameManagers.Input;
 using NOS.GameManagers.Settings;
 using NOS.Player.Controller;
+using NOS.GameplayManagers;
 
 namespace NOS.Player
 {
@@ -12,6 +13,7 @@ namespace NOS.Player
 
     [RequireComponent(typeof(CapsuleCollider))]
     [RequireComponent(typeof(Rigidbody))]
+    [DefaultExecutionOrder(0)]
 
     #endregion Required Components
 
@@ -71,6 +73,7 @@ namespace NOS.Player
             input = InputManager.Instance.CurrentInput;
             _controllers = new PlayerControllers(input, actions, conditions, values, references, SettingsManager.Instance.CurrentSettings);
             SetupStateMachine();
+            SetupCamerasManager();
         }
 
         #region Setups
@@ -91,6 +94,11 @@ namespace NOS.Player
             //Set first state//
             _stateContext.CurrentState = _stateFactory.Default();
             _stateContext.CurrentState.EnterStates();
+        }
+
+        private void SetupCamerasManager()
+        {
+            CameraManager.Instance.Setup(references.objects.headPivot.transform);
         }
 
         #endregion Setups

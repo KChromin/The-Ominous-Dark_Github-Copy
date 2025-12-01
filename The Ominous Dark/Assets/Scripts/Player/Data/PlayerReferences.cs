@@ -1,8 +1,8 @@
 using System;
-using NOS.Controller;
+using NOS.Controllers;
 using NOS.Player.Controller.Default;
-using NOS.Player.Controller.General;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace NOS.Player.Data
 {
@@ -20,6 +20,7 @@ namespace NOS.Player.Data
             public Transform transform;
             public Rigidbody rigidBody;
             public CapsuleCollider collider;
+            public RigidbodyFloatingCapsule floatingCapsule;
         }
 
         #endregion Components
@@ -77,6 +78,9 @@ namespace NOS.Player.Data
                 public PlayerControllerCheckersDefaultScriptableObject checkers;
                 public PlayerControllerMovementScriptableObject movement;
                 public PlayerControllerCrouchScriptableObject crouch;
+                public PlayerControllerJumpScriptableObject jump;
+                public PlayerControllerHeadBobbingDefaultScriptableObject headBobbing;
+                public PlayerControllerDefaultInteractionScriptableObject interaction;
             }
 
             #endregion Default

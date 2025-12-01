@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace NOS.GameManagers.Settings
 {
+    [DefaultExecutionOrder(-90)]
     public class SettingsManager : SingletonPersistent<SettingsManager>
     {
         #region Settings Containers

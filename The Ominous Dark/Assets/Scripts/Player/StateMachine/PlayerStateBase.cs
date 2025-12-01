@@ -12,15 +12,5 @@ namespace NOS.Player.StateMachine
 
         protected PlayerStateContext Ctx { get; private set; }
         protected PlayerStateFactory Factory { get; private set; }
-
-        #region Debug Gizmos
-
-#if UNITY_EDITOR
-        public virtual void OnDrawGizmos()
-        {
-        }
-#endif
-
-        #endregion Debug Gizmos
     }
 }

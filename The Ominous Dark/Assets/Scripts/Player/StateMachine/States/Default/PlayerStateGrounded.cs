@@ -49,8 +49,6 @@ namespace NOS.Player.StateMachine
 
         protected override void FixedUpdateState()
         {
-            //Steep Slope Sliding
-            Ctx.Controllers.Default.Movement.ExecuteSlideFromSteepSlope();
         }
 
         protected override void CheckSwitchState()

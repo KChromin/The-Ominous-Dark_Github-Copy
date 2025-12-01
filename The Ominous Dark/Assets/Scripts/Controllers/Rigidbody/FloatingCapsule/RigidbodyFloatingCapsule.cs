@@ -1,10 +1,11 @@
-using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace NOS.Controllers
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(CapsuleCollider))]
+    [DefaultExecutionOrder(-20)]
     public class RigidbodyFloatingCapsule : MonoBehaviour
     {
         #region Variables
@@ -16,6 +17,10 @@ namespace NOS.Controllers
         private RigidbodyFloatingCapsuleScriptableObject parameters;
 
         #endregion Parameters
+
+        //Is Updating
+        [SerializeField]
+        private bool isExecutingForce = true;
 
         //Local
         private Rigidbody _rigidBody;
@@ -32,6 +37,8 @@ namespace NOS.Controllers
         private RaycastHit _groundCheckHit;
         private bool _didGroundCheckSpherecastHit;
 
+        private bool _holdExecutionThisFixedUpdate;
+
         #endregion Variables
 
         private void Awake()
@@ -41,7 +48,8 @@ namespace NOS.Controllers
             CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
             float halfCapsuleHeight = capsuleCollider.height / 2;
             _originCenter = capsuleCollider.center + parameters.checkOriginOffset;
-            float distanceToCheckFromOriginToGround = halfCapsuleHeight + parameters.floatHeight + parameters.checkOriginOffset.y;;
+            float distanceToCheckFromOriginToGround = halfCapsuleHeight + parameters.floatHeight + parameters.checkOriginOffset.y;
+            ;
 
             //Radius
             _checkRadius = capsuleCollider.radius + parameters.groundCastRadiusOffset;
@@ -69,6 +77,14 @@ namespace NOS.Controllers
 
         private void ExecuteSpringForce()
         {
+            if (!isExecutingForce) return;
+
+            if (_holdExecutionThisFixedUpdate)
+            {
+                _holdExecutionThisFixedUpdate = false;
+                return;
+            }
+
             Vector3 hitObjectLinearVelocity = Vector3.zero;
             Rigidbody hitObjectRigidBody = _groundCheckHit.rigidbody;
             float checkHitDistance;
@@ -149,6 +165,23 @@ namespace NOS.Controllers
             }
 
             return false;
+        }
+
+        public void SuspendSpringExecution(float suspendingTimeInSeconds)
+        {
+            _ = SuspendForceExecutionForSomeTime(suspendingTimeInSeconds);
+        }
+
+        async UniTaskVoid SuspendForceExecutionForSomeTime(float suspendingTimeInSeconds)
+        {
+            isExecutingForce = false;
+            await UniTask.WaitForSeconds(suspendingTimeInSeconds, cancellationToken: this.GetCancellationTokenOnDestroy());
+            isExecutingForce = true;
+        }
+
+        public void SuspendExecutionNextFixedUpdate()
+        {
+            _holdExecutionThisFixedUpdate = true;
         }
 
         #region Debug

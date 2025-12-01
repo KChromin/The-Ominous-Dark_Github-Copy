@@ -25,9 +25,12 @@ namespace NOS.Player.StateMachine
 
             //Set Condition
             Ctx.Conditions.Default.cases.isMoving = true;
-            
+
             //Set Movement Speed//
             Ctx.Controllers.Default.Movement.SetMovementParameters(PlayerControllerMovement.MovementStates.CrouchWalk);
+
+            //Set Head Bobbing//
+            Ctx.Controllers.Default.HeadBobbing.SetHeadBobbingParameters(PlayerControllerHeadBobbingDefault.HeadBobbingStates.CrouchWalk);
         }
 
         protected override void ExitState()
@@ -40,7 +43,10 @@ namespace NOS.Player.StateMachine
 #endif
 
             #endregion Debug
-            
+
+            //Set Head Bobbing//
+            Ctx.Controllers.Default.HeadBobbing.DisableHeadBobbing();
+
             //Set Condition
             Ctx.Conditions.Default.cases.isMoving = false;
         }

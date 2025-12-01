@@ -68,7 +68,7 @@ Rigidbody:
   m_GameObject: {fileID: 1771675767514930888}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 0.001
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: NOS.Controllers::NOS.Controllers.RigidbodyFloatingCapsule
   parameters: {fileID: 11400000, guid: 8fe1e65db5f86554db843b5201f59ce5, type: 2}
+  isExecutingForce: 1
 --- !u!114 &2069172625126429559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,9 +150,11 @@ MonoBehaviour:
         isRunning: 0
         wantsToJump: 0
         isJumping: 0
+        jumpIsOnCooldown: 0
         wantsToDoCrouchAction: 0
         isCrouching: 0
         isAbleToStandUp: 0
+        isInteracting: 0
       possibilities:
         canLookY: 1
         canLookX: 1
@@ -159,6 +162,7 @@ MonoBehaviour:
         canRun: 1
         canJump: 1
         canCrouch: 1
+        canInteract: 1
   values:
     <General>k__BackingField:
       playerPositionLastFrame: {x: 0, y: 0, z: 0}
@@ -175,6 +179,7 @@ MonoBehaviour:
       transform: {fileID: 1482170653032078285}
       rigidBody: {fileID: 8531838541615964865}
       collider: {fileID: 886449582819316013}
+      floatingCapsule: {fileID: 6107828250219678370}
     objects:
       playerBase: {fileID: 1771675767514930888}
       orientation: {fileID: 7888497059077763280}
@@ -189,6 +194,9 @@ MonoBehaviour:
         checkers: {fileID: 11400000, guid: 80e8e3f4f2f088947b25cd48dd131d7d, type: 2}
         movement: {fileID: 11400000, guid: dbd02b241cbdb934794e3a65f14c7f7a, type: 2}
         crouch: {fileID: 11400000, guid: c9be49933745a0a40a59c98fb8957132, type: 2}
+        jump: {fileID: 11400000, guid: 696d433305e56914bb7ebb87a7e5581e, type: 2}
+        headBobbing: {fileID: 11400000, guid: 775f48ec2e88cf24cb9110c6c00cb332, type: 2}
+        interaction: {fileID: 11400000, guid: ab9994f8d0a156548afee2d9678eec7d, type: 2}
 --- !u!1 &4188096735222578025
 GameObject:
   m_ObjectHideFlags: 0

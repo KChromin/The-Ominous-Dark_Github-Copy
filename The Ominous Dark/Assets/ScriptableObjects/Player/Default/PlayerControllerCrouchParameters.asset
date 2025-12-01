@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: PlayerControllerCrouchParameters
   m_EditorClassIdentifier: NOS.Player::NOS.Player.Controller.Default.PlayerControllerCrouchScriptableObject
   standValues:
-    updateTime: 0.18
+    updateTime: 0.15
     headHeight: 1.7
     colliderHeight: 1.5
     colliderCenterY: 1.05
   crouchValues:
-    updateTime: 0.22
-    headHeight: 0.8
-    colliderHeight: 0.6
-    colliderCenterY: 0.6
+    updateTime: 0.15
+    headHeight: 1.1
+    colliderHeight: 1.2
+    colliderCenterY: 0.9
   roundingValue: 0.001
+  timeBeforeAutoStandUpInAirInSeconds: 1

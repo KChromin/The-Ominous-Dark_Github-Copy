@@ -51,12 +51,16 @@ namespace NOS.Player.StateMachine
             Ctx.Controllers.Default.Checkers.Update();
             Ctx.Controllers.Default.Movement.Update();
             Ctx.Controllers.Default.Crouch.Update();
+            Ctx.Controllers.Default.Jump.Update();
+            Ctx.Controllers.Default.HeadBobbing.Update();
+            Ctx.Controllers.Default.Interaction.Update();
         }
 
         protected override void FixedUpdateState()
         {
-            Ctx.Controllers.Default.Movement.ExecuteMovement();
             Ctx.Controllers.Default.Movement.ApplyGravitation();
+            Ctx.Controllers.Default.Movement.ExecuteMovement();
+            Ctx.Controllers.Default.Jump.FixedUpdate();
         }
 
         protected override void CheckSwitchState()

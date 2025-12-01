@@ -2,7 +2,8 @@
     "name": "NOS.Controllers",
     "rootNamespace": "NOS.Controllers",
     "references": [
-        "GUID:851e821717d3aeb488aca7ada38d7ac1"
+        "GUID:851e821717d3aeb488aca7ada38d7ac1",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

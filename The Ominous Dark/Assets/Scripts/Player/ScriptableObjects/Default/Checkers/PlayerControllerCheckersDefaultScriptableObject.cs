@@ -16,6 +16,9 @@ namespace NOS.Player.Controller.Default
         #region Slope Check
 
         [Header("Slope Check")]
+        public float slopeCheckDistance;
+        public float slopeCheckRadius;
+        
         public float slopeCheckMaxSlope;
         public Vector3 slopeCheckRaycastOffset = new (0,0.02f,0);
         
@@ -52,6 +55,11 @@ namespace NOS.Player.Controller.Default
         public bool debugGroundCheckDraw;
         public Color debugGroundCheckColorHit = Color.green;
         public Color debugGroundCheckColor = Color.red;
+        
+        [Header("Ground", order = 1)]
+        public bool debugSlopeCheckDraw;
+        public Color debugSlopeCheckColorHit = Color.pink;
+        public Color debugSlopeCheckColor = Color.violetRed;
 
         [Header("Celling")]
         public bool debugCellingCheckDraw;
