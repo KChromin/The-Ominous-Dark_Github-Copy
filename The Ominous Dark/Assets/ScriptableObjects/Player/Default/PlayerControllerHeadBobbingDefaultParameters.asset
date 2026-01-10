@@ -69,7 +69,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   runValues:
-    headBobbingSpeed: 12
+    headBobbingSpeed: 10
     headBobbingMaxHeight: 0.1
     headBobbingMaxWidth: 0.03
     headBobbingHeightCurve:

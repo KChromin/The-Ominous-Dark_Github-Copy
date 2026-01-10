@@ -1,0 +1,25 @@
+{
+    "name": "NOS.Gameplay",
+    "rootNamespace": "NOS",
+    "references": [
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:eec0964c48f6f4e40bc3ec2257ccf8c5",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:df380645f10b7bc4b97d4f5eb6303d95",
+        "GUID:457756d89b35d2941b3e7b37b4ece6f1",
+        "GUID:72ad99b1198a38e4382e42c9ba3758a1",
+        "GUID:851e821717d3aeb488aca7ada38d7ac1",
+        "GUID:b1bb8180fe94b6c4b9c0bdfcbede7c6b",
+        "GUID:c98f570c8c3aeca439647f9f15a413a5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

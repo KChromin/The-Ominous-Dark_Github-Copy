@@ -45,7 +45,7 @@ QualitySettings:
     streamingMipmapsMaxFileIORequests: 1024
     particleRaycastBudget: 16
     asyncUploadTimeSlice: 4
-    asyncUploadBufferSize: 32
+    asyncUploadBufferSize: 64
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 11400000, guid: a50006ca3940d6f4c949d335ddb48a75, type: 2}
@@ -65,6 +65,7 @@ QualitySettings:
     CloudRendering: 0
     Lumin: 0
     Nintendo Switch: 0
+    Nintendo Switch 2: 0
     PS4: 0
     Server: 0
     Stadia: 0

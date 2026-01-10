@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NOS.Patterns.Singleton;
 using Unity.Cinemachine;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 namespace NOS.GameplayManagers
 {
-    [DefaultExecutionOrder(-50)]
+    [DefaultExecutionOrder(-35)]
     public class CameraManager : Singleton<CameraManager>
     {
         [Header("Currently Selected Camera")]
@@ -18,6 +19,8 @@ namespace NOS.GameplayManagers
         [Header("Cinemachine Cameras")]
         [SerializeField]
         private List<CinemachineCamera> cinemachineCameras;
+
+        private Transform _playerHeadPivot;
 
         public enum CameraNames
         {
@@ -40,29 +43,26 @@ namespace NOS.GameplayManagers
 
         #region Setup
 
-        protected override void Awake()
+        private void Start()
         {
-            base.Awake();
-            SetupCamerasDictionary();
-        }
+            _playerHeadPivot = GameplayReferenceManager.Instance.PlayerReferences.Objects.headPivot.transform;
 
-        //Must be called by player//
-        public void Setup(Transform playerHeadPivot)
-        {
-            SetupCameras(playerHeadPivot);
+            SetupCamerasDictionary();
+
+            SetupCameras();
 
             //Set default camera//
             ChangeCurrentCamera(CameraNames.Default);
         }
 
-        private void SetupCameras(Transform playerHeadPivot)
+        private void SetupCameras()
         {
             //Setup all camera like Default//
             foreach (CinemachineCamera cinemachineCamera in cinemachineCameras)
             {
                 cinemachineCamera.Target = new CameraTarget
                 {
-                    TrackingTarget = playerHeadPivot,
+                    TrackingTarget = _playerHeadPivot,
                     LookAtTarget = null,
                     CustomLookAtTarget = false
                 };

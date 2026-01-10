@@ -1,9 +1,7 @@
 {
     "name": "NOS.CustomEditors",
     "rootNamespace": "NOS.CustomEditors",
-    "references": [
-        "GUID:72aa6fe789c379e4d99eae077f2f2ed7"
-    ],
+    "references": [],
     "includePlatforms": [
         "Editor"
     ],

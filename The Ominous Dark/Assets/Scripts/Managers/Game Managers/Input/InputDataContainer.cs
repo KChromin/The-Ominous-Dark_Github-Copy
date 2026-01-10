@@ -7,6 +7,8 @@ namespace NOS.GameManagers.Input
     [Serializable]
     public class InputDataContainer
     {
+        public const float MinimumInputMagnitudeBeforeTrigger = 0.125f;
+
         //Look
         [Header("Look")]
         public bool inputtingLook;
@@ -42,10 +44,33 @@ namespace NOS.GameManagers.Input
         public Action OnPerformedInteract;
         public Action OnCancelInteract;
 
-        //Attack
-        [Header("Attack")]
-        public bool inputtingAttack;
-        public Action OnPerformedAttack;
-        public Action OnCancelAttack;
+        //Inventory
+        [Header("Inventory Scrolls")]
+        public bool inputtingInventoryScroll;
+        public Vector2 inventoryScrollValue;
+        public Action<Vector2> OnPerformedInventoryScroll;
+        public Action<Vector2> OnCancelInventoryScroll;
+
+        [Header("Inventory Throw")]
+        public bool inputtingInventoryThrow;
+        public Action OnPerformedInventoryThrow;
+        public Action OnCancelInventoryThrow;
+
+        //Numpad
+        [Header("Inventory Numpad")]
+        public Action OnPerformedInventoryNumpad1;
+        public Action OnPerformedInventoryNumpad2;
+        public Action OnPerformedInventoryNumpad3;
+        public Action OnPerformedInventoryNumpad4;
+        public Action OnPerformedInventoryNumpad5;
+
+        [Header("Inventory Actions")]
+        public bool inputtingInventoryActionMain;
+        public Action OnPerformedInventoryActionMain;
+        public Action OnCancelInventoryActionMain;
+
+        public bool inputtingInventoryActionSecondary;
+        public Action OnPerformedInventoryActionSecondary;
+        public Action OnCancelInventoryActionSecondary;
     }
 }

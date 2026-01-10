@@ -87,7 +87,9 @@ namespace NOS.GameManagers.Settings
         {
             "0 - English, 1 - Polish",
             
-            "0 - 1"
+            "0 - 1",
+            
+            "True, False"
         };
 
         #endregion Game

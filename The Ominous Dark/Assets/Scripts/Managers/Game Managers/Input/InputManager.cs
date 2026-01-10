@@ -55,9 +55,26 @@ namespace NOS.GameManagers.Input
             _inputs.Player.Interact.performed += InteractPerformed;
             _inputs.Player.Interact.canceled += InteractCanceled;
 
-            //Attack
-            _inputs.Player.Attack.performed += AttackPerformed;
-            _inputs.Player.Attack.canceled += AttackCanceled;
+            //Inventory
+            _inputs.Player.InventoryScroll.performed += InventoryScrollPerformed;
+            _inputs.Player.InventoryScroll.canceled += InventoryScrollCanceled;
+
+            //Throw
+            _inputs.Player.InventoryThrow.performed += InventoryThrowPerformed;
+            _inputs.Player.InventoryThrow.canceled += InventoryThrowCanceled;
+
+            //Numpad
+            _inputs.Player.InventoryNumpad1.performed += InventoryNumpad1Performed;
+            _inputs.Player.InventoryNumpad2.performed += InventoryNumpad2Performed;
+            _inputs.Player.InventoryNumpad3.performed += InventoryNumpad3Performed;
+            _inputs.Player.InventoryNumpad4.performed += InventoryNumpad4Performed;
+            _inputs.Player.InventoryNumpad5.performed += InventoryNumpad5Performed;
+
+            _inputs.Player.InventoryActionMain.performed += InventoryActionMainPerformed;
+            _inputs.Player.InventoryActionMain.canceled += InventoryActionMainCanceled;
+
+            _inputs.Player.InventoryActionSecondary.performed += InventoryActionSecondaryPerformed;
+            _inputs.Player.InventoryActionSecondary.canceled += InventoryActionSecondaryCanceled;
         }
 
         #region Look
@@ -167,21 +184,89 @@ namespace NOS.GameManagers.Input
 
         #endregion Interact
 
-        #region Attack
+        #region Inventory
 
-        private void AttackPerformed(InputAction.CallbackContext context)
+        private void InventoryScrollPerformed(InputAction.CallbackContext context)
         {
-            CurrentInput.inputtingAttack = true;
-            CurrentInput.OnPerformedAttack?.Invoke();
+            CurrentInput.inputtingInventoryScroll = true;
+            Vector2 scrollValue = context.ReadValue<Vector2>();
+            CurrentInput.inventoryScrollValue = scrollValue;
+            CurrentInput.OnPerformedInventoryScroll?.Invoke(scrollValue);
         }
 
-        private void AttackCanceled(InputAction.CallbackContext context)
+        private void InventoryScrollCanceled(InputAction.CallbackContext context)
         {
-            CurrentInput.inputtingAttack = false;
-            CurrentInput.OnCancelAttack?.Invoke();
+            CurrentInput.inputtingInventoryScroll = false;
+            CurrentInput.inventoryScrollValue = Vector2.zero;
+            CurrentInput.OnCancelInventoryScroll?.Invoke(Vector2.zero);
         }
 
-        #endregion Attack
+        private void InventoryThrowPerformed(InputAction.CallbackContext context)
+        {
+            CurrentInput.inputtingInventoryThrow = true;
+            CurrentInput.OnPerformedInventoryThrow?.Invoke();
+        }
+
+        private void InventoryThrowCanceled(InputAction.CallbackContext context)
+        {
+            CurrentInput.inputtingInventoryThrow = false;
+            CurrentInput.OnCancelInventoryThrow?.Invoke();
+        }
+
+        #region Numpad
+
+        private void InventoryNumpad1Performed(InputAction.CallbackContext context)
+        {
+            CurrentInput.OnPerformedInventoryNumpad1?.Invoke();
+        }
+
+        private void InventoryNumpad2Performed(InputAction.CallbackContext context)
+        {
+            CurrentInput.OnPerformedInventoryNumpad2?.Invoke();
+        }
+
+        private void InventoryNumpad3Performed(InputAction.CallbackContext context)
+        {
+            CurrentInput.OnPerformedInventoryNumpad3?.Invoke();
+        }
+
+        private void InventoryNumpad4Performed(InputAction.CallbackContext context)
+        {
+            CurrentInput.OnPerformedInventoryNumpad4?.Invoke();
+        }
+
+        private void InventoryNumpad5Performed(InputAction.CallbackContext context)
+        {
+            CurrentInput.OnPerformedInventoryNumpad5?.Invoke();
+        }
+
+        #endregion Numpad
+
+        private void InventoryActionMainPerformed(InputAction.CallbackContext context)
+        {
+            CurrentInput.inputtingInventoryActionMain = true;
+            CurrentInput.OnPerformedInventoryActionMain?.Invoke();
+        }
+
+        private void InventoryActionMainCanceled(InputAction.CallbackContext context)
+        {
+            CurrentInput.inputtingInventoryActionMain = false;
+            CurrentInput.OnCancelInventoryActionMain?.Invoke();
+        }
+
+        private void InventoryActionSecondaryPerformed(InputAction.CallbackContext context)
+        {
+            CurrentInput.inputtingInventoryActionSecondary = true;
+            CurrentInput.OnPerformedInventoryActionSecondary?.Invoke();
+        }
+
+        private void InventoryActionSecondaryCanceled(InputAction.CallbackContext context)
+        {
+            CurrentInput.inputtingInventoryActionSecondary = false;
+            CurrentInput.OnCancelInventoryActionSecondary?.Invoke();
+        }
+
+        #endregion Inventory
 
         private void OnDisable()
         {
@@ -209,9 +294,25 @@ namespace NOS.GameManagers.Input
             _inputs.Player.Interact.performed -= InteractPerformed;
             _inputs.Player.Interact.canceled -= InteractCanceled;
 
-            //Attack
-            _inputs.Player.Attack.performed -= AttackPerformed;
-            _inputs.Player.Attack.canceled -= AttackCanceled;
+            //Inventory
+            _inputs.Player.InventoryScroll.performed -= InventoryScrollPerformed;
+            _inputs.Player.InventoryScroll.canceled -= InventoryScrollCanceled;
+
+            //Throw
+            _inputs.Player.InventoryThrow.performed -= InventoryThrowPerformed;
+            _inputs.Player.InventoryThrow.canceled -= InventoryThrowCanceled;
+
+            _inputs.Player.InventoryNumpad1.performed -= InventoryNumpad1Performed;
+            _inputs.Player.InventoryNumpad2.performed -= InventoryNumpad2Performed;
+            _inputs.Player.InventoryNumpad3.performed -= InventoryNumpad3Performed;
+            _inputs.Player.InventoryNumpad4.performed -= InventoryNumpad4Performed;
+            _inputs.Player.InventoryNumpad5.performed -= InventoryNumpad5Performed;
+
+            _inputs.Player.InventoryActionMain.performed -= InventoryActionMainPerformed;
+            _inputs.Player.InventoryActionMain.canceled -= InventoryActionMainCanceled;
+
+            _inputs.Player.InventoryActionSecondary.performed -= InventoryActionSecondaryPerformed;
+            _inputs.Player.InventoryActionSecondary.canceled -= InventoryActionSecondaryCanceled;
 
             _inputs.Disable();
         }

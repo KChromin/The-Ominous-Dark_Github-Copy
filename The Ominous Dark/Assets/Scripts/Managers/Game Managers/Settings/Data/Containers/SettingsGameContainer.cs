@@ -14,6 +14,9 @@ namespace NOS.GameManagers.Settings
         [Range(0, 1f)]
         public float headBobbingIntensity = 1f;
 
+        [Header("Item Scrolling loops on ends")]
+        public bool inventoryItemScrollLoopsOnEnds = true;
+
         public object Clone()
         {
             return MemberwiseClone();

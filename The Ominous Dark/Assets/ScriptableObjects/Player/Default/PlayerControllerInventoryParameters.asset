@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0f745cf5b90a05499fb3ae7eb2e94b3, type: 3}
+  m_Name: PlayerControllerInventoryParameters
+  m_EditorClassIdentifier: NOS.Gameplay::NOS.Player.Controller.Default.PlayerControllerDefaultInventoryScriptableObject
+  objectInHandScale: 0.2
+  rootForItemsRemovedFromInventory: {fileID: 0}
+  holdTimeBeforeMaximalForce: 1.2
+  holdTimeUntilForceBeginToRise: 0.2
+  throwForceMinimal: 2.2
+  throwForceMaximal: 6
+  throwPlayerVelocityMultiplier: 0.85

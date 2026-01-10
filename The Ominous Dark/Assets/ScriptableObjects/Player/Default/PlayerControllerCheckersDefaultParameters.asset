@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: PlayerControllerCheckersDefaultParameters
   m_EditorClassIdentifier: NOS.Player::NOS.Player.Controller.Default.PlayerControllerCheckersDefaultScriptableObject
   groundCheckDistance: 0.66
-  groundCheckRadius: 0.24
-  slopeCheckDistance: 1
-  slopeCheckRadius: 0.02
+  groundCheckRadius: 0.235
+  slopeCheckDistance: 0.66
+  slopeCheckRadius: 0.235
   slopeCheckMaxSlope: 45
   slopeCheckRaycastOffset: {x: 0, y: 0.02, z: 0}
+  slopeCheckDirectionVerticalOffset: 0
+  slopeCheckDirectionDistance: 0.14
+  slopeCheckDirectionRadius: 0.22
   cellingCheckDistance: 1.052
   cellingCheckRadius: 0.25
   groundLayer:
@@ -25,10 +28,10 @@ MonoBehaviour:
     m_Bits: 193
   checkPositionOffsetFromOriginForGroundCheck: {x: 0, y: 0.78, z: 0}
   checkPositionOffsetFromOriginForCellingCheck: {x: 0, y: 0.5, z: 0}
-  debugGroundCheckDraw: 0
+  debugGroundCheckDraw: 1
   debugGroundCheckColorHit: {r: 0, g: 1, b: 0, a: 1}
   debugGroundCheckColor: {r: 1, g: 0, b: 0, a: 1}
-  debugSlopeCheckDraw: 0
+  debugSlopeCheckDraw: 1
   debugSlopeCheckColorHit: {r: 1, g: 0.7529413, b: 0.7960785, a: 1}
   debugSlopeCheckColor: {r: 0.8156863, g: 0.1254902, b: 0.5647059, a: 1}
   debugCellingCheckDraw: 0

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.HDRenderPipelineAsset
   m_RenderPipelineSettings:
     supportShadowMask: 1
-    supportSSR: 0
-    supportSSRTransparent: 0
+    supportSSR: 1
+    supportSSRTransparent: 1
     supportSSAO: 1
     supportSSGI: 0
     supportSubsurfaceScattering: 0
@@ -51,10 +51,11 @@ MonoBehaviour:
     supportTransparentDepthPrepass: 1
     supportTransparentDepthPostpass: 1
     colorBufferFormat: 74
+    depthBufferFormat: 0
     supportCustomPass: 1
-    supportVariableRateShading: 1
+    supportVariableRateShading: 0
     customBufferFormat: 12
-    supportedLitShaderMode: 2
+    supportedLitShaderMode: 3
     planarReflectionResolution:
       m_Values: 000100000004000000040000
       m_SchemaId:
@@ -103,7 +104,7 @@ MonoBehaviour:
       reflectionProbeTexLastValidCubeMip: 3
       reflectionProbeTexLastValidPlanarMip: 0
       reflectionProbeDecreaseResToFit: 1
-      skyReflectionSize: 1024
+      skyReflectionSize: 512
       skyLightingOverrideLayerMask:
         serializedVersion: 2
         m_Bits: 0
@@ -169,6 +170,8 @@ MonoBehaviour:
       enabled: 0
       useMipBias: 0
       advancedUpscalersByPriority: 02
+      advancedUpscalerNames:
+      - STP
       DLSSPerfQualitySetting: 0
       DLSSInjectionPoint: 0
       TAAUInjectionPoint: 0
@@ -176,6 +179,11 @@ MonoBehaviour:
       defaultInjectionPoint: 2
       DLSSUseOptimalSettings: 1
       DLSSSharpness: 0.5
+      DLSSRenderPresetForQuality: 0
+      DLSSRenderPresetForBalanced: 0
+      DLSSRenderPresetForPerformance: 0
+      DLSSRenderPresetForUltraPerformance: 0
+      DLSSRenderPresetForDLAA: 0
       FSR2EnableSharpness: 0
       FSR2Sharpness: 0
       FSR2UseOptimalSettings: 0
@@ -353,7 +361,7 @@ MonoBehaviour:
   m_CompositorCustomVolumeComponentsList:
     m_InjectionPoint: 1
     m_CustomPostProcessTypesAsString: []
-  m_Version: 25
+  m_Version: 26
   m_ObsoleteFrameSettings:
     overrides: 0
     enableShadow: 0

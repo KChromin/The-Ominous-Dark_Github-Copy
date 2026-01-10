@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c452683a640c84428e3fe1f00336b2f, type: 3}
   m_Name: PlayerControllerLookParameters
   m_EditorClassIdentifier: NOS.Player::NOS.Player.Controller.Default.PlayerControllerLookScriptableObject
-  maxAngleUp: 80
-  maxAngleDown: -80
+  maxAngleUp: 85
+  maxAngleDown: -85

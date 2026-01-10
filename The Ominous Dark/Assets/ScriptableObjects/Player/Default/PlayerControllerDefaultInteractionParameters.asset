@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a358b4b0df5741d8b154459bd5cf3cc2, type: 3}
   m_Name: PlayerControllerDefaultInteractionParameters
   m_EditorClassIdentifier: NOS.Player::NOS.Player.Controller.Default.PlayerControllerDefaultInteractionScriptableObject
-  interactionDistance: 2
+  interactionDistance: 1.6
   interactableLayers:
     serializedVersion: 2
-    m_Bits: 192
-  currentlySelectedObjectName: 
+    m_Bits: 1472
+  currentlySelectedObjectName: Lamp_01

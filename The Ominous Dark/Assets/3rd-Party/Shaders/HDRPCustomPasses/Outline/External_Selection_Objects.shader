@@ -8,12 +8,12 @@
         // Transparency
         //    _AlphaCutoff("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
 
-        _BlendMode("BlendMode", Float) = 1
+        _BlendMode("BlendMode", Float) = 0
     }
 
     HLSLINCLUDE
     #pragma target 4.5
-    #pragma only_renderers d3d11 ps4 xboxone vulkan metal switch
+    //#pragma only_renderers d3d11 ps4 xboxone vulkan metal switch
     // #pragma enable_d3d11_debug_symbols
 
     //enable GPU instancing support
@@ -75,7 +75,7 @@
                 // No call to InitBuiltinData as we don't have any lighting
                 ZERO_INITIALIZE(SurfaceData, surfaceData);
                 // No call to InitBuiltinData as we don't have any lighting
-                  builtinData.opacity = 1;
+                builtinData.opacity = 1;
                 //   builtinData.emissiveColor = float3(0, 0, 0);
                 surfaceData.color = float3(1, 1, 1);
             }

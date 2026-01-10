@@ -1,0 +1,5 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="InventoryItemSlot1" style="flex-grow: 0; width: 100px; height: 100px; background-image: url(&quot;project://database/Assets/Visuals/GUI/ItemSlot/ItemSlot.png?fileID=2800000&amp;guid=e3d22d22614a2f64880de85ba252894d&amp;type=3#ItemSlot&quot;); align-self: center; align-items: center; justify-content: center; margin-left: 20px; margin-right: 20px; -unity-background-image-tint-color: rgb(255, 255, 255);">
+        <ui:VisualElement name="InventoryItemSlotImage1" style="flex-grow: 1; width: 100%; height: 100%;"/>
+    </ui:VisualElement>
+</ui:UXML>

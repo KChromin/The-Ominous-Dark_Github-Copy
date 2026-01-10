@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: InteractablesTable_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 3dbaa7a1860af5b4eb1c8423a461b3db, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 64893702144
+    m_Localized: Use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 103728762880
+    m_Localized: Push
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106480226304
+    m_Localized: Pull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 189649080320
+    m_Localized: Take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421430513664
+    m_Localized: Pick up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 561771925504
+    m_Localized: Light switch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 668210778112
+    m_Localized: Light dimmer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1023665459200
+    m_Localized: Color Switcher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1265836183552
+    m_Localized: Drop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1555712921600
+    m_Localized: Uuuu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88304489287680
+    m_Localized: Sphere
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88434760175616
+    m_Localized: Cube
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89655852093440
+    m_Localized: Lamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2947960999989248
+    m_Localized: Pill Eater
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2948059058622464
+    m_Localized: Need
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

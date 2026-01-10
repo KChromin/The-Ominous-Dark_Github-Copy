@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 2839200558153462307}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.3100004, z: 7.05}
+  m_LocalPosition: {x: 20.5, y: 3.7, z: 28.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -100,7 +100,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 70
+  field of view: 80
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -325,7 +325,7 @@ Transform:
   m_GameObject: {fileID: 3582727172878963656}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.3100004, z: 7.05}
+  m_LocalPosition: {x: 20.5, y: 3.7, z: 28.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -355,7 +355,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 70
+    FieldOfView: 80
     OrthographicSize: 5
     NearClipPlane: 0.01
     FarClipPlane: 1000
@@ -446,7 +446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb971d4406fdb114587490b0d4d94e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: NOS.GameplayManagers::NOS.GameplayManagers.CameraManager
+  currentCamera: 0
   mainCamera: {fileID: 7747558527131156183}
   cinemachineCameras:
   - {fileID: 709097773488956170}
-  tempPlayerHead: {fileID: 0}

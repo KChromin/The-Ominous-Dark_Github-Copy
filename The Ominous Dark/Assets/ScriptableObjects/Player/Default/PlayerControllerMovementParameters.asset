@@ -83,8 +83,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   walkValues:
-    maxSpeed: 2.8
-    accelerationSpeed: 25
+    maxSpeed: 3
+    accelerationSpeed: 28
     accelerationFactorFromDot:
       serializedVersion: 2
       m_Curve:
@@ -153,8 +153,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   runValues:
-    maxSpeed: 5
-    accelerationSpeed: 60
+    maxSpeed: 5.5
+    accelerationSpeed: 65
     accelerationFactorFromDot:
       serializedVersion: 2
       m_Curve:
@@ -258,7 +258,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    maxAccelerationForce: 10
+    maxAccelerationForce: 15
     maxAccelerationForceFactorFromDot:
       serializedVersion: 2
       m_Curve:
@@ -293,7 +293,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   crouchWalkValues:
-    maxSpeed: 1.8
+    maxSpeed: 2.2
     accelerationSpeed: 8
     accelerationFactorFromDot:
       serializedVersion: 2
@@ -328,7 +328,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    maxAccelerationForce: 10
+    maxAccelerationForce: 15
     maxAccelerationForceFactorFromDot:
       serializedVersion: 2
       m_Curve:
@@ -432,10 +432,19 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+  maxSpeedUpdateInTimeValue: 0.1
   factorMoveSideways: 1
   factorMoveBackwards: 0.92
   inAirControlAccelerationSpeed: 8
   inAirMaximalMomentumAdditionBaseValue: 0.3
   inAirMaximalMomentumAdditionJumpingInPlace: 1.4
-  inAirMomentumKeepMultiplier: 0.6
-  slidingControlMultiplier: 0.3
+  inAirMomentumKeepMultiplier: 0.7
+  slidingControlMultiplier: 0.4
+  slidingMaxSpeedAccelerationSpeed: 0.6
+  slidingMaxSpeedReductionSpeed: 0.3
+  slidingTimeBeforeDisablingFloatingCapsule: 0.22
+  steepSlopeMovementReductionThresholdStart: 20
+  steepSlopeMovementReductionThresholdEnd: 45
+  steepSlopeMovementReductionMaximalReductionMultiplier: 0.5
+  minimalMovingThreshold: 0.7
+  minimalRunningThreshold: 3

@@ -13,6 +13,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
+  - _MASKMAP
   - _NORMALMAP
   - _NORMALMAP_TANGENT_SPACE
   m_InvalidKeywords: []
@@ -39,14 +40,25 @@ Material:
         m_Texture: {fileID: 2800000, guid: 2a6f3cbb010f3d240aa97ab6354b0f2b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MaskMap:
+        m_Texture: {fileID: 2800000, guid: ebee247f63a346940a6fd3e7a34e18c2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _NormalMap:
         m_Texture: {fileID: 2800000, guid: 67855112e5308b349a6e2386ba9f0494, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AORemapMax: 0.9858358
+    - _AORemapMin: 0
     - _InvTilingScale: 1
     - _Metallic: 1
+    - _MetallicRemapMax: 1
+    - _MetallicRemapMin: 0.5410766
+    - _NormalScale: 1
+    - _SmoothnessRemapMax: 0.84985834
+    - _SmoothnessRemapMin: 0.3201133
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
