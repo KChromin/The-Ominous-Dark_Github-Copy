@@ -1,0 +1,139 @@
+:root {
+}
+
+.InventoryItemSlot {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.InventoryItemSlotImage {
+    background-color: rgb(0, 0, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+#CrossHairThrowIndicator {
+    display: none;
+    visibility: visible;
+    background-color: rgba(255, 255, 255, 0);
+    height: 0;
+    -unity-background-scale-mode: stretch-to-fill;
+    scale: 1 0.5;
+    position: absolute;
+    top: 110px;
+    width: 80px;
+}
+
+#CrossHairThrowIndicator #unity-progress-bar {
+    display: flex;
+    visibility: visible;
+    background-color: rgba(255, 255, 255, 0);
+    height: auto;
+    flex-grow: 1;
+}
+
+#CrossHairThrowIndicator .unity-progress-bar__title-container {
+    display: flex;
+    visibility: visible;
+    background-color: rgba(255, 255, 255, 0);
+    height: auto;
+    overflow: visible;
+    flex-grow: 1;
+}
+
+#CrossHairThrowIndicator .unity-progress-bar__progress {
+    display: flex;
+    visibility: visible;
+    background-color: rgba(141, 180, 0, 0.49);
+    height: auto;
+    flex-grow: 1;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+#CrossHairThrowIndicator .unity-progress-bar__title {
+    display: none;
+    visibility: hidden;
+    background-color: rgba(255, 100, 0, 0);
+    height: auto;
+    flex-grow: 0;
+}
+
+#CrossHairThrowIndicator .unity-progress-bar__background {
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(0, 0, 0, 0.47);
+}
+
+#StaminaBar {
+    display: flex;
+    visibility: visible;
+    background-color: rgba(255, 255, 255, 0);
+    height: 0;
+    -unity-background-scale-mode: stretch-to-fill;
+    scale: 1 1.5;
+    position: absolute;
+    top: 100px;
+    width: 580px;
+    bottom: auto;
+    left: 18px;
+}
+
+#StaminaBar #unity-progress-bar {
+    display: flex;
+    visibility: visible;
+    background-color: rgba(255, 255, 255, 0);
+    height: auto;
+    flex-grow: 1;
+}
+
+#StaminaBar .unity-progress-bar__title-container {
+    display: flex;
+    visibility: visible;
+    background-color: rgba(255, 255, 255, 0);
+    height: auto;
+    overflow: visible;
+    flex-grow: 1;
+}
+
+#StaminaBar .unity-progress-bar__progress {
+    display: flex;
+    visibility: visible;
+    background-color: rgba(52, 77, 91, 0.61);
+    height: auto;
+    flex-grow: 1;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+#StaminaBar .unity-progress-bar__background {
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(0, 0, 0, 0.71);
+    color: rgb(212, 93, 0);
+    font-size: 14px;
+    -unity-font-definition: initial;
+}
+
+#StaminaBar .unity-progress-bar__title {
+    display: flex;
+    visibility: visible;
+    background-color: rgba(255, 100, 0, 0);
+    height: auto;
+    flex-grow: 0;
+    -unity-font-definition: url("project://database/Assets/Visuals/Fonts/stiff-brush-jk.regular.otf?fileID=12800000&guid=5addb68f1796b554798b48248ee39ff3&type=3#stiff-brush-jk.regular");
+    font-size: 14px;
+    -unity-text-align: middle-center;
+    letter-spacing: 2px;
+    scale: 1.5 1;
+    color: rgb(255, 139, 0);
+}

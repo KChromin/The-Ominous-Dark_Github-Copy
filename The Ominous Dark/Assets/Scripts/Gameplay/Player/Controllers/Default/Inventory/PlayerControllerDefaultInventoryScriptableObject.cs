@@ -17,5 +17,10 @@ namespace NOS.Player.Controller.Default
         public float throwForceMinimal = 1;
         public float throwForceMaximal = 5;
         public float throwPlayerVelocityMultiplier = 0.2f;
+
+        [Header("Swapping Item")]
+        public float itemHidingTransitionSpeed = 0.3f;
+        public float itemPullOutTransitionSpeed = 0.3f;
+        public Vector3 itemHideOffset = new (0, -0.1f, -0.02f);
     }
 }

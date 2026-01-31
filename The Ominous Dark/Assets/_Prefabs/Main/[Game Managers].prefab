@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8677204499945084108}
+  - component: {fileID: 7721722105424750122}
   - component: {fileID: 970965668720388957}
   - component: {fileID: 4151915074772349064}
   - component: {fileID: 62021380486163480}
@@ -34,6 +35,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7721722105424750122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110175984143664829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 2398ed2757af4424495da26c6f29f093, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 89816efdd3e4dfb4b82505c1e8394ca2, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
 --- !u!114 &970965668720388957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,8 +101,9 @@ MonoBehaviour:
       runInBackground: 0
     game:
       language: 0
-      headBobbingDisable: 0
+      fieldOfView: 75
       headBobbingIntensity: 1
+      inventoryItemScrollLoopsOnEnds: 1
     visual:
       test: 0
     accessibility:
@@ -114,8 +139,9 @@ MonoBehaviour:
       runInBackground: 0
     game:
       language: 0
-      headBobbingDisable: 0
+      fieldOfView: 75
       headBobbingIntensity: 1
+      inventoryItemScrollLoopsOnEnds: 1
     visual:
       test: 0
     accessibility:
@@ -143,7 +169,11 @@ MonoBehaviour:
     inputtingJump: 0
     inputtingCrouch: 0
     inputtingInteract: 0
-    inputtingAttack: 0
+    inputtingInventoryScroll: 0
+    inventoryScrollValue: {x: 0, y: 0}
+    inputtingInventoryThrow: 0
+    inputtingInventoryActionMain: 0
+    inputtingInventoryActionSecondary: 0
 --- !u!114 &62021380486163480
 MonoBehaviour:
   m_ObjectHideFlags: 0

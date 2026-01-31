@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: NOS.Gameplay::NOS.Player.Controller.Default.PlayerControllerDefaultStaminaScriptableObject
   maximalStamina: 100
   staminaCostPerSecondRunning: 12
-  staminaCostPerJump: 10
+  staminaCostPerJump: 8
   staminaRegenerationBase: 10
   staminaRegenerationAfterFullyDepleting: 4
   staminaOverlayFadingInStartValue: 50

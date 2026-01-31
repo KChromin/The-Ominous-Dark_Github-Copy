@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using NOS.GameManagers.Input;
 using NOS.GameManagers.Settings;
 using NOS.Item;
@@ -43,14 +44,25 @@ namespace NOS.Player.Controller
         private float _itemThrowHoldTime;
         private float _throwForce01;
 
+        //Transition
+        //Define things that must be done//
+        private bool _executeTransitionHide;
+        private bool _executeTransitionPullOut;
+
+        private Transform _transitioningItem;
+        private Vector3 _currentTransitioningItemCalculations;
+
         #endregion Variables
 
         public override void Update()
         {
             ItemThrowUpdate();
+            UpdateItemInHandsTransitionExecution();
         }
 
         #region Private methodes
+
+        #region Add, Remove Item
 
         private void TryToPickUpItem(ItemBase itemToAdd)
         {
@@ -59,6 +71,7 @@ namespace NOS.Player.Controller
             {
                 AddItemToInventory(itemToAdd, _dynamicReferences.currentSelectedSlot);
                 _dynamicReferences.OnSelectedSlotChange?.Invoke(); //Refresh hand after picking item//
+                UpdateItemInHands();
                 return;
             }
 
@@ -78,10 +91,69 @@ namespace NOS.Player.Controller
 #endif
         }
 
+
+        //Process item after addition//
+        private void AddItemToInventory(ItemBase itemToAdd, int slotNumber)
+        {
+            //Add to inventory
+            _dynamicReferences.currentInventoryItems[slotNumber] = itemToAdd;
+
+            itemToAdd.OnBeingAddedToInventory();
+
+            Transform newItemTransform = itemToAdd.transform;
+
+            newItemTransform.SetParent(_itemSlot);
+            newItemTransform.localPosition = Vector3.zero;
+            newItemTransform.localRotation = Quaternion.identity;
+            newItemTransform.localScale = Vector3.one * _parameters.objectInHandScale;
+
+            _dynamicReferences.OnPickedUpItemGUINotice?.Invoke(slotNumber);
+
+            newItemTransform.gameObject.SetActive(false);
+        }
+
+
+        private void RemoveItemFromInventory(int slotNumber, float throwForce01 = 0, bool insertingToSlot = false)
+        {
+            ItemBase itemToRemove = _dynamicReferences.currentInventoryItems[slotNumber];
+
+            itemToRemove.CancelMainAction();
+            itemToRemove.CancelSecondaryAction();
+
+            if (insertingToSlot)
+            {
+                itemToRemove.OnBeingInsertedToSlot();
+            }
+            else
+            {
+                itemToRemove.OnBeingRemovedFromInventory(throwForce01);
+            }
+
+            Transform removedItemTransform = itemToRemove.transform;
+
+            removedItemTransform.SetParent(_parameters.rootForItemsRemovedFromInventory);
+            //  removedItemTransform.localScale = Vector3.one;
+            //Instead call methode in item that makes it bigger
+
+            removedItemTransform.gameObject.SetActive(true);
+
+            //Remove item
+            _dynamicReferences.currentInventoryItems[slotNumber] = null;
+
+            _dynamicReferences.OnDroppedItemGUINotice?.Invoke(slotNumber);
+        }
+
+        #endregion Add, Remove Item
+
+        #region Changing Items
+
         private void UpdateScroll(Vector2 scrollDelta)
         {
             if (_conditions.cases.inventoryItemSwitchingIsBlocked) return;
+            if (_conditions.cases.inventoryIsTransitioningItems) return;
 
+            _previousSelectedItem = _dynamicReferences.currentSelectedSlot;
+            
             //When next
             if (scrollDelta.y > 0)
             {
@@ -125,85 +197,98 @@ namespace NOS.Player.Controller
         private void UpdateScrollNumpad(int selectedNumber)
         {
             if (_conditions.cases.inventoryItemSwitchingIsBlocked) return;
+            if (_conditions.cases.inventoryIsTransitioningItems) return;
 
+            _previousSelectedItem = _dynamicReferences.currentSelectedSlot;
             _dynamicReferences.currentSelectedSlot = selectedNumber;
 
             //Here Update Item//
             _dynamicReferences.OnSelectedSlotChange?.Invoke();
         }
 
-        //Process item after addition//
-        private void AddItemToInventory(ItemBase itemToAdd, int slotNumber)
-        {
-            //Add to inventory
-            _dynamicReferences.currentInventoryItems[slotNumber] = itemToAdd;
-
-            itemToAdd.OnBeingAddedToInventory();
-
-            Transform newItemTransform = itemToAdd.transform;
-
-            newItemTransform.SetParent(_itemSlot);
-            newItemTransform.localPosition = Vector3.zero;
-            newItemTransform.localRotation = Quaternion.identity;
-            newItemTransform.localScale = Vector3.one * _parameters.objectInHandScale;
-
-            _dynamicReferences.OnPickedUpItemGUINotice?.Invoke(slotNumber);
-
-            newItemTransform.gameObject.SetActive(false);
-        }
-
         private void UpdateItemInHands()
         {
+            if (_conditions.cases.inventoryIsTransitioningItems) return;
             if (_previousSelectedItem == _dynamicReferences.currentSelectedSlot && (_dynamicReferences.currentInventoryItems[_previousSelectedItem] && _dynamicReferences.currentInventoryItems[_previousSelectedItem].gameObject.activeSelf)) return;
+            
+            _conditions.cases.inventoryIsTransitioningItems = true;
 
             //Hide current item
             if (_dynamicReferences.currentInventoryItems[_previousSelectedItem])
             {
-                DeactivateItemInHand(_previousSelectedItem);
+                _executeTransitionHide = true;
             }
 
             //Pull up new
             if (_dynamicReferences.GetCurrentItem())
             {
-                ActivateItemInHand(_dynamicReferences.currentSelectedSlot);
+                _executeTransitionPullOut = true;
             }
-            else //When null, that means it's empty, so just update ui
-            {
-            }
-
-            _previousSelectedItem = _dynamicReferences.currentSelectedSlot;
         }
 
-        private void RemoveItemFromInventory(int slotNumber, float throwForce01 = 0, bool insertingToSlot = false)
+        private void UpdateItemInHandsTransitionExecution()
         {
-            ItemBase itemToRemove = _dynamicReferences.currentInventoryItems[slotNumber];
+            if (!_conditions.cases.inventoryIsTransitioningItems) return;
 
-            itemToRemove.CancelMainAction();
-            itemToRemove.CancelSecondaryAction();
-
-            if (insertingToSlot)
+            //First hide thing in hand
+            if (_executeTransitionHide)
             {
-                itemToRemove.OnBeingInsertedToSlot();
+                if (!_transitioningItem)
+                {
+                    _transitioningItem = _dynamicReferences.currentInventoryItems[_previousSelectedItem].transform;
+                }
+
+                //Transition
+                if (_transitioningItem.localPosition != _parameters.itemHideOffset)
+                {
+                    TransitItem(_parameters.itemHideOffset, _parameters.itemHidingTransitionSpeed);
+                }
+                else
+                {
+                    DeactivateItemInHand(_previousSelectedItem);
+                    _transitioningItem = null;
+                    _executeTransitionHide = false;
+                }
             }
-            else
+            else if (_executeTransitionPullOut) //Next try to bring new thing//
             {
-                itemToRemove.OnBeingRemovedFromInventory(throwForce01);
+                if (!_transitioningItem)
+                {
+                    _transitioningItem = _dynamicReferences.GetCurrentItem().transform;
+                    _dynamicReferences.GetCurrentItem().transform.localPosition = _parameters.itemHideOffset;
+                    ActivateItemInHand(_dynamicReferences.currentSelectedSlot);
+                }
+
+                if (_transitioningItem.localPosition != Vector3.zero)
+                {
+                    TransitItem(Vector3.zero, _parameters.itemPullOutTransitionSpeed);
+                }
+                else
+                {
+                    _transitioningItem = null;
+                    _executeTransitionPullOut = false;
+                }
             }
-
-            Transform removedItemTransform = itemToRemove.transform;
-
-            removedItemTransform.SetParent(_parameters.rootForItemsRemovedFromInventory);
-            //  removedItemTransform.localScale = Vector3.one;
-            //Instead call methode in item that makes it bigger
-
-            removedItemTransform.gameObject.SetActive(true);
-
-            //Remove item
-            _dynamicReferences.currentInventoryItems[slotNumber] = null;
-
-            _dynamicReferences.OnDroppedItemGUINotice?.Invoke(slotNumber);
+            else //When all done, reset//
+            {
+                _conditions.cases.inventoryIsTransitioningItems = false;
+            }
         }
 
+        private void TransitItem(Vector3 targetLocalPosition, float speed)
+        {
+            _transitioningItem.localPosition = Vector3.SmoothDamp(_transitioningItem.localPosition, targetLocalPosition, ref _currentTransitioningItemCalculations, speed, Mathf.Infinity, Time.deltaTime);
+
+            //When close enough round value//
+            if (Mathf.Approximately(_transitioningItem.localPosition.x, targetLocalPosition.x) && Mathf.Approximately(_transitioningItem.localPosition.y, targetLocalPosition.y) &&
+                Mathf.Approximately(_transitioningItem.localPosition.z, targetLocalPosition.z))
+            {
+                _transitioningItem.localPosition = targetLocalPosition;
+                //Reset calculation value//
+                _currentTransitioningItemCalculations = Vector3.zero;
+            }
+        }
+        
         private void ActivateItemInHand(int slotNumber)
         {
             _dynamicReferences.currentInventoryItems[slotNumber].gameObject.SetActive(true);
@@ -217,6 +302,8 @@ namespace NOS.Player.Controller
             _dynamicReferences.currentInventoryItems[slotNumber].SetItemInHandsActivity(false);
             _dynamicReferences.currentInventoryItems[slotNumber].gameObject.SetActive(false);
         }
+
+        #endregion Changing Items
 
         #region Using items
 
@@ -260,6 +347,7 @@ namespace NOS.Player.Controller
         private void ItemThrowBegin()
         {
             if (!_dynamicReferences.GetCurrentItem()) return;
+            if (_conditions.cases.inventoryIsTransitioningItems) return;
 
             _conditions.cases.inventoryItemSwitchingIsBlocked = true;
             _conditions.cases.inventoryWantsToThrowItem = true;
@@ -344,8 +432,8 @@ namespace NOS.Player.Controller
 
         #endregion Throw
 
-        #endregion Private methodes
-        
+        #region Interactable slot
+
         private void InteractableItemSlotGiveItem()
         {
             RemoveItemFromInventory(_dynamicReferences.currentSelectedSlot, insertingToSlot: true);
@@ -357,6 +445,10 @@ namespace NOS.Player.Controller
             TryToPickUpItem(itemTaken);
         }
 
+        #endregion Interactable slot
+
+        #endregion Private methodes
+        
         #region Events
 
         private void SubscribeToEvents()

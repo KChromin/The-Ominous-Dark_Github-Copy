@@ -22,6 +22,8 @@ namespace NOS.Item
 
         private Rigidbody[] _rigidbody;
 
+        public Action<GameObject> OnDisableItem;
+
         private struct ItemRigidbodySettingsSaveStruct
         {
             public ItemRigidbodySettingsSaveStruct(bool isKinematic, RigidbodyInterpolation interpolationType)
@@ -37,7 +39,7 @@ namespace NOS.Item
         private ItemRigidbodySettingsSaveStruct[] _rigidbodyStartSettings;
 
         private Collider[] _collider;
-        private bool[] _colliderStartEnabledness;
+        private bool[] _colliderStartTriggerState;
 
         private MeshRenderer[] _renderers;
         private ShadowCastingMode[] _renderersShadowModes;
@@ -82,11 +84,11 @@ namespace NOS.Item
             #region Colliders
 
             _collider = GetComponentsInChildren<Collider>();
-            _colliderStartEnabledness = new bool [_collider.Length];
+            _colliderStartTriggerState = new bool [_collider.Length];
 
-            for (int i = 0; i < _colliderStartEnabledness.Length; i++)
+            for (int i = 0; i < _colliderStartTriggerState.Length; i++)
             {
-                _colliderStartEnabledness[i] = _collider[i].enabled;
+                _colliderStartTriggerState[i] = _collider[i].isTrigger;
             }
 
             #endregion Colliders
@@ -143,7 +145,7 @@ namespace NOS.Item
                 //Enable Colliders
                 for (int i = 0; i < _collider.Length; i++)
                 {
-                    _collider[i].enabled = _colliderStartEnabledness[i];
+                    _collider[i].isTrigger = _colliderStartTriggerState[i];
                 }
 
                 for (int i = 0; i < _renderers.Length; i++)
@@ -163,7 +165,7 @@ namespace NOS.Item
                 //Disable Colliders
                 for (int i = 0; i < _collider.Length; i++)
                 {
-                    _collider[i].enabled = false;
+                    _collider[i].isTrigger = true;
                 }
 
                 //Disable Shadows
@@ -211,6 +213,7 @@ namespace NOS.Item
                     break;
             }
         }
+
         protected abstract void ExecuteMainAction();
         protected abstract void ExecuteSecondaryAction();
 
@@ -229,10 +232,15 @@ namespace NOS.Item
                 _isPerformingSecondaryAction = false;
             }
         }
-        
+
         protected virtual void DisableItem()
         {
-            
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+           OnDisableItem?.Invoke(gameObject);
         }
 
         #endregion Private Methodes
@@ -276,7 +284,7 @@ namespace NOS.Item
             _needResetToCorrectSize = false;
             UpdateSelectionEvenWhenCannotBeUsed = true;
         }
-
+        
         #endregion Public Methodes
     }
 

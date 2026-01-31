@@ -1,0 +1,11 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Visuals/GUI/StyleSheets/MenuStyle.uss?fileID=7433441132597879392&amp;guid=45474e1e1bf041d418a600106f3f2ccd&amp;type=3#MenuStyle"/>
+    <ui:VisualElement name="MenuContainer" style="flex-grow: 1;">
+        <ui:VisualElement name="ButtonContainer" style="flex-grow: 1; width: 400px; height: 350px; position: absolute; bottom: 0; left: 0; align-self: center; align-content: flex-start; align-items: center; justify-content: space-around;">
+            <ui:Button text="Start" name="StartButton" icon-image="" class="MenuButton"/>
+            <ui:Button text="Settings" name="SettingsButton" class="MenuButton"/>
+            <ui:Button text="Exit" name="ExitButton" display-tooltip-when-elided="false" triple-click-selects-line="false" double-click-selects-word="false" class="MenuButton"/>
+        </ui:VisualElement>
+        <ui:Label text="The Ominous Dark" selectable="false" focusable="false" display-tooltip-when-elided="false" triple-click-selects-line="false" double-click-selects-word="false" enable-rich-text="false" emoji-fallback-support="false" style="align-self: center; width: 1300px; height: 190px; -unity-text-align: middle-center; font-size: 130px; -unity-font-definition: url(&quot;project://database/Assets/Visuals/Fonts/prime-minister-of-canada.regular.otf?fileID=12800000&amp;guid=c07cb2304bda7bb44866c0d52edc4ffc&amp;type=3#prime-minister-of-canada.regular&quot;); color: rgb(255, 0, 88); -unity-text-outline-color: rgb(144, 0, 50); -unity-text-outline-width: 3px;"/>
+    </ui:VisualElement>
+</ui:UXML>

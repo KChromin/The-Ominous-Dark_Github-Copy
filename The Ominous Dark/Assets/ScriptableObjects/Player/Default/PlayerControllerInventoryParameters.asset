@@ -19,3 +19,6 @@ MonoBehaviour:
   throwForceMinimal: 2.2
   throwForceMaximal: 6
   throwPlayerVelocityMultiplier: 0.85
+  itemHidingTransitionSpeed: 0.03
+  itemPullOutTransitionSpeed: 0.04
+  itemHideOffset: {x: 0, y: -0.08, z: -0.05}

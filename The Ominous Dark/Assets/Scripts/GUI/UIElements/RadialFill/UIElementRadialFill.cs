@@ -117,7 +117,9 @@ namespace NOS.UIElements
             if (mwd.vertexCount == 0)
                 return;
 
+#pragma warning disable CS0618 // Type or member is obsolete
             Rect uvRegion = mwd.uvRegion;
+#pragma warning restore CS0618 // Type or member is obsolete
 
             float startRad = _startAngle * Mathf.Deg2Rad;
             float fillArc = Tau * _fillAmount;

@@ -31,7 +31,24 @@ namespace NOS.Player.Controller.Default
         [Space]
         [Header("Max Speed Smooth change in time value")]
         public float maxSpeedUpdateInTimeValue = 0.2f;
-        
+
+        [Space]
+        [Header("FOV Change")]
+        [Range(0, 12)]
+        public int fovChangeMaxAddition = 5;
+        public AnimationCurve fovChangeFromSpeedCurve = new()
+        {
+            keys = new Keyframe[]
+            {
+                new(0, 0),
+                new(4.5f, 0),
+                new(5, 0.5f),
+                new(8, 1)
+            },
+            preWrapMode = WrapMode.Clamp,
+            postWrapMode = WrapMode.Clamp
+        };
+
         [Space]
         [Header("Factors")]
         [Range(0f, 1f)]
@@ -63,7 +80,7 @@ namespace NOS.Player.Controller.Default
         public float steepSlopeMovementReductionThresholdStart = 15f;
         public float steepSlopeMovementReductionThresholdEnd = 45f;
         public float steepSlopeMovementReductionMaximalReductionMultiplier = 0.2f;
-        
+
         [Space]
         [Header("Minimal Movement Thresholds")]
         public float minimalMovingThreshold = 0.1f;

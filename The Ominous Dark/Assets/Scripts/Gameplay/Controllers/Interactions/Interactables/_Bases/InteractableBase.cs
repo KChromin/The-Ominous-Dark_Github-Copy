@@ -271,7 +271,7 @@ namespace NOS.Controllers.Interactions
             SetLayerMask(false);
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             SetLayerMask(false);
         }

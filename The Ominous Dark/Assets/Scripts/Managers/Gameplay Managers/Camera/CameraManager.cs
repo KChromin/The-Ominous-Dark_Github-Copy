@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using NOS.GameManagers.Settings;
 using NOS.Patterns.Singleton;
 using Unity.Cinemachine;
 using UnityEngine;
 
 namespace NOS.GameplayManagers
 {
-    [DefaultExecutionOrder(-35)]
+    [DefaultExecutionOrder(-49)]
     public class CameraManager : Singleton<CameraManager>
     {
         [Header("Currently Selected Camera")]
@@ -22,10 +23,13 @@ namespace NOS.GameplayManagers
 
         private Transform _playerHeadPivot;
 
+        private SettingsContainers _settings;
+
         public enum CameraNames
         {
             Default //Default Camera
         }
+
 
         #region Dictionary
 
@@ -41,7 +45,31 @@ namespace NOS.GameplayManagers
 
         #endregion Dictionary
 
+        #region Default Camera
+
+        private CinemachineCamera _defaultCamera;
+
+        #region FOV
+
+        private const float SmoothUpdateTimeDefaultCameraFOV = 0.12f;
+        private float _defaultCameraBaseFOV;
+        private bool _defaultCameraUpdateFOVUpdateIsNeeded;
+        private float _defaultCameraUpdateFOVTarget;
+        private float _defaultCameraUpdateFOVCalculations;
+
+        #endregion FOV
+
+        #endregion Default Camera
+
         #region Setup
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            _settings = SettingsManager.Instance.CurrentSettings;
+            SettingsManager.Instance.OnSettingsUpdate += OnSettingsUpdate;
+        }
 
         private void Start()
         {
@@ -53,6 +81,8 @@ namespace NOS.GameplayManagers
 
             //Set default camera//
             ChangeCurrentCamera(CameraNames.Default);
+
+            _defaultCamera = _camerasDictionary[CameraNames.Default];
         }
 
         private void SetupCameras()
@@ -69,6 +99,7 @@ namespace NOS.GameplayManagers
             }
 
             //Setups for Specific cameras//
+            UpdateBaseFieldOfViews();
         }
 
         #endregion Setup
@@ -85,6 +116,70 @@ namespace NOS.GameplayManagers
 
             //Enable correct camera//
             _camerasDictionary[newCamera].gameObject.SetActive(true);
+        }
+
+        private void Update()
+        {
+            #region Default Camera
+
+            //FOV
+            UpdateDefaultCameraFOVInTime();
+
+            #endregion Default Camera
+        }
+
+        #region Field of view
+
+        private void UpdateBaseFieldOfViews()
+        {
+            foreach (CinemachineCamera cinemachineCamera in cinemachineCameras)
+            {
+                _defaultCameraBaseFOV = _settings.game.fieldOfView;
+                cinemachineCamera.Lens.FieldOfView = _settings.game.fieldOfView;
+            }
+        }
+
+
+        public void UpdateDefaultCameraFieldOfView(float additionalFOV)
+        {
+            _defaultCameraUpdateFOVTarget = _defaultCameraBaseFOV + additionalFOV;
+            _defaultCameraUpdateFOVUpdateIsNeeded = true;
+        }
+
+        public void UpdateDefaultCameraFieldOfViewTryToReset()
+        {
+            if (!Mathf.Approximately(_defaultCamera.Lens.FieldOfView, _defaultCameraBaseFOV))
+            {
+                _defaultCameraUpdateFOVTarget = _defaultCameraBaseFOV;
+                _defaultCameraUpdateFOVUpdateIsNeeded = true;
+            }
+        }
+
+        private void UpdateDefaultCameraFOVInTime()
+        {
+            if (!_defaultCameraUpdateFOVUpdateIsNeeded) return;
+            if (!Mathf.Approximately(_defaultCamera.Lens.FieldOfView, _defaultCameraUpdateFOVTarget))
+            {
+                _defaultCamera.Lens.FieldOfView = Mathf.SmoothDamp(_defaultCamera.Lens.FieldOfView, _defaultCameraUpdateFOVTarget, ref _defaultCameraUpdateFOVCalculations, SmoothUpdateTimeDefaultCameraFOV);
+
+                if (Mathf.Approximately(_defaultCamera.Lens.FieldOfView, _defaultCameraUpdateFOVTarget))
+                {
+                    _defaultCameraUpdateFOVUpdateIsNeeded = false;
+                    _defaultCamera.Lens.FieldOfView = _defaultCameraUpdateFOVTarget;
+                }
+            }
+        }
+
+        #endregion Field of view
+
+        private void OnSettingsUpdate()
+        {
+            UpdateBaseFieldOfViews();
+        }
+
+        private void OnDestroy()
+        {
+            SettingsManager.Instance.OnSettingsUpdate -= OnSettingsUpdate;
         }
     }
 }

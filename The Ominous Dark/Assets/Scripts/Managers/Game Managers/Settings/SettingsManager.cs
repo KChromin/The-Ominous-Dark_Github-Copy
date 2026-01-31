@@ -1,5 +1,7 @@
+using System;
 using NOS.Patterns.Singleton;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace NOS.GameManagers.Settings
 {
@@ -21,7 +23,8 @@ namespace NOS.GameManagers.Settings
         private SettingsManagerFileHandler _fileHandler;
         private SettingsUpdaters _updaters;
         private SettingsAutoConfigurations _autoConfigs;
-
+        private SettingsGUI _gui;
+        
         public enum SettingsType
         {
             Audio,
@@ -31,6 +34,8 @@ namespace NOS.GameManagers.Settings
             Visual,
             Accessibility
         }
+
+        public Action OnSettingsUpdate; //For controllers to update cached values//
 
         #region Methodes
 
@@ -43,7 +48,8 @@ namespace NOS.GameManagers.Settings
             temporarySettings = new SettingsContainers();
             _autoConfigs = new SettingsAutoConfigurations(CurrentSettings);
             _fileHandler = new SettingsManagerFileHandler(CurrentSettings);
-            _updaters = new SettingsUpdaters(CurrentSettings);
+            _updaters = new SettingsUpdaters(this,CurrentSettings);
+            _gui = new SettingsGUI(GetComponent<UIDocument>());
 
             //Events
             _fileHandler.OnCorruptedSettingsCheck += ResetSettings;
@@ -185,16 +191,18 @@ namespace NOS.GameManagers.Settings
                     break;
             }
         }
-
-        #region Load Save Settings
-
+        
+        
         private void OnDisable()
         {
             _fileHandler.OnCorruptedSettingsCheck -= ResetSettings;
         }
 
-        #endregion Load Save Settings
-
+        public void GUIOpenSettingsMenu()
+        {
+            _gui.OpenMenu();
+        }
+        
         #endregion Methodes
     }
 }

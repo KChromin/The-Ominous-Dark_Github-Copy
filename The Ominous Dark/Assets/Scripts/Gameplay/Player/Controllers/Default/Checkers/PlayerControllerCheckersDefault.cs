@@ -85,6 +85,7 @@ namespace NOS.Player.Controller.Default
                 }
                 else //When somehow sphere cannot hit, check groundCheck's normal
                 {
+                    
                     _valuesDefault.slopeCheckAngle = Vector3.Angle(_valuesDefault.GroundCheckHit.normal, Vector3.up);
                     _conditions.cases.isOnTooSteepSlope = _valuesDefault.slopeCheckAngle > _parameters.slopeCheckMaxSlope;
 

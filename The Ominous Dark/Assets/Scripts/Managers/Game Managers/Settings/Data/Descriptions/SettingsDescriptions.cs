@@ -87,6 +87,8 @@ namespace NOS.GameManagers.Settings
         {
             "0 - English, 1 - Polish",
             
+            "65 - 90 (75)", //fov
+            
             "0 - 1",
             
             "True, False"

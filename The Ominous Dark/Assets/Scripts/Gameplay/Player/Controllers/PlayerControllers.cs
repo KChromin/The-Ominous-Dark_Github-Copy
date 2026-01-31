@@ -47,7 +47,7 @@ namespace NOS.Player.Controller
             {
                 Look = new PlayerControllerLook(input, conditions, references, settings);
                 Checkers = new PlayerControllerCheckersDefault(input, conditions, values, references);
-                Movement = new PlayerControllerMovement(input, actions, conditions, values, references);
+                Movement = new PlayerControllerMovement(input, actions, conditions, values, references, settings);
                 Crouch = new PlayerControllerCrouch(input, conditions, references, actions);
                 Jump = new PlayerControllerJump(input, conditions, references, dynamicReferences, actions);
                 HeadBobbing = new PlayerControllerHeadBobbingDefault(references, generalControllers, conditions, settings, actions);

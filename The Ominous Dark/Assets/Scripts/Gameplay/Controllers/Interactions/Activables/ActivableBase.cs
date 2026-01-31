@@ -6,8 +6,10 @@ namespace NOS.Controllers.Interactions
     [Serializable]
     public abstract class ActivableBase : MonoBehaviour, IActivable
     {
+        public bool CanBeActivated { get; set; } = true;
+        
         private float _currentProgress01;
-
+        
         public float CurrentProgress01
         {
             get => _currentProgress01;
@@ -21,15 +23,19 @@ namespace NOS.Controllers.Interactions
         
         public virtual void Activate()
         {
+            
         }
 
         public virtual void OnProgressUpdate()
         {
+            
         }
     }
 
     public interface IActivable
     {
+        public bool CanBeActivated { get; set; }
+        
         //Current Activation Progress//
         public float CurrentProgress01 { get; set; }
 

@@ -88,6 +88,7 @@ namespace NOS.Player.Data
                 //Inventory
                 public bool inventoryItemSwitchingIsBlocked;
                 public bool inventoryWantsToThrowItem;
+                public bool inventoryIsTransitioningItems;
             }
 
             #endregion Cases

@@ -15,11 +15,17 @@ namespace NOS.GameManagers.Settings
         public void UpdateSettings()
         {
             UpdateLanguage();
+            ClampFieldOfView();
         }
 
         private void UpdateLanguage()
         {
             LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[_current.game.language];
+        }
+
+        private void ClampFieldOfView()
+        {
+            _current.game.fieldOfView = Mathf.Clamp(_current.game.fieldOfView, 65, 90);
         }
     }
 }

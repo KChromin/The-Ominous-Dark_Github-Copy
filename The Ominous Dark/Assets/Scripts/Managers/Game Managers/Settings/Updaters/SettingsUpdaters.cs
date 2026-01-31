@@ -4,10 +4,11 @@ namespace NOS.GameManagers.Settings
 {
     public class SettingsUpdaters
     {
-        public SettingsUpdaters(SettingsContainers currentSettings)
+        public SettingsUpdaters(SettingsManager settingsManager, SettingsContainers currentSettings)
         {
             _display = new SettingsUpdaterDisplay(currentSettings);
             _game = new SettingsUpdaterGame(currentSettings);
+            _settingsManager = settingsManager;
         }
 
         private readonly SettingsUpdaterAudio _audio = new();
@@ -16,6 +17,7 @@ namespace NOS.GameManagers.Settings
         private readonly SettingsUpdaterGame _game;
         private readonly SettingsUpdaterVisual _visual = new();
         private readonly SettingsUpdaterAccessibility _accessibility = new();
+        private readonly SettingsManager _settingsManager; //Just for event//
 
         public void UpdateAllSettings()
         {
@@ -25,6 +27,7 @@ namespace NOS.GameManagers.Settings
             _game.UpdateSettings();
             _visual.UpdateSettings();
             _accessibility.UpdateSettings();
+            _settingsManager.OnSettingsUpdate?.Invoke();
         }
 
         public async UniTaskVoid UpdateAllSettingsNextFrame()
@@ -36,9 +39,10 @@ namespace NOS.GameManagers.Settings
             _game.UpdateSettings();
             _visual.UpdateSettings();
             _accessibility.UpdateSettings();
+            _settingsManager.OnSettingsUpdate?.Invoke();
         }
 
-        public void UpdateOneSettings(SettingsManager.SettingsType settingsType)
+        public void UpdateOneSetting(SettingsManager.SettingsType settingsType)
         {
             switch (settingsType)
             {
@@ -62,8 +66,10 @@ namespace NOS.GameManagers.Settings
                     break;
                 default:
                     UpdateAllSettingsNextFrame().Forget();
-                    break;
+                    return;
             }
+
+            _settingsManager.OnSettingsUpdate?.Invoke();
         }
     }
 }

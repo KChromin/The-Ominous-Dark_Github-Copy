@@ -1,6 +1,7 @@
 using NOS.Controllers;
 using NOS.GameManagers.Settings;
 using NOS.GameManagers.Input;
+using NOS.GameplayManagers;
 using NOS.Patterns.Controller;
 using NOS.Player.Data;
 using UnityEngine;
@@ -10,14 +11,17 @@ namespace NOS.Player.Controller.Default
 {
     public class PlayerControllerMovement : ControllerBase
     {
-        public PlayerControllerMovement(InputDataContainer input, PlayerActions actions, PlayerConditions conditions, PlayerValues values, PlayerReferences references)
+        public PlayerControllerMovement(InputDataContainer input, PlayerActions actions, PlayerConditions conditions, PlayerValues values, PlayerReferences references, SettingsContainers settings)
         {
             _input = input;
             _actions = actions.Default;
             _conditions = conditions.Default;
             _values = values;
             _parameters = references.ScriptableObjects.Default.movement;
-            _controlSettings = SettingsManager.Instance.CurrentSettings.control;
+
+            _currentSettings = settings;
+
+            _cameraManager = CameraManager.Instance;
 
             _rigidBody = references.Components.rigidBody;
             _floatingCapsule = references.Components.floatingCapsule;
@@ -32,7 +36,10 @@ namespace NOS.Player.Controller.Default
         private readonly PlayerConditions.DefaultConditionsClass _conditions;
         private readonly PlayerValues _values;
         private readonly PlayerControllerMovementScriptableObject _parameters;
-        private readonly SettingsControlContainer _controlSettings;
+
+        private readonly SettingsContainers _currentSettings;
+
+        private readonly CameraManager _cameraManager;
 
         private readonly Rigidbody _rigidBody;
         private readonly RigidbodyFloatingCapsule _floatingCapsule;
@@ -121,7 +128,7 @@ namespace NOS.Player.Controller.Default
             }
 
             _onEnterSlopeSlidingResetWasDone = false;
-            
+
             SlidingMaxSpeedReduceInTime();
             _timeFromStartingToSlide = 0;
 
@@ -199,6 +206,7 @@ namespace NOS.Player.Controller.Default
         public override void Update()
         {
             CheckAllPlayerWants();
+            UpdateFieldOfViewBasedOnMovementSpeed();
         }
 
         #endregion Public Methodes
@@ -383,6 +391,25 @@ namespace NOS.Player.Controller.Default
         }
 
         #endregion Slopes
+
+        #region Fov
+
+        private void UpdateFieldOfViewBasedOnMovementSpeed()
+        {
+            float currentSpeed = _values.General.rigidBodyCurrentVelocityMagnitudeXZ;
+            
+            if (!_conditions.cases.isMoving || (_currentTargetVelocity.magnitude < _parameters.minimalRunningThreshold && currentSpeed < _parameters.minimalRunningThreshold && !_conditions.cases.isRunning) || !_conditions.cases.isGrounded)
+            {
+                _cameraManager.UpdateDefaultCameraFieldOfViewTryToReset();
+            }
+            else
+            {
+                float fovAdditionalValue = _parameters.fovChangeFromSpeedCurve.Evaluate(currentSpeed) * _parameters.fovChangeMaxAddition;
+                _cameraManager.UpdateDefaultCameraFieldOfView(fovAdditionalValue);
+            }
+        }
+
+        #endregion Fov
 
         #endregion Private Methodes
 
