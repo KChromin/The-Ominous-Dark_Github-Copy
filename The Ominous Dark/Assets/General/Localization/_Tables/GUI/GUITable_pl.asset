@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: GUITable_pl
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: pl
+  m_SharedData: {fileID: 11400000, guid: 1f1123ab9256ab64a87b807b5642eb68, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 360680214528
+    m_Localized: "Masz nie zapisane zmiany! Czy chcesz je ustawi\u0107?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 270225854464
+    m_Localized: "Zresetuj ustawienia do domy\u015Blnych"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 227490091008
+    m_Localized: "Zaaplikowa\u0107 ustawienia?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3054622953472
+    m_Localized: "Przywr\xF3\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83789041664
+    m_Localized: Anuluj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5502357504
+    m_Localized: Zastosuj
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

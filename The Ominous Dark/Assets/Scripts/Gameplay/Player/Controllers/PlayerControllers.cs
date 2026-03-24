@@ -1,3 +1,4 @@
+using NOS.GameManagers.Audio;
 using NOS.GameManagers.Input;
 using NOS.GameManagers.Settings;
 using NOS.Player.Controller.General;
@@ -11,10 +12,10 @@ namespace NOS.Player.Controller
 
     public class PlayerControllers
     {
-        public PlayerControllers(InputDataContainer input, PlayerActions actions, PlayerConditions conditions, PlayerValues values, PlayerReferences references, PlayerDynamicReferences dynamicReferences, SettingsContainers settings)
+        public PlayerControllers(InputDataContainer input, PlayerActions actions, PlayerConditions conditions, PlayerValues values, PlayerReferences references, PlayerDynamicReferences dynamicReferences, SettingsManager settingsManager, SoundManager soundManager)
         {
             General = new GeneralControllersClass(actions, values, references);
-            Default = new DefaultControllersClass(input, actions, conditions, values, references, dynamicReferences, General, settings);
+            Default = new DefaultControllersClass(input, actions, conditions, values, references, dynamicReferences, General, settingsManager, soundManager);
         }
 
         #region General
@@ -43,17 +44,18 @@ namespace NOS.Player.Controller
 
         public class DefaultControllersClass
         {
-            public DefaultControllersClass(InputDataContainer input, PlayerActions actions, PlayerConditions conditions, PlayerValues values, PlayerReferences references, PlayerDynamicReferences dynamicReferences, GeneralControllersClass generalControllers, SettingsContainers settings)
+            public DefaultControllersClass(InputDataContainer input, PlayerActions actions, PlayerConditions conditions, PlayerValues values, PlayerReferences references, PlayerDynamicReferences dynamicReferences, GeneralControllersClass generalControllers, SettingsManager settingsManager, SoundManager soundManager)
             {
-                Look = new PlayerControllerLook(input, conditions, references, settings);
+                Look = new PlayerControllerLook(input, conditions, references, settingsManager);
                 Checkers = new PlayerControllerCheckersDefault(input, conditions, values, references);
-                Movement = new PlayerControllerMovement(input, actions, conditions, values, references, settings);
+                Movement = new PlayerControllerMovement(input, actions, conditions, values, references, settingsManager);
                 Crouch = new PlayerControllerCrouch(input, conditions, references, actions);
                 Jump = new PlayerControllerJump(input, conditions, references, dynamicReferences, actions);
-                HeadBobbing = new PlayerControllerHeadBobbingDefault(references, generalControllers, conditions, settings, actions);
+                HeadBobbing = new PlayerControllerHeadBobbingDefault(references, generalControllers, conditions, settingsManager, actions);
                 Interaction = new PlayerControllerDefaultInteraction(input, conditions, references, dynamicReferences);
-                Inventory = new PlayerControllerDefaultInventory(input, conditions, references, values, dynamicReferences, settings);
-                Stamina = new PlayerControllerDefaultStamina(actions, conditions, references, dynamicReferences, values);
+                Inventory = new PlayerControllerDefaultInventory(input, conditions, references, values, dynamicReferences, settingsManager);
+                Stamina = new PlayerControllerDefaultStamina(actions, conditions, references, dynamicReferences, values, soundManager);
+                Footsteps = new PlayerControllerFootsteps(references, conditions, values, actions, soundManager);
             }
 
             //Look//
@@ -82,11 +84,14 @@ namespace NOS.Player.Controller
 
             //Stamina//
             public readonly PlayerControllerDefaultStamina Stamina;
+
+            //Footsteps
+            public readonly PlayerControllerFootsteps Footsteps;
         }
 
         #endregion Default
 
-        //Mainly for unsubscribing from events
+        //Mainly for unsubscribing from events, and releasing sounds
         public void OnDestroy()
         {
             Default.Movement.OnDestroy();
@@ -94,6 +99,7 @@ namespace NOS.Player.Controller
             Default.Jump.OnDestroy();
             Default.Interaction.OnDestroy();
             Default.Inventory.OnDestroy();
+            Default.Footsteps.OnDestroy();
         }
 
         #region OnGizmoDraw

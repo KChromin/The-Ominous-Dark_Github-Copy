@@ -10,9 +10,9 @@ namespace NOS.GameManagers.Settings
 {
     public class SettingsManagerFileHandler
     {
-        public SettingsManagerFileHandler(SettingsContainers currentSettings)
+        public SettingsManagerFileHandler(SettingsManager settingsManager)
         {
-            _currentSettings = currentSettings;
+            _settingsManager = settingsManager;
 
             _directoryPath = Application.persistentDataPath + "/" + "Settings";
             _filePath = _directoryPath + "/Settings.txt";
@@ -25,7 +25,7 @@ namespace NOS.GameManagers.Settings
         private readonly string _filePath;
 
         //Current settings
-        private readonly SettingsContainers _currentSettings;
+        private SettingsManager _settingsManager;
 
         //Comments
         private const int LenghtBeforeComment = 48;
@@ -83,22 +83,22 @@ namespace NOS.GameManagers.Settings
             //Try to assign loaded values
 
             //Audio
-            _currentSettings.audio = (SettingsAudioContainer)TryToLoadSetting(settingsTypes[0], SettingsManager.SettingsType.Audio, out _loadFileCheckThatSettingsAreLoaded[0]);
+            _settingsManager.CurrentSettings.audio = (SettingsAudioContainer)TryToLoadSetting(settingsTypes[0], SettingsManager.SettingsType.Audio, out _loadFileCheckThatSettingsAreLoaded[0]);
 
             //Control
-            _currentSettings.control = (SettingsControlContainer)TryToLoadSetting(settingsTypes[1], SettingsManager.SettingsType.Control, out _loadFileCheckThatSettingsAreLoaded[1]);
+            _settingsManager.CurrentSettings.control = (SettingsControlContainer)TryToLoadSetting(settingsTypes[1], SettingsManager.SettingsType.Controls, out _loadFileCheckThatSettingsAreLoaded[1]);
 
             //Display
-            _currentSettings.display = (SettingsDisplayContainer)TryToLoadSetting(settingsTypes[2], SettingsManager.SettingsType.Display, out _loadFileCheckThatSettingsAreLoaded[2]);
+            _settingsManager.CurrentSettings.display = (SettingsDisplayContainer)TryToLoadSetting(settingsTypes[2], SettingsManager.SettingsType.Display, out _loadFileCheckThatSettingsAreLoaded[2]);
 
             //Game
-            _currentSettings.game = (SettingsGameContainer)TryToLoadSetting(settingsTypes[3], SettingsManager.SettingsType.Game, out _loadFileCheckThatSettingsAreLoaded[3]);
+            _settingsManager.CurrentSettings.game = (SettingsGameContainer)TryToLoadSetting(settingsTypes[3], SettingsManager.SettingsType.Game, out _loadFileCheckThatSettingsAreLoaded[3]);
 
             //Visual
-            _currentSettings.visual = (SettingsVisualContainer)TryToLoadSetting(settingsTypes[4], SettingsManager.SettingsType.Visual, out _loadFileCheckThatSettingsAreLoaded[4]);
+            _settingsManager.CurrentSettings.visual = (SettingsVisualContainer)TryToLoadSetting(settingsTypes[4], SettingsManager.SettingsType.Visuals, out _loadFileCheckThatSettingsAreLoaded[4]);
 
             //Accessibility
-            _currentSettings.accessibility = (SettingsAccessibilityContainer)TryToLoadSetting(settingsTypes[5], SettingsManager.SettingsType.Accessibility, out _loadFileCheckThatSettingsAreLoaded[5]);
+            _settingsManager.CurrentSettings.accessibility = (SettingsAccessibilityContainer)TryToLoadSetting(settingsTypes[5], SettingsManager.SettingsType.Accessibility, out _loadFileCheckThatSettingsAreLoaded[5]);
 
             //Regenerate settings if needed
             OnCorruptedSettingsCheck?.Invoke(_loadFileCheckThatSettingsAreLoaded);
@@ -118,7 +118,7 @@ namespace NOS.GameManagers.Settings
                     case SettingsManager.SettingsType.Audio:
                         Debug.LogError("Cannot load Audio Settings | Regeneration!");
                         break;
-                    case SettingsManager.SettingsType.Control:
+                    case SettingsManager.SettingsType.Controls:
                         Debug.LogError("Cannot load Control Settings | Regeneration!");
                         break;
                     case SettingsManager.SettingsType.Display:
@@ -127,7 +127,7 @@ namespace NOS.GameManagers.Settings
                     case SettingsManager.SettingsType.Game:
                         Debug.LogError("Cannot load Game Settings | Regeneration!");
                         break;
-                    case SettingsManager.SettingsType.Visual:
+                    case SettingsManager.SettingsType.Visuals:
                         Debug.LogError("Cannot load Visual Settings | Regeneration!");
                         break;
                     case SettingsManager.SettingsType.Accessibility:
@@ -169,17 +169,17 @@ namespace NOS.GameManagers.Settings
             AssureExistenceOfSettingsDirectory();
             File.WriteAllText(_filePath, GetAllDataToSave());
         }
-
+        
         private string GetAllDataToSave()
         {
             string dataToSave = "[Settings Configuration] \n\n";
 
-            dataToSave += DataToSave(_currentSettings.audio, SettingsManager.SettingsType.Audio) + "\n";
-            dataToSave += DataToSave(_currentSettings.control, SettingsManager.SettingsType.Control) + "\n";
-            dataToSave += DataToSave(_currentSettings.display, SettingsManager.SettingsType.Display) + "\n";
-            dataToSave += DataToSave(_currentSettings.game, SettingsManager.SettingsType.Game) + "\n";
-            dataToSave += DataToSave(_currentSettings.visual, SettingsManager.SettingsType.Visual) + "\n";
-            dataToSave += DataToSave(_currentSettings.accessibility, SettingsManager.SettingsType.Accessibility) + "\n";
+            dataToSave += DataToSave(_settingsManager.CurrentSettings.audio, SettingsManager.SettingsType.Audio) + "\n";
+            dataToSave += DataToSave(_settingsManager.CurrentSettings.control, SettingsManager.SettingsType.Controls) + "\n";
+            dataToSave += DataToSave(_settingsManager.CurrentSettings.display, SettingsManager.SettingsType.Display) + "\n";
+            dataToSave += DataToSave(_settingsManager.CurrentSettings.game, SettingsManager.SettingsType.Game) + "\n";
+            dataToSave += DataToSave(_settingsManager.CurrentSettings.visual, SettingsManager.SettingsType.Visuals) + "\n";
+            dataToSave += DataToSave(_settingsManager.CurrentSettings.accessibility, SettingsManager.SettingsType.Accessibility) + "\n";
 
             return dataToSave;
         }
@@ -203,7 +203,7 @@ namespace NOS.GameManagers.Settings
                     header = SettingsDescriptions.SettingsHeaders[0];
                     description = SettingsDescriptions.AudioSettingsDescriptions;
                     break;
-                case SettingsManager.SettingsType.Control:
+                case SettingsManager.SettingsType.Controls:
                     header = SettingsDescriptions.SettingsHeaders[1];
                     description = SettingsDescriptions.ControlSettingsDescriptions;
                     break;
@@ -215,7 +215,7 @@ namespace NOS.GameManagers.Settings
                     header = SettingsDescriptions.SettingsHeaders[3];
                     description = SettingsDescriptions.GameSettingsDescriptions;
                     break;
-                case SettingsManager.SettingsType.Visual:
+                case SettingsManager.SettingsType.Visuals:
                     header = SettingsDescriptions.SettingsHeaders[4];
                     description = SettingsDescriptions.VisualSettingsDescriptions;
                     break;
@@ -301,7 +301,7 @@ namespace NOS.GameManagers.Settings
                 case SettingsManager.SettingsType.Audio:
                     classFromJson = JsonConvert.DeserializeObject<SettingsAudioContainer>(json);
                     break;
-                case SettingsManager.SettingsType.Control:
+                case SettingsManager.SettingsType.Controls:
                     classFromJson = JsonConvert.DeserializeObject<SettingsControlContainer>(json);
                     break;
                 case SettingsManager.SettingsType.Display:
@@ -310,7 +310,7 @@ namespace NOS.GameManagers.Settings
                 case SettingsManager.SettingsType.Game:
                     classFromJson = JsonConvert.DeserializeObject<SettingsGameContainer>(json);
                     break;
-                case SettingsManager.SettingsType.Visual:
+                case SettingsManager.SettingsType.Visuals:
                     classFromJson = JsonConvert.DeserializeObject<SettingsVisualContainer>(json);
                     break;
                 case SettingsManager.SettingsType.Accessibility:

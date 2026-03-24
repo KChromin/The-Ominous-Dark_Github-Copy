@@ -23,7 +23,7 @@ namespace NOS.GameplayManagers
 
         private Transform _playerHeadPivot;
 
-        private SettingsContainers _settings;
+        private SettingsManager _settingsManager;
 
         public enum CameraNames
         {
@@ -67,7 +67,7 @@ namespace NOS.GameplayManagers
         {
             base.Awake();
 
-            _settings = SettingsManager.Instance.CurrentSettings;
+            _settingsManager = SettingsManager.Instance;
             SettingsManager.Instance.OnSettingsUpdate += OnSettingsUpdate;
         }
 
@@ -134,8 +134,8 @@ namespace NOS.GameplayManagers
         {
             foreach (CinemachineCamera cinemachineCamera in cinemachineCameras)
             {
-                _defaultCameraBaseFOV = _settings.game.fieldOfView;
-                cinemachineCamera.Lens.FieldOfView = _settings.game.fieldOfView;
+                _defaultCameraBaseFOV = _settingsManager.CurrentSettings.game.FieldOfView;
+                cinemachineCamera.Lens.FieldOfView = _settingsManager.CurrentSettings.game.FieldOfView;
             }
         }
 

@@ -1,3 +1,4 @@
+using NOS.GameManagers.Audio;
 using UnityEngine;
 using NOS.Player.Data;
 using NOS.Player.StateMachine;
@@ -72,7 +73,7 @@ namespace NOS.Player
         private void Awake()
         {
             Input = InputManager.Instance.CurrentInput;
-            _controllers = new PlayerControllers(Input, Actions, Conditions, Values, References, DynamicReferences, SettingsManager.Instance.CurrentSettings);
+            _controllers = new PlayerControllers(Input, Actions, Conditions, Values, References, DynamicReferences, SettingsManager.Instance, SoundManager.Instance);
             SetupStateMachine();
             SetupRigidbodyIterations();
         }
@@ -100,8 +101,8 @@ namespace NOS.Player
         private void SetupRigidbodyIterations()
         {
             Rigidbody rigidBody = References.Components.rigidBody;
-            rigidBody.solverIterations = 96;
-            rigidBody.solverVelocityIterations = 24;
+            rigidBody.solverIterations = 128;
+            rigidBody.solverVelocityIterations = 32;
         }
 
         #endregion Setups
@@ -112,6 +113,8 @@ namespace NOS.Player
 
         private void Update()
         {
+            if (Time.timeScale == 0) return;
+
             //General Values Updater//
             _controllers.General.ValuesUpdater.Update();
 

@@ -1,3 +1,4 @@
+using NOS.GameManagers.Audio;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -23,7 +24,12 @@ namespace NOS.Player.Controller.Default
         
         [Header("Depletion Recovery")]
         public float staminaRecoveryValueAfterDepletion = 30f;
-        
-        
+
+        [Header("Sound Settings")]
+        public SoundInstanceReference soundReference;
+        public Vector3 soundLocalOffsetFromParent;
+
+
+
     }
 }

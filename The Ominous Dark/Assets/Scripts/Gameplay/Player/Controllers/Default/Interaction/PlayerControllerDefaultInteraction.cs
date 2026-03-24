@@ -1,4 +1,3 @@
-using System;
 using NOS.Controllers.Interactions;
 using NOS.GameManagers.Input;
 using NOS.Patterns.Controller;

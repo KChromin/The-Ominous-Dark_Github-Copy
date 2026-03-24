@@ -30,7 +30,7 @@
                     <ui:Instance template="SettingsSliderOption" name="GeneralSensitivity">
                         <AttributeOverrides element-name="SettingName" text="Sensitivity"/>
                     </ui:Instance>
-                    <ui:Instance template="SettingsBooleanOption" name="DiffrentAxesSensitivity">
+                    <ui:Instance template="SettingsBooleanOption" name="DifferentAxesSensitivity">
                         <AttributeOverrides element-name="SettingName" text="Set Sensitivity Per Axis"/>
                     </ui:Instance>
                     <ui:VisualElement name="DifferentAxesHiddenPanel" class="HiddenSettingsPanel">
@@ -52,6 +52,7 @@
                     <ui:VisualElement name="LookSmoothingHiddenPanel" class="HiddenSettingsPanel" style="flex-grow: 1;">
                         <ui:Instance template="SettingsSliderOption" name="LookSmoothingValue">
                             <AttributeOverrides element-name="SettingName" text="Look Smoothing Value"/>
+                            <AttributeOverrides element-name="SettingsSlider" high-value="0.1"/>
                         </ui:Instance>
                     </ui:VisualElement>
                 </ui:ScrollView>
@@ -61,24 +62,24 @@
                 <ui:ScrollView name="SettingsPanelContent" horizontal-page-size="0" touch-scroll-type="Clamped" vertical-scroller-visibility="AlwaysVisible" horizontal-scroller-visibility="Hidden" class="SettingsPanelContent">
                     <ui:Instance template="SettingsEnumOption" name="FullscreenMode">
                         <AttributeOverrides element-name="SettingName" text="Fullscreen Mode"/>
-                        <AttributeOverrides element-name="SettingsDropdown" choices="Exclusive,Maximized Window,Windowed"/>
+                        <AttributeOverrides element-name="SettingsDropdown" choices="Fullscreen,Fullscreen Window,Windowed"/>
                     </ui:Instance>
                     <ui:Instance template="SettingsEnumOption" name="AspectRatio">
                         <AttributeOverrides element-name="SettingName" text="Aspect Ratio"/>
                     </ui:Instance>
-                    <ui:VisualElement name="16x9hHiddenPanel" class="HiddenSettingsPanel" style="flex-grow: 1; display: flex;">
+                    <ui:VisualElement name="16x9HiddenPanel" class="HiddenSettingsPanel" style="flex-grow: 1; display: flex;">
                         <ui:Instance template="SettingsEnumOption" name="16x9Options">
                             <AttributeOverrides element-name="SettingName" text="16:9 Presets"/>
                             <AttributeOverrides element-name="SettingsDropdown" choices="1280x720,1600x900,1920x1080,2048x1152,2560x1440,3200x1800,3840x2160" index="4"/>
                         </ui:Instance>
                     </ui:VisualElement>
-                    <ui:VisualElement name="16x10hHiddenPanel" class="HiddenSettingsPanel" style="flex-grow: 1;">
+                    <ui:VisualElement name="16x10HiddenPanel" class="HiddenSettingsPanel" style="flex-grow: 1;">
                         <ui:Instance template="SettingsEnumOption" name="16x10Options">
                             <AttributeOverrides element-name="SettingName" text="16:10 Presets"/>
                             <AttributeOverrides element-name="SettingsDropdown" choices="1440x900,1680x1050,1920x1200,2560x1600,3840x2400"/>
                         </ui:Instance>
                     </ui:VisualElement>
-                    <ui:VisualElement name="21x9hHiddenPanel" class="HiddenSettingsPanel" style="flex-grow: 1;">
+                    <ui:VisualElement name="21x9HiddenPanel" class="HiddenSettingsPanel" style="flex-grow: 1;">
                         <ui:Instance template="SettingsEnumOption" name="21x9Options">
                             <AttributeOverrides element-name="SettingName" text="21:9 Presets"/>
                             <AttributeOverrides element-name="SettingsDropdown" choices="2560x1080,2880x1200,3440x1440,3840x1600,4320x1800,5120x2160"/>
@@ -116,6 +117,26 @@
                     </ui:Instance>
                 </ui:ScrollView>
             </ui:VisualElement>
+            <ui:VisualElement name="SettingsPanelGame" class="SettingsPanel" style="display: none;">
+                <ui:Label text="Game" name="SettingsHeader" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false" class="MainHeader"/>
+                <ui:ScrollView name="SettingsPanelContent" horizontal-page-size="0" touch-scroll-type="Clamped" vertical-scroller-visibility="AlwaysVisible" horizontal-scroller-visibility="Hidden" class="SettingsPanelContent">
+                    <ui:Instance template="SettingsEnumOption" name="Language">
+                        <AttributeOverrides element-name="SettingsDropdown" choices="English,Polish" index="0"/>
+                        <AttributeOverrides element-name="SettingName" text="Language"/>
+                    </ui:Instance>
+                    <ui:Instance template="SettingsSliderOption" name="FieldOfView">
+                        <AttributeOverrides element-name="SettingName" text="Field Of View"/>
+                        <AttributeOverrides element-name="SettingsSlider" value="75" high-value="90" low-value="60"/>
+                    </ui:Instance>
+                    <ui:Instance template="SettingsSliderOption" name="HeadBobbingIntensity">
+                        <AttributeOverrides element-name="SettingName" text="Headbobbing Intensity" double-click-selects-word="false" triple-click-selects-line="false" display-tooltip-when-elided="false"/>
+                        <AttributeOverrides element-name="SettingsSlider" value="0" high-value="1"/>
+                    </ui:Instance>
+                    <ui:Instance template="SettingsBooleanOption" name="InventoryItemScrollLoopsOnEnds">
+                        <AttributeOverrides element-name="SettingName" text="Inventory Looping"/>
+                    </ui:Instance>
+                </ui:ScrollView>
+            </ui:VisualElement>
             <ui:VisualElement name="SettingsPanel" class="SettingsPanel" style="visibility: visible; display: none;">
                 <ui:Label text="Visuals" name="SettingsHeader" double-click-selects-word="false" triple-click-selects-line="false" class="MainHeader"/>
                 <ui:ScrollView name="SettingsPanelContent" horizontal-page-size="0" touch-scroll-type="Clamped" vertical-scroller-visibility="AlwaysVisible" horizontal-scroller-visibility="Hidden" class="SettingsPanelContent">
@@ -141,19 +162,12 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="ConfirmationPanel" enabled="true" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; align-items: center; justify-content: center; align-self: auto; align-content: auto; background-color: rgba(0, 0, 0, 0.51); display: none;">
-            <ui:VisualElement name="ConfirmationPanelSaveSettings" class="ConfirmationPanel" style="flex-grow: 0; width: 700px; height: 200px; justify-content: space-between; background-color: rgb(51, 51, 51); border-top-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-bottom-left-radius: 50px; display: none;">
-                <ui:Label text="Save This Settings?" name="ConfirmationNote" class="MainHeader" style="-unity-text-align: middle-center;"/>
-                <ui:Label text="10" name="ConfirmationTimeToReset" class="ConfirmationCountdown" style="-unity-text-align: middle-center; visibility: visible; display: flex; position: absolute; right: 0; bottom: 0; left: 0; top: 0;"/>
-                <ui:VisualElement name="ConfirmationButtonHolder" style="flex-grow: 0; flex-direction: row; justify-content: space-around; align-self: auto; align-content: auto; height: 100px; display: flex;">
-                    <ui:Button text="Apply" name="ConfirmationButton" class="PanelButton"/>
+            <ui:VisualElement name="ConfirmationContainer" class="ConfirmationPanel" style="flex-grow: 0; width: 700px; height: 200px; justify-content: space-between; background-color: rgb(51, 51, 51); border-top-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-bottom-left-radius: 50px; display: flex;">
+                <ui:Label text="Save This Settings?" name="ConfirmationTitle" class="MainHeader" style="-unity-text-align: middle-center; -unity-text-auto-size: best-fit 10px 57px; -unity-text-generator: advanced;"/>
+                <ui:Label text="10" name="ConfirmationResetTime" class="ConfirmationCountdown" style="-unity-text-align: middle-center; visibility: visible; display: none; position: absolute; right: 0; bottom: 0; left: 0; top: 0;"/>
+                <ui:VisualElement name="ConfirmationButtonContainer" style="flex-grow: 0; flex-direction: row; justify-content: space-around; align-self: auto; align-content: auto; height: 100px; display: flex;">
+                    <ui:Button text="Apply" name="ApplyButton" class="PanelButton"/>
                     <ui:Button text="Cancel" name="CancelButton" class="PanelButton"/>
-                </ui:VisualElement>
-            </ui:VisualElement>
-            <ui:VisualElement name="ConfirmationPanelReset" class="ConfirmationPanel" style="flex-grow: 0; width: 700px; height: 200px; justify-content: space-between; background-color: rgb(51, 51, 51); border-top-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-bottom-left-radius: 50px; display: none;">
-                <ui:Label text="Save This Settings?" name="ResetToDefault" class="MainHeader" style="-unity-text-align: middle-center;"/>
-                <ui:VisualElement name="ResetToDefaultButtonHolder" style="flex-grow: 0; flex-direction: row; justify-content: space-around; align-self: auto; align-content: auto; height: 100px;">
-                    <ui:Button text="Apply" name="ResetToDefaultButton" class="PanelButton"/>
-                    <ui:Button text="Cancel" name="CancelResetToDefaultButton" class="PanelButton"/>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

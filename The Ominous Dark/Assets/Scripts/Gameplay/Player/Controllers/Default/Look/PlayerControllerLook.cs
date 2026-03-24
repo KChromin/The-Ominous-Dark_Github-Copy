@@ -8,14 +8,14 @@ namespace NOS.Player.Controller.Default
 {
     public class PlayerControllerLook : ControllerBase
     {
-        public PlayerControllerLook(InputDataContainer input, PlayerConditions conditions, PlayerReferences references, SettingsContainers settings)
+        public PlayerControllerLook(InputDataContainer input, PlayerConditions conditions, PlayerReferences references, SettingsManager settingsManager)
         {
             _input = input;
             _conditions = conditions.Default;
             _orientation = references.Objects.orientation.transform;
             _headPivot = references.Objects.headPivot.transform;
             _parameters = references.ScriptableObjects.Default.look;
-            _controlSettings = settings.control;
+            _settingsManager = settingsManager;
         }
 
         private readonly InputDataContainer _input;
@@ -23,7 +23,7 @@ namespace NOS.Player.Controller.Default
         private readonly Transform _orientation;
         private readonly Transform _headPivot;
         private readonly PlayerControllerLookScriptableObject _parameters;
-        private readonly SettingsControlContainer _controlSettings;
+        private readonly SettingsManager _settingsManager;
 
         private float _verticalRotationValue;
         private Vector2 _finalInput;
@@ -32,7 +32,7 @@ namespace NOS.Player.Controller.Default
         public override void Update()
         {
             //Input
-            if (_controlSettings.lookSmoothing)
+            if (_settingsManager.CurrentSettings.control.LookSmoothing)
             {
                 LookSmoothing();
             }
@@ -72,25 +72,25 @@ namespace NOS.Player.Controller.Default
         private Vector2 InputWithControlSettings(Vector2 rawInput)
         {
             //Invert Y Axis//
-            if (_controlSettings.lookInvertYAxis)
+            if (_settingsManager.CurrentSettings.control.LookInvertYAxis)
             {
                 rawInput.y = -rawInput.y;
             }
 
             //Separate Sensitivities//
-            if (_controlSettings.lookSeparateSensitivityAxes)
+            if (_settingsManager.CurrentSettings.control.LookSeparateSensitivityAxes)
             {
-                Vector2 sensitivity = new(_controlSettings.lookSensitivityXAxis, _controlSettings.lookSensitivityYAxis);
+                Vector2 sensitivity = new(_settingsManager.CurrentSettings.control.LookSensitivityXAxis, _settingsManager.CurrentSettings.control.LookSensitivityYAxis);
                 return new Vector2(rawInput.x * sensitivity.x, rawInput.y * sensitivity.y);
             }
 
-            return rawInput * _controlSettings.lookSensitivityGeneral;
+            return rawInput * _settingsManager.CurrentSettings.control.LookSensitivityGeneral;
         }
 
         //Smooth input in time//
         private void LookSmoothing()
         {
-            _finalInput = Vector2.SmoothDamp(_finalInput, CurrentInput(), ref _smoothedInputCalculations, _controlSettings.lookSmoothingTime, Mathf.Infinity, Time.deltaTime);
+            _finalInput = Vector2.SmoothDamp(_finalInput, CurrentInput(), ref _smoothedInputCalculations, _settingsManager.CurrentSettings.control.LookSmoothingTime, Mathf.Infinity, Time.deltaTime);
         }
 
         #endregion Input

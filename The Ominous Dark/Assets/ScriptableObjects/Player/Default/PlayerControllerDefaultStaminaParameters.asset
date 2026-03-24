@@ -13,10 +13,54 @@ MonoBehaviour:
   m_Name: PlayerControllerDefaultStaminaParameters
   m_EditorClassIdentifier: NOS.Gameplay::NOS.Player.Controller.Default.PlayerControllerDefaultStaminaScriptableObject
   maximalStamina: 100
-  staminaCostPerSecondRunning: 12
-  staminaCostPerJump: 8
+  staminaCostPerSecondRunning: 8
+  staminaCostPerJump: 5
   staminaRegenerationBase: 10
   staminaRegenerationAfterFullyDepleting: 4
   staminaOverlayFadingInStartValue: 50
   staminaOverlaySmoothTransitionTime: 0.2
-  staminaRecoveryValueAfterDepletion: 30
+  staminaRecoveryValueAfterDepletion: 20
+  soundReference:
+    soundType: 0
+    eventReference:
+      Guid:
+        Data1: -967939527
+        Data2: 1186253948
+        Data3: -1244221781
+        Data4: -1569784306
+      Path: event:/SFX/Player/Breathing/HeavyBreathing
+    eventStopMode: 0
+  soundParameters:
+    enableOcclusion: 0
+    occlusionSamples: 8
+    occlusionRadius: 1
+    enableTransmissions: 0
+    transmissionsMaxSurfaces: 8
+    enableReflections: 1
+    useReflectionLimiter: 0
+    reflectionRange: 20
+    falloffCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: -1.75
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  soundLocalOffsetFromParent: {x: 0, y: -0.02, z: 0.04}

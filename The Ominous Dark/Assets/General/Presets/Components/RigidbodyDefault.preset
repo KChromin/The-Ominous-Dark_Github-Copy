@@ -17,11 +17,11 @@ Preset:
     value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: m_Drag
+    propertyPath: m_LinearDamping
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: m_AngularDrag
+    propertyPath: m_AngularDamping
     value: 0.05
     objectReference: {fileID: 0}
   - target: {fileID: 0}
@@ -98,7 +98,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_CollisionDetection
-    value: 1
+    value: 2
     objectReference: {fileID: 0}
   m_ExcludedProperties: []
   m_CoupledType:

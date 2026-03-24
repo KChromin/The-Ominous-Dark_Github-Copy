@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{6747668b-b666-4263-8abf-216dfdd4ae9c}">
+		<property name="assetPath">
+			<value>SFX/Test/TiffanRapsy.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>20.757074829931973</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{40057fdf-ed5d-4f5f-9216-d460aba7e7d3}</destination>
+		</relationship>
+	</object>
+</objects>

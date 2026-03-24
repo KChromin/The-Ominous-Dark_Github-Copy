@@ -5,27 +5,21 @@ namespace NOS.GameManagers.Settings
 {
     public class SettingsUpdaterGame : ISettingsUpdater
     {
-        public SettingsUpdaterGame(SettingsContainers currentSettings)
+        public SettingsUpdaterGame(SettingsManager settingsManager)
         {
-            _current = currentSettings;
+            Settings = settingsManager;
         }
-
-        private readonly SettingsContainers _current;
+        
+        public SettingsManager Settings { get; set; }
 
         public void UpdateSettings()
         {
             UpdateLanguage();
-            ClampFieldOfView();
         }
 
         private void UpdateLanguage()
         {
-            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[_current.game.language];
-        }
-
-        private void ClampFieldOfView()
-        {
-            _current.game.fieldOfView = Mathf.Clamp(_current.game.fieldOfView, 65, 90);
+            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[Settings.CurrentSettings.game.Language];
         }
     }
 }

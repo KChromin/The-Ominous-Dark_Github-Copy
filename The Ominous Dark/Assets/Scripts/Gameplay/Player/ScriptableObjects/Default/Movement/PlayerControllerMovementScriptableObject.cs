@@ -9,18 +9,19 @@ namespace NOS.Player.Controller.Default
     {
         #region Movement Values
 
-        [Header("Movement Values", order = 0)]
+        [Header("Stopping Values", order = 0)]
         [Header("Idle", order = 1)]
-        public MovementValuesClass idleValues;
+        public float idleStoppingValue = 10;
 
+        [Header("Idle Crouch")]
+        public float idleCrouchStoppingValue = 12;
+
+        [Header("Movement Values")]
         [Header("Walk")]
         public MovementValuesClass walkValues;
 
         [Header("Run")]
         public MovementValuesClass runValues;
-
-        [Header("Crouch Idle")]
-        public MovementValuesClass crouchIdleValues;
 
         [Header("Crouch Walk")]
         public MovementValuesClass crouchWalkValues;

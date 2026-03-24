@@ -5,25 +5,25 @@ namespace NOS.GameManagers.Settings
 {
     public class SettingsUpdaterDisplay : ISettingsUpdater
     {
-        public SettingsUpdaterDisplay(SettingsContainers currentSettings)
+        public SettingsUpdaterDisplay(SettingsManager settingsManager)
         {
-            _current = currentSettings;
+            Settings = settingsManager;
         }
 
-        private readonly SettingsContainers _current;
+        public SettingsManager Settings { get; set; }
 
         public void UpdateSettings()
         {
             SetAspectAndResolution();
             SetFullscreen();
             SetFrameRateAndVSync();
-            Application.runInBackground = _current.display.runInBackground;
+            Application.runInBackground = Settings.CurrentSettings.display.RunInBackground;
         }
 
         //Fullscreen mode//
         private void SetFullscreen()
         {
-            switch (_current.display.fullscreenMode)
+            switch (Settings.CurrentSettings.display.FullscreenMode)
             {
                 case 0:
                     Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
@@ -42,25 +42,25 @@ namespace NOS.GameManagers.Settings
 
         private void SetAspectAndResolution()
         {
-            if (_current.display.resolutionCustom)
+            if (Settings.CurrentSettings.display.ResolutionCustom)
             {
-                Screen.SetResolution(_current.display.resolutionCustomWidth, _current.display.resolutionCustomHeight, true);
+                Screen.SetResolution(Settings.CurrentSettings.display.ResolutionCustomWidth, Settings.CurrentSettings.display.ResolutionCustomHeight, true);
             }
             else
             {
-                switch (_current.display.aspectRatio)
+                switch (Settings.CurrentSettings.display.AspectRatio)
                 {
                     //16x9
                     case 0:
-                        Screen.SetResolution(SettingsDictionaries.ResolutionPresets16X9[_current.display.resolutionPreset16X9].Width, SettingsDictionaries.ResolutionPresets16X9[_current.display.resolutionPreset16X9].Height, true);
+                        Screen.SetResolution(SettingsDictionaries.ResolutionPresets16X9[Settings.CurrentSettings.display.ResolutionPreset16X9].Width, SettingsDictionaries.ResolutionPresets16X9[Settings.CurrentSettings.display.ResolutionPreset16X9].Height, true);
                         return;
                     //16x10
                     case 1:
-                        Screen.SetResolution(SettingsDictionaries.ResolutionPresets16X10[_current.display.resolutionPreset16X10].Width, SettingsDictionaries.ResolutionPresets16X10[_current.display.resolutionPreset16X10].Height, true);
+                        Screen.SetResolution(SettingsDictionaries.ResolutionPresets16X10[Settings.CurrentSettings.display.ResolutionPreset16X10].Width, SettingsDictionaries.ResolutionPresets16X10[Settings.CurrentSettings.display.ResolutionPreset16X10].Height, true);
                         return;
                     //21x9
                     case 2:
-                        Screen.SetResolution(SettingsDictionaries.ResolutionPresets21X9[_current.display.resolutionPreset21X9].Width, SettingsDictionaries.ResolutionPresets21X9[_current.display.resolutionPreset21X9].Height, true);
+                        Screen.SetResolution(SettingsDictionaries.ResolutionPresets21X9[Settings.CurrentSettings.display.ResolutionPreset21X9].Width, SettingsDictionaries.ResolutionPresets21X9[Settings.CurrentSettings.display.ResolutionPreset21X9].Height, true);
                         return;
                 }
             }
@@ -68,14 +68,14 @@ namespace NOS.GameManagers.Settings
 
         private void SetFrameRateAndVSync()
         {
-            if (_current.display.framerateCustomMax)
+            if (Settings.CurrentSettings.display.FramerateCustomMax)
             {
                 QualitySettings.vSyncCount = 0; //Disable VSync
-                Application.targetFrameRate = _current.display.framerateCustomMaxValue;
+                Application.targetFrameRate = Settings.CurrentSettings.display.FramerateCustomMaxValue;
             }
             else
             {
-                QualitySettings.vSyncCount = _current.display.vSyncMode;
+                QualitySettings.vSyncCount = Settings.CurrentSettings.display.VSyncMode;
                 Application.targetFrameRate = -1;
             }
         }

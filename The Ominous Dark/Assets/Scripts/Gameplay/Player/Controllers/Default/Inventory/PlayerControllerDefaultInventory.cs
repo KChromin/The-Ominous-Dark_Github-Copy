@@ -12,7 +12,7 @@ namespace NOS.Player.Controller
 {
     public class PlayerControllerDefaultInventory : ControllerBase
     {
-        public PlayerControllerDefaultInventory(InputDataContainer input, PlayerConditions conditions, PlayerReferences references, PlayerValues values, PlayerDynamicReferences dynamicReferences, SettingsContainers settings)
+        public PlayerControllerDefaultInventory(InputDataContainer input, PlayerConditions conditions, PlayerReferences references, PlayerValues values, PlayerDynamicReferences dynamicReferences, SettingsManager settingsManager)
         {
             _input = input;
             _conditions = conditions.Default;
@@ -20,7 +20,7 @@ namespace NOS.Player.Controller
             _parameters = references.ScriptableObjects.Default.inventory;
             _itemSlot = references.Objects.handsItemSlot.transform;
             _dynamicReferences = dynamicReferences.Default.InventoryDefault;
-            _settings = settings;
+            _settingsManager = settingsManager;
 
             //Set inventory size//
             _dynamicReferences.currentInventoryItems = new ItemBase[InventorySize];
@@ -36,7 +36,7 @@ namespace NOS.Player.Controller
         private readonly PlayerControllerDefaultInventoryScriptableObject _parameters;
         private readonly Transform _itemSlot;
         private readonly PlayerDynamicReferences.DefaultDynamicReferencesClass.InventoryDefaultClass _dynamicReferences;
-        private readonly SettingsContainers _settings;
+        private readonly SettingsManager _settingsManager;
 
         private const int InventorySize = 5;
 
@@ -162,7 +162,7 @@ namespace NOS.Player.Controller
                 //Loop
                 if (_dynamicReferences.currentSelectedSlot > _dynamicReferences.currentInventoryItems.Length - 1)
                 {
-                    if (_settings.game.inventoryItemScrollLoopsOnEnds)
+                    if (_settingsManager.CurrentSettings.game.InventoryItemScrollLoopsOnEnds)
                     {
                         _dynamicReferences.currentSelectedSlot = 0;
                     }
@@ -179,7 +179,7 @@ namespace NOS.Player.Controller
                 //Loop
                 if (_dynamicReferences.currentSelectedSlot < 0)
                 {
-                    if (_settings.game.inventoryItemScrollLoopsOnEnds)
+                    if (_settingsManager.CurrentSettings.game.InventoryItemScrollLoopsOnEnds)
                     {
                         _dynamicReferences.currentSelectedSlot = _dynamicReferences.currentInventoryItems.Length - 1;
                     }

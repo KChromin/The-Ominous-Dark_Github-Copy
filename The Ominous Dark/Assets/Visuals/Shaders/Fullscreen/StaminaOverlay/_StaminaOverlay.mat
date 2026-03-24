@@ -119,7 +119,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture:
-        m_Texture: {fileID: 2800000, guid: 1958eb9418c255346bd1cdbc81971577, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2c58ad7b94922e44183374d6048e23c7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ThicknessMap:
@@ -208,8 +208,8 @@ Material:
     - _MaterialID: 1
     - _MaxIntensity: 5
     - _MaxPower: 3
-    - _Max_Intensity: 5
-    - _Max_Power: 2.5
+    - _Max_Intensity: 3.2
+    - _Max_Power: 2.3
     - _Metallic: 0
     - _MetallicRemapMax: 1
     - _MetallicRemapMin: 0
@@ -254,7 +254,7 @@ Material:
     - _TEXTURE_NEGATETEXTURE: 0
     - _TexWorldScale: 1
     - _TexWorldScaleEmissive: 1
-    - _Texture_Scale: 0.4
+    - _Texture_Scale: 0.25
     - _Thickness: 1
     - _TransmissionEnable: 1
     - _TransmissionMask: 1

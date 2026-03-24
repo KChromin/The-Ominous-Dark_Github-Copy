@@ -33,14 +33,15 @@ namespace NOS.Player.Controller.Default
 
         private void GroundCheck()
         {
-            _conditions.cases.isGrounded = Physics.SphereCast(_valuesGeneral.orientationCurrentPosition + _parameters.checkPositionOffsetFromOriginForGroundCheck, _parameters.groundCheckRadius, Vector3.down, out _valuesDefault.GroundCheckHit, _parameters.groundCheckDistance, _parameters.groundLayer);
+            _conditions.cases.isGrounded = Physics.SphereCast(_valuesGeneral.orientationCurrentPosition + _parameters.checkPositionOffsetFromOriginForGroundCheck, _parameters.groundCheckRadius, Vector3.down, out _valuesDefault.GroundCheckHit, _parameters.groundCheckDistance, _parameters.groundLayer,
+                QueryTriggerInteraction.Ignore);
         }
 
         #endregion Ground Check
 
         #region Slope Check
 
-        //todo cast sphere in input direction to check if there is a slope. If there is, then do not go
+        //Todo - Additional check for slope when taking groundcheck info
 
         private void SlopeCheck()
         {
@@ -62,17 +63,25 @@ namespace NOS.Player.Controller.Default
 
             Vector3 groundHitOrigin = _valuesDefault.GroundCheckHit.point;
 
-            if (Physics.Raycast(groundHitOrigin + _parameters.slopeCheckRaycastOffset, Vector3.down, out RaycastHit hit, _parameters.slopeCheckRaycastOffset.y + 0.01f, _parameters.groundLayer, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(groundHitOrigin + _parameters.slopeCheckRaycastOffset, Vector3.down, out RaycastHit hit, _parameters.slopeCheckRaycastOffset.y * 2, _parameters.groundLayer, QueryTriggerInteraction.Ignore))
             {
                 //When player is on slope don't check//
                 Vector3 slopeCheckOrigin = _valuesGeneral.orientationCurrentPosition + _parameters.checkPositionOffsetFromOriginForGroundCheck;
 
-                if (Physics.SphereCast(slopeCheckOrigin, _parameters.slopeCheckRadius, Vector3.down, out RaycastHit slopeCheckHit, _parameters.slopeCheckDistance, _parameters.groundLayer))
+                if (Physics.SphereCast(slopeCheckOrigin, _parameters.slopeCheckRadius, Vector3.down, out RaycastHit slopeCheckHit, _parameters.slopeCheckDistance, _parameters.groundLayer, QueryTriggerInteraction.Ignore))
                 {
-                    _valuesDefault.slopeCheckNormal = hit.normal;
-                    _valuesDefault.slopeCheckAngle = Vector3.Angle(slopeCheckHit.normal, Vector3.up);
-                    //  _conditions.cases.isOnTooSteepSlope = Vector3.Angle(hit.normal, Vector3.up) > _parameters.slopeCheckMaxSlope && Vector3.Angle(slopeCheckHit.normal, Vector3.up) > _parameters.slopeCheckMaxSlope;
-                    _conditions.cases.isOnTooSteepSlope = Vector3.Angle(slopeCheckHit.normal, Vector3.up) > _parameters.slopeCheckMaxSlope;
+                    if (Physics.Raycast(slopeCheckHit.point + _parameters.slopeCheckRaycastOffset, Vector3.down, out RaycastHit additionalCheckHit, _parameters.slopeCheckRaycastOffset.y * 2, _parameters.groundLayer, QueryTriggerInteraction.Ignore))
+                    {
+                        _valuesDefault.slopeCheckNormal = additionalCheckHit.normal;
+                        _valuesDefault.slopeCheckAngle = Vector3.Angle(additionalCheckHit.normal, Vector3.up);
+                        _conditions.cases.isOnTooSteepSlope = Vector3.Angle(additionalCheckHit.normal, Vector3.up) > _parameters.slopeCheckMaxSlope;
+                    }
+                    else
+                    {
+                        _valuesDefault.slopeCheckNormal = hit.normal;
+                        _valuesDefault.slopeCheckAngle = Vector3.Angle(slopeCheckHit.normal, Vector3.up);
+                        _conditions.cases.isOnTooSteepSlope = Vector3.Angle(slopeCheckHit.normal, Vector3.up) > _parameters.slopeCheckMaxSlope;
+                    }
 
                     #region Debug
 
@@ -85,7 +94,6 @@ namespace NOS.Player.Controller.Default
                 }
                 else //When somehow sphere cannot hit, check groundCheck's normal
                 {
-                    
                     _valuesDefault.slopeCheckAngle = Vector3.Angle(_valuesDefault.GroundCheckHit.normal, Vector3.up);
                     _conditions.cases.isOnTooSteepSlope = _valuesDefault.slopeCheckAngle > _parameters.slopeCheckMaxSlope;
 

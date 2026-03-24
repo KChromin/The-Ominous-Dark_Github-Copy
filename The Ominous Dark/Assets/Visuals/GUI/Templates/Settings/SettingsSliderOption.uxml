@@ -3,7 +3,7 @@
         <ui:Label text="Labelssssssssdasdadadadasd" name="SettingName" class="OptionName"/>
         <ui:VisualElement name="VisualElement" style="flex-grow: 0; flex-direction: row; align-self: auto; align-items: center; width: 865px; justify-content: space-between;">
             <ui:Slider label="Slider" value="42" high-value="100" name="SettingsSlider" style="position: relative; left: auto; flex-direction: row; align-self: center; align-content: flex-start; align-items: center;"/>
-            <ui:Label text="0.5" name="SettingsSliderValue" class="OptionName" style="padding-left: 0; margin-left: 20px;"/>
+            <ui:FloatField label="" value="1" name="SettingsSliderValue" password="false" max-length="4" emoji-fallback-support="false" select-line-by-triple-click="false" select-word-by-double-click="false" select-all-on-focus="false" select-all-on-mouse-up="false" support-expressions="false"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

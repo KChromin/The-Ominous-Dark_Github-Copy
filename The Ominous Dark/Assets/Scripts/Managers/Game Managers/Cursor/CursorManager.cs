@@ -34,7 +34,7 @@ namespace NOS.GameManagers
             }
             else //Unlocked
             {
-                Cursor.lockState = SettingsManager.Instance.CurrentSettings.accessibility.cursorLockToWindow ? CursorLockMode.Confined : CursorLockMode.None;
+                Cursor.lockState = SettingsManager.Instance.CurrentSettings.accessibility.CursorLockToWindow ? CursorLockMode.Confined : CursorLockMode.None;
             }
         }
 

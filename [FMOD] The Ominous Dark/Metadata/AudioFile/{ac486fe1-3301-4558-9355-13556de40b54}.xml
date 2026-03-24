@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{ac486fe1-3301-4558-9355-13556de40b54}">
+		<property name="assetPath">
+			<value>SFX/Player/Footsteps/Run_Basic/NoxSound_Run_Basic_25.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.34554166666666669</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{40057fdf-ed5d-4f5f-9216-d460aba7e7d3}</destination>
+		</relationship>
+	</object>
+</objects>

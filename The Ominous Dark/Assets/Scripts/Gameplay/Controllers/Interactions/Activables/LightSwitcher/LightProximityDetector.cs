@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -13,11 +12,6 @@ namespace NOS.Controllers.Interactions
         {
             _light = GetComponent<Light>();
             _light.lightUnit = LightUnit.Candela;
-        }
-
-        public override void OnProgressUpdate()
-        {
-        
         }
 
         public override void Activate()

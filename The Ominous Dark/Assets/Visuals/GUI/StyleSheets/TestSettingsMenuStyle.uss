@@ -15,8 +15,9 @@
     -unity-text-outline-width: 0;
     -unity-text-outline-color: rgb(0, 0, 0);
     height: 32px;
-    -unity-text-align: middle-center;
+    -unity-text-align: middle-left;
     -unity-font-definition: url("project://database/Assets/Visuals/Fonts/prime-minister-of-canada.regular.otf?fileID=12800000&guid=c07cb2304bda7bb44866c0d52edc4ffc&type=3#prime-minister-of-canada.regular");
+    align-items: stretch;
 }
 
 .SettingsPanel {
@@ -237,7 +238,34 @@ Scroller #unity-slider #unity-dragger {
     border-right-width: 0;
     border-bottom-width: 0;
     border-left-width: 0;
+    background-color: rgba(255, 255, 255, 0);
 }
+
+#SettingsSliderValue #unity-text-input {
+    visibility: visible;
+    display: flex;
+    width: 100px;
+    height: 70px;
+    background-color: rgba(255, 0, 0, 0);
+    color: rgb(255, 0, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    overflow: visible;
+    -unity-text-align: middle-center;
+}
+
+#SettingsSliderValue #unity-text-input TextElement {
+    visibility: visible;
+    display: flex;
+    color: rgb(255, 0, 76);
+    -unity-text-align: middle-right;
+    -unity-font-definition: url("project://database/Assets/Visuals/Fonts/prime-minister-of-canada.regular.otf?fileID=12800000&guid=c07cb2304bda7bb44866c0d52edc4ffc&type=3#prime-minister-of-canada.regular");
+    font-size: 36px;
+}
+
+
 
 #SettingsSlider VisualElement {
     align-items: stretch;
@@ -395,7 +423,7 @@ Scroller #unity-slider #unity-dragger {
     transition-duration: 1.5s;
 }
 
-#IntigerOption {
+#IntegerOption {
     visibility: visible;
     display: flex;
     width: 300px;
@@ -405,12 +433,12 @@ Scroller #unity-slider #unity-dragger {
     justify-content: center;
 }
 
-#IntigerOption Label {
+#IntegerOption Label {
     visibility: visible;
     display: none;
 }
 
-#IntigerOption #unity-text-input {
+#IntegerOption #unity-text-input {
     visibility: visible;
     display: flex;
     width: 100px;
@@ -425,7 +453,7 @@ Scroller #unity-slider #unity-dragger {
     -unity-text-align: middle-center;
 }
 
-#IntigerOption #unity-text-input TextElement {
+#IntegerOption #unity-text-input TextElement {
     visibility: visible;
     display: flex;
     color: rgb(255, 0, 76);

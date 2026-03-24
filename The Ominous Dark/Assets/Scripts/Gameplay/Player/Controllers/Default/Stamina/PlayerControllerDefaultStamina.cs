@@ -1,3 +1,4 @@
+using NOS.GameManagers.Audio;
 using NOS.GameplayManagers;
 using NOS.Patterns.Controller;
 using NOS.Player.Data;
@@ -7,7 +8,7 @@ namespace NOS.Player.Controller.Default
 {
     public class PlayerControllerDefaultStamina : ControllerBase
     {
-        public PlayerControllerDefaultStamina(PlayerActions actions, PlayerConditions conditions, PlayerReferences references, PlayerDynamicReferences dynamicReferences, PlayerValues values)
+        public PlayerControllerDefaultStamina(PlayerActions actions, PlayerConditions conditions, PlayerReferences references, PlayerDynamicReferences dynamicReferences, PlayerValues values, SoundManager soundManager)
         {
             _actions = actions;
             _conditions = conditions.Default;
@@ -15,6 +16,8 @@ namespace NOS.Player.Controller.Default
             _dynamicReferences = dynamicReferences.Default.StaminaDefault;
             _values = values.Default;
 
+            Transform soundParent = references.Objects.headPivot.transform;
+            _soundInstance = soundManager.CreateSoundInstance(_parameters.soundReference, references.SoundInstanceParameters.closeToPlayerSoundsWithReflections, soundParent, _parameters.soundLocalOffsetFromParent);
             _values.currentStamina = _parameters.maximalStamina;
 
             _volumesManager = GlobalVolumesManager.Instance;
@@ -29,6 +32,9 @@ namespace NOS.Player.Controller.Default
         private readonly PlayerValues.DefaultValuesClass _values;
         private readonly GlobalVolumesManager _volumesManager;
 
+        private readonly SoundInstanceController _soundInstance;
+
+
         private void SubscribeToEvents()
         {
             _actions.Default.OnInAirState += CheckForJump;
@@ -37,6 +43,7 @@ namespace NOS.Player.Controller.Default
         public override void OnDestroy()
         {
             _actions.Default.OnInAirState -= CheckForJump;
+            _soundInstance.OnParentDestroy();
         }
 
 
@@ -106,6 +113,7 @@ namespace NOS.Player.Controller.Default
             {
                 _values.currentStamina = 0;
                 _conditions.cases.staminaWasFullyDepleted = true;
+                _soundInstance.Play();
             }
 
             StaminaClampAndUpdateUI();

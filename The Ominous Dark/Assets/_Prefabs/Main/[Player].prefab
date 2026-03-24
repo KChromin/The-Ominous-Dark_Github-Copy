@@ -101,7 +101,7 @@ MonoBehaviour:
   isExecutingForce: 1
   parameters:
     floatHeight: 0.3
-    checkOriginOffset: {x: 0, y: -0.3, z: 0}
+    checkOriginOffset: {x: 0, y: -0.25, z: 0}
     springStrength: 620
     springDampingForceUp: 35
     springDampingForceDown: 10
@@ -109,7 +109,7 @@ MonoBehaviour:
     maximalForceObjectsUnder: 3
     goingDownVelocityThreshold: -0.1
     groundingLenght: 0.1
-    groundCastRadiusOffset: -0.02
+    groundCastRadiusOffset: -0.025
     groundLayers:
       serializedVersion: 2
       m_Bits: 193
@@ -165,20 +165,26 @@ MonoBehaviour:
       cases:
         isGrounded: 0
         isOnTooSteepSlope: 0
+        wantsToMoveOnTooSteepSlope: 0
         isLooking: 0
         wantsToMove: 0
         isMoving: 0
+        isMovingAboveMinimalThreshold: 0
         wantsToRun: 0
         isRunning: 0
+        isRunningAboveMinimalThreshold: 0
         wantsToJump: 0
         isJumping: 0
         jumpIsOnCooldown: 0
         wantsToDoCrouchAction: 0
         isCrouching: 0
         isAbleToStandUp: 0
+        staminaWasFullyDepleted: 0
+        staminaIsTooLowToJump: 0
         isInteracting: 0
         inventoryItemSwitchingIsBlocked: 0
         inventoryWantsToThrowItem: 0
+        inventoryIsTransitioningItems: 0
       possibilities:
         canLookY: 1
         canLookX: 1
@@ -197,7 +203,10 @@ MonoBehaviour:
       orientationCurrentPosition: {x: 0, y: 0, z: 0}
       orientationCurrentRotation: {x: 0, y: 0, z: 0, w: 0}
     <Default>k__BackingField:
-      SlopeCheckNormal: {x: 0, y: 0, z: 0}
+      slopeCheckNormal: {x: 0, y: 0, z: 0}
+      slopeCheckAngle: 0
+      slopeCheckDirectionNormal: {x: 0, y: 0, z: 0}
+      currentStamina: 0
   <References>k__BackingField:
     <Components>k__BackingField:
       transform: {fileID: 1482170653032078285}
@@ -214,6 +223,7 @@ MonoBehaviour:
       hands: {fileID: 6728439362612001055}
       handsItemSlot: {fileID: 2943477667704812999}
       body: {fileID: 8669740161593657262}
+      footSteps: {fileID: 8461260347111553048}
     <ScriptableObjects>k__BackingField:
       <Default>k__BackingField:
         look: {fileID: 11400000, guid: 94f0f08076cf88b45ba922b3c03bcb5b, type: 2}
@@ -224,8 +234,12 @@ MonoBehaviour:
         headBobbing: {fileID: 11400000, guid: 775f48ec2e88cf24cb9110c6c00cb332, type: 2}
         interaction: {fileID: 11400000, guid: ab9994f8d0a156548afee2d9678eec7d, type: 2}
         inventory: {fileID: 11400000, guid: e3dd25df209fe9f4985ef1d108069ffc, type: 2}
+        stamina: {fileID: 11400000, guid: 76fe121a289806544b3c3d04e89dd1be, type: 2}
+        footsteps: {fileID: 11400000, guid: 7c9abb37bdcf2c043ba0f52dd2ccfa4a, type: 2}
   <DynamicReferences>k__BackingField:
     <Default>k__BackingField:
+      <MovementDefault>k__BackingField:
+        currentSelectedInteractableObject: {fileID: 0}
       <InteractionDefault>k__BackingField:
         currentSelectedInteractableObject: {fileID: 0}
       <InventoryDefault>k__BackingField:
@@ -455,6 +469,37 @@ Transform:
   - {fileID: 7132419344545131407}
   m_Father: {fileID: 1482170653032078285}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8461260347111553048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4178558109108668500}
+  m_Layer: 3
+  m_Name: Footsteps
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4178558109108668500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8461260347111553048}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7132419344545131407}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8669740161593657262
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,6 +528,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4178558109108668500}
   m_Father: {fileID: 2266860265770233300}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

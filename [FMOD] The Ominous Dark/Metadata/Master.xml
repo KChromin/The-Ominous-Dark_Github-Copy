@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerMaster" id="{efb5574c-cd62-4084-a50f-368fbad1d3c2}">
+		<property name="name">
+			<value>Master Bus</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{3abf5414-4fa7-4728-84bc-93aa04b4d9dc}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{7e3d2f56-3b81-45e3-9399-790783b5f7e4}</destination>
+		</relationship>
+		<relationship name="mixer">
+			<destination>{01489fe2-51c8-4d4c-ab36-bdc74db907a7}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{3abf5414-4fa7-4728-84bc-93aa04b4d9dc}">
+		<relationship name="effects">
+			<destination>{1519547b-cfae-42e7-84b6-c4537a1a9838}</destination>
+			<destination>{93a38e32-b201-48ae-8bbb-67d36faa16ce}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{7e3d2f56-3b81-45e3-9399-790783b5f7e4}">
+		<property name="overridingOutputFormat">
+			<value>2</value>
+		</property>
+	</object>
+	<object class="PluginEffect" id="{1519547b-cfae-42e7-84b6-c4537a1a9838}">
+		<relationship name="plugin">
+			<destination>{b82c697e-f86a-45af-9320-8b2f8d373d9a}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusFader" id="{93a38e32-b201-48ae-8bbb-67d36faa16ce}" />
+	<object class="Plugin" id="{b82c697e-f86a-45af-9320-8b2f8d373d9a}">
+		<property name="identifier">
+			<value>Steam Audio Mixer Return</value>
+		</property>
+		<relationship name="pluginParameters">
+			<destination>{307c6a86-bf20-48d3-beab-8bac06af5246}</destination>
+			<destination>{34af1f4f-1c83-4c21-aa9f-4c809041df92}</destination>
+		</relationship>
+	</object>
+	<object class="BoolPluginParameter" id="{307c6a86-bf20-48d3-beab-8bac06af5246}">
+		<property name="name">
+			<value>Binaural</value>
+		</property>
+		<property name="value">
+			<value>true</value>
+		</property>
+	</object>
+	<object class="IntPluginParameter" id="{34af1f4f-1c83-4c21-aa9f-4c809041df92}">
+		<property name="name">
+			<value>OutputFormat</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+		<property name="minimumValue">
+			<value>0</value>
+		</property>
+		<property name="maximumValue">
+			<value>2</value>
+		</property>
+	</object>
+</objects>

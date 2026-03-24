@@ -1,12 +1,13 @@
 using System;
 using NOS.Controllers;
+using NOS.GameManagers.Audio;
 using NOS.Player.Controller.Default;
 using UnityEngine;
 
 namespace NOS.Player.Data
 {
     //Player static references
-    
+
     [Serializable]
     public class PlayerReferences
     {
@@ -48,6 +49,7 @@ namespace NOS.Player.Data
             public GameObject handsItemSlot;
             [Space]
             public GameObject body;
+            public GameObject footSteps;
         }
 
         #endregion Objects
@@ -90,11 +92,26 @@ namespace NOS.Player.Data
                 public PlayerControllerDefaultInteractionScriptableObject interaction;
                 public PlayerControllerDefaultInventoryScriptableObject inventory;
                 public PlayerControllerDefaultStaminaScriptableObject stamina;
+                public PlayerControllerFootstepsScriptableObject footsteps;
             }
 
             #endregion Default
         }
 
         #endregion Scriptable Objects
+
+        #region Sound Instance Settings
+
+        [field: Header("Scriptable Objects")]
+        [field: SerializeField]
+        public SoundInstanceParametersClass SoundInstanceParameters { get; set; } = new();
+
+        [Serializable]
+        public class SoundInstanceParametersClass
+        {
+            public SoundInstanceParameters closeToPlayerSoundsWithReflections;
+        }
+
+        #endregion Sound Instance Settings
     }
 }

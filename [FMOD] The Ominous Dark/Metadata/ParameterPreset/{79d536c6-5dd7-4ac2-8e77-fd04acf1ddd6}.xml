@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{79d536c6-5dd7-4ac2-8e77-fd04acf1ddd6}">
+		<property name="name">
+			<value>PanSiding</value>
+		</property>
+		<relationship name="folder">
+			<destination>{fc154aa2-25ed-4cdc-8de9-dc69f7dd9b96}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{aa7718bf-0776-4280-8c62-5882ce79748d}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{aa7718bf-0776-4280-8c62-5882ce79748d}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>3</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Left</value>
+			<value>Middle</value>
+			<value>Right</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

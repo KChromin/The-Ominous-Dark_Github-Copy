@@ -12,9 +12,12 @@ namespace NOS.Controllers.Interactions
         [field: Header("Interactable Settings"), SerializeField]
         public InteractableParametersClass InteractableSettings { get; set; }
 
+        [field: Space]
+
         #region Variables
 
         private bool IsInteracting { get; set; }
+
         private float _interactingTime;
 
         protected int SelectedMaskLayer;
@@ -222,6 +225,9 @@ namespace NOS.Controllers.Interactions
                 case LayerMaskSetOptions.Default:
                     for (int i = 0; i < _allObjects.Length; i++)
                     {
+                        if (_allObjects[i].CompareTag("SoundInstance"))
+                            continue;
+
                         _allObjects[i].gameObject.layer = _allObjectsSavedLayerMasks[i];
                     }
 
@@ -229,6 +235,9 @@ namespace NOS.Controllers.Interactions
                 case LayerMaskSetOptions.Select:
                     for (int i = 0; i < _allObjects.Length; i++)
                     {
+                        if (_allObjects[i].CompareTag("SoundInstance"))
+                            continue;
+
                         _allObjects[i].gameObject.layer = SelectedMaskLayer;
                     }
 
@@ -236,6 +245,9 @@ namespace NOS.Controllers.Interactions
                 case LayerMaskSetOptions.NoPlayerCollision:
                     for (int i = 0; i < _allObjects.Length; i++)
                     {
+                        if (_allObjects[i].CompareTag("SoundInstance"))
+                            continue;
+
                         _allObjects[i].gameObject.layer = NoPlayerCollisionLayer;
                     }
 

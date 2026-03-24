@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: GUITable_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 1f1123ab9256ab64a87b807b5642eb68, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 360680214528
+    m_Localized: You have unsaved changes! Would you like to apply them?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 270225854464
+    m_Localized: Reset settings to default values?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 227490091008
+    m_Localized: Apply Settings?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83789041664
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5502357504
+    m_Localized: Apply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3054622953472
+    m_Localized: Revert
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

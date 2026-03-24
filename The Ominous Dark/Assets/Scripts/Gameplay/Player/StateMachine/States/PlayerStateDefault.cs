@@ -56,6 +56,7 @@ namespace NOS.Player.StateMachine
             Ctx.Controllers.Default.HeadBobbing.Update();
             Ctx.Controllers.Default.Interaction.Update();
             Ctx.Controllers.Default.Inventory.Update();
+            Ctx.Controllers.Default.Footsteps.Update();
         }
 
         protected override void FixedUpdateState()

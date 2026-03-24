@@ -2,7 +2,7 @@
     <ui:VisualElement name="SettingsIntOption" template="SettingsBooleanOption">
         <ui:VisualElement name="IntOption" class="OptionContainer">
             <ui:Label text="Labelssssssssdasdadadadasd" name="SettingName" class="OptionName"/>
-            <ui:IntegerField label="" value="1920" name="IntigerOption" max-length="4" placeholder-text="dsffe" mask-character="d" select-all-on-mouse-up="false" select-all-on-focus="false" select-word-by-double-click="false" select-line-by-triple-click="false" emoji-fallback-support="false" support-expressions="false"/>
+            <ui:IntegerField label="" value="1920" name="IntegerOption" max-length="4" select-all-on-mouse-up="false" select-all-on-focus="false" select-word-by-double-click="false" select-line-by-triple-click="false" emoji-fallback-support="false" support-expressions="false"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerReturn" id="{c527e489-bd2c-45b4-a008-1a112ea4db6b}">
+		<property name="overridingInputFormat">
+			<value>2</value>
+		</property>
+		<property name="name">
+			<value>Reverb</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{f66ed62c-ccec-4bd1-b988-14f0d914b4bb}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{1c3129a7-a035-4e30-aa0a-de76902ab5e0}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{efb5574c-cd62-4084-a50f-368fbad1d3c2}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{f66ed62c-ccec-4bd1-b988-14f0d914b4bb}">
+		<relationship name="effects">
+			<destination>{49a24a0b-c0cd-4d1c-b971-f6fa85fc0b91}</destination>
+			<destination>{64686d60-3827-4d7d-803f-537647d5eed1}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{1c3129a7-a035-4e30-aa0a-de76902ab5e0}" />
+	<object class="PluginEffect" id="{49a24a0b-c0cd-4d1c-b971-f6fa85fc0b91}">
+		<relationship name="plugin">
+			<destination>{fb4f962b-13e9-4cd3-a9c9-d1ec42d3d8c8}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusFader" id="{64686d60-3827-4d7d-803f-537647d5eed1}" />
+	<object class="Plugin" id="{fb4f962b-13e9-4cd3-a9c9-d1ec42d3d8c8}">
+		<property name="identifier">
+			<value>Steam Audio Reverb</value>
+		</property>
+		<relationship name="pluginParameters">
+			<destination>{deb15a04-5cba-444f-9f5f-5c9d10be220f}</destination>
+			<destination>{3470890b-f3c5-4763-aab2-9d6a57831470}</destination>
+		</relationship>
+	</object>
+	<object class="BoolPluginParameter" id="{deb15a04-5cba-444f-9f5f-5c9d10be220f}">
+		<property name="name">
+			<value>Binaural</value>
+		</property>
+		<property name="value">
+			<value>true</value>
+		</property>
+	</object>
+	<object class="IntPluginParameter" id="{3470890b-f3c5-4763-aab2-9d6a57831470}">
+		<property name="name">
+			<value>OutputFormat</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+		<property name="minimumValue">
+			<value>0</value>
+		</property>
+		<property name="maximumValue">
+			<value>2</value>
+		</property>
+	</object>
+</objects>

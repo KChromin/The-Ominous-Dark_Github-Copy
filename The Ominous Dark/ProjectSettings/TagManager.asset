@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Item
+  - SoundInstance
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Item
   - NoPlayerCollision
   - ItemSelected
-  - 
+  - OnlyPlayerCollision
   - 
   - 
   - 

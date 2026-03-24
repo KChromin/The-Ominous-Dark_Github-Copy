@@ -111,7 +111,7 @@
 
         // float obj = c.a;
 
-        //    uint offset = 5;
+        // uint offset = 5;
 
         uint sampleCount = min(2 * pow(2, _SamplePrecision), MAXSAMPLES);
 

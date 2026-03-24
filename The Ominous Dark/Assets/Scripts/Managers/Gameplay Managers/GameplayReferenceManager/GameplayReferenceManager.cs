@@ -1,3 +1,4 @@
+using System;
 using NOS.Patterns.Singleton;
 using NOS.Player;
 using NOS.Player.Data;
@@ -36,6 +37,7 @@ namespace NOS.GameplayManagers
             PlayerReferences = playerMain.GetPlayerReferences();
             PlayerDynamicReferences = playerMain.GetPlayerDynamicReferences();
         }
+
         #endregion Player
     }
 }

@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: GUITable Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: GUITable
+  m_TableCollectionNameGuidString: 1f1123ab9256ab64a87b807b5642eb68
+  m_Entries:
+  - m_Id: 5502357504
+    m_Key: ConfirmationButtonApply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83789041664
+    m_Key: ConfirmationButtonCancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3054622953472
+    m_Key: ConfirmationButtonRevert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 227490091008
+    m_Key: ConfirmationLabelSaveSettings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 270225854464
+    m_Key: ConfirmationLabelResetToDefault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 360680214528
+    m_Key: ConfirmationLabelUnsavedChanges
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6798081431414244066
+  references:
+    version: 2
+    RefIds:
+    - rid: 6798081431414244066
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1770010676315

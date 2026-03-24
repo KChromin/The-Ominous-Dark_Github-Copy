@@ -1,3 +1,4 @@
+using System;
 using NOS.Controllers;
 using NOS.GameManagers.Settings;
 using NOS.GameManagers.Input;
@@ -6,12 +7,11 @@ using NOS.Patterns.Controller;
 using NOS.Player.Data;
 using UnityEngine;
 
-
 namespace NOS.Player.Controller.Default
 {
     public class PlayerControllerMovement : ControllerBase
     {
-        public PlayerControllerMovement(InputDataContainer input, PlayerActions actions, PlayerConditions conditions, PlayerValues values, PlayerReferences references, SettingsContainers settings)
+        public PlayerControllerMovement(InputDataContainer input, PlayerActions actions, PlayerConditions conditions, PlayerValues values, PlayerReferences references, SettingsManager settingsManager)
         {
             _input = input;
             _actions = actions.Default;
@@ -19,12 +19,14 @@ namespace NOS.Player.Controller.Default
             _values = values;
             _parameters = references.ScriptableObjects.Default.movement;
 
-            _currentSettings = settings;
+            _settingsManager = settingsManager;
 
             _cameraManager = CameraManager.Instance;
 
             _rigidBody = references.Components.rigidBody;
             _floatingCapsule = references.Components.floatingCapsule;
+
+            _fixedDeltaTimeCompensationMultiplier = 1 / Time.fixedDeltaTime;
 
             SubscribeToEvents();
         }
@@ -37,7 +39,7 @@ namespace NOS.Player.Controller.Default
         private readonly PlayerValues _values;
         private readonly PlayerControllerMovementScriptableObject _parameters;
 
-        private readonly SettingsContainers _currentSettings;
+        private readonly SettingsManager _settingsManager;
 
         private readonly CameraManager _cameraManager;
 
@@ -57,6 +59,10 @@ namespace NOS.Player.Controller.Default
 
         private PlayerControllerMovementScriptableObject.MovementValuesClass _currentMovementParameters = new();
 
+        private bool _isStopping;
+        private StoppingState _stoppingState;
+        private Vector3 _stoppingForceCalculation;
+
         public enum MovementStates
         {
             Idle,
@@ -66,6 +72,17 @@ namespace NOS.Player.Controller.Default
             CrouchWalk
         }
 
+        private enum StoppingState
+        {
+            Idle,
+            CrouchIdle
+        }
+
+        private const float RoundValue = 0.008f;
+
+        //Instead of dividing by Time.fixedDeltaTime to compensate FixedUpdates, value to multiply it because it's cheaper//
+        private readonly float _fixedDeltaTimeCompensationMultiplier;
+
         #endregion Variables
 
         #region Public Methodes
@@ -74,11 +91,14 @@ namespace NOS.Player.Controller.Default
 
         public void SetMovementParameters(MovementStates movementState)
         {
+            _isStopping = false;
+
             switch (movementState)
             {
                 default:
                 case MovementStates.Idle:
-                    _currentMovementParameters = _parameters.idleValues;
+                    _isStopping = true;
+                    _stoppingState = StoppingState.Idle;
                     break;
                 case MovementStates.Walk:
                     _currentMovementParameters = _parameters.walkValues;
@@ -87,7 +107,8 @@ namespace NOS.Player.Controller.Default
                     _currentMovementParameters = _parameters.runValues;
                     break;
                 case MovementStates.CrouchIdle:
-                    _currentMovementParameters = _parameters.crouchIdleValues;
+                    _isStopping = true;
+                    _stoppingState = StoppingState.CrouchIdle;
                     break;
                 case MovementStates.CrouchWalk:
                     _currentMovementParameters = _parameters.crouchWalkValues;
@@ -127,6 +148,35 @@ namespace NOS.Player.Controller.Default
                 return;
             }
 
+            //Stopping//
+            if (_isStopping)
+            {
+                float stoppingValue;
+
+                switch (_stoppingState)
+                {
+                    default:
+                    case StoppingState.Idle:
+                        stoppingValue = _parameters.idleStoppingValue;
+                        break;
+                    case StoppingState.CrouchIdle:
+                        stoppingValue = _parameters.idleCrouchStoppingValue;
+                        break;
+                }
+
+                Vector3 stoppingVelocity = -_values.General.rigidBodyCurrentVelocity * (stoppingValue * _fixedDeltaTimeCompensationMultiplier);
+
+
+                stoppingVelocity.y = 0;
+                _rigidBody.AddForce(stoppingVelocity, ForceMode.Acceleration);
+
+                _currentMovementMaxSpeed = _values.General.rigidBodyCurrentVelocityMagnitudeXZ;
+
+                Vector3 velocityWithoutY = _values.General.rigidBodyCurrentVelocity;
+                _currentTargetVelocity = velocityWithoutY;
+                return;
+            }
+
             _onEnterSlopeSlidingResetWasDone = false;
 
             SlidingMaxSpeedReduceInTime();
@@ -148,7 +198,6 @@ namespace NOS.Player.Controller.Default
                 targetVelocity = Vector3.ProjectOnPlane(targetVelocity.normalized, slopeNormal.normalized) * targetVelocity.magnitude;
             }
 
-
             //Velocity not accounting Y//
             Vector3 currentVelocityWithoutY = _values.General.rigidBodyCurrentVelocity;
             currentVelocityWithoutY.y = 0;
@@ -159,12 +208,12 @@ namespace NOS.Player.Controller.Default
 
             _currentTargetVelocity = Vector3.MoveTowards(_currentTargetVelocity, targetVelocity, accelerationValueAfterGraph * Time.fixedDeltaTime);
 
-            Vector3 neededAcceleration = (_currentTargetVelocity - currentVelocityWithoutY) / Time.fixedDeltaTime;
+            Vector3 neededAcceleration = (_currentTargetVelocity - currentVelocityWithoutY) * _fixedDeltaTimeCompensationMultiplier;
 
             neededAcceleration.y = 0;
             neededAcceleration = Vector3.ClampMagnitude(neededAcceleration, _currentMovementParameters.maxAccelerationForce * _currentMovementParameters.maxAccelerationForceFactorFromDot.Evaluate(inputToVelocityDot));
 
-            _rigidBody.AddForce(neededAcceleration * _values.General.rigidBodyMass, ForceMode.Force);
+            _rigidBody.AddForce(neededAcceleration, ForceMode.Acceleration);
         }
 
         private void SlidingMaxSpeedReduceInTime()
@@ -382,7 +431,7 @@ namespace NOS.Player.Controller.Default
 
             _currentTargetVelocity = Vector3.MoveTowards(_currentTargetVelocity, targetVelocity, accelerationValueAfterGraph * Time.fixedDeltaTime);
 
-            Vector3 neededAcceleration = (_currentTargetVelocity - currentVelocityWithoutY) / Time.fixedDeltaTime;
+            Vector3 neededAcceleration = (_currentTargetVelocity - currentVelocityWithoutY) * _fixedDeltaTimeCompensationMultiplier;
 
             // neededAcceleration.y = 0;
             neededAcceleration = Vector3.ClampMagnitude(neededAcceleration, _parameters.slidingFromSteepSlopeValues.maxAccelerationForce * _parameters.slidingFromSteepSlopeValues.maxAccelerationForceFactorFromDot.Evaluate(inputToVelocityDot));
@@ -397,7 +446,7 @@ namespace NOS.Player.Controller.Default
         private void UpdateFieldOfViewBasedOnMovementSpeed()
         {
             float currentSpeed = _values.General.rigidBodyCurrentVelocityMagnitudeXZ;
-            
+
             if (!_conditions.cases.isMoving || (_currentTargetVelocity.magnitude < _parameters.minimalRunningThreshold && currentSpeed < _parameters.minimalRunningThreshold && !_conditions.cases.isRunning) || !_conditions.cases.isGrounded)
             {
                 _cameraManager.UpdateDefaultCameraFieldOfViewTryToReset();

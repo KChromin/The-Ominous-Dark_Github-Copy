@@ -1,0 +1,239 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2110175984143664829
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8677204499945084108}
+  - component: {fileID: 7721722105424750122}
+  - component: {fileID: 970965668720388957}
+  - component: {fileID: 4151915074772349064}
+  - component: {fileID: 62021380486163480}
+  - component: {fileID: 3348389307028986174}
+  m_Layer: 0
+  m_Name: '[Game Managers]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8677204499945084108
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110175984143664829}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8069271954818728191}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7721722105424750122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110175984143664829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 2398ed2757af4424495da26c6f29f093, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 89816efdd3e4dfb4b82505c1e8394ca2, type: 3}
+  m_SortingOrder: 100
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!114 &970965668720388957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110175984143664829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 693a3b970dbf7394a806dd494756e6f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NOS.GameManagers::NOS.GameManagers.Settings.SettingsManager
+  <CurrentSettings>k__BackingField:
+    audio:
+      volumeMaster: 100
+      volumeSfx: 80
+      volumeMusic: 80
+      volumeVoice: 80
+      <Subtitles>k__BackingField: 0
+    control:
+      lookSensitivityGeneral: 20
+      <LookSeparateSensitivityAxes>k__BackingField: 0
+      lookSensitivityXAxis: 20
+      lookSensitivityYAxis: 20
+      <LookInvertYAxis>k__BackingField: 0
+      <LookSmoothing>k__BackingField: 1
+      lookSmoothingTime: 0.002
+      <InputCrouchToggle>k__BackingField: 1
+    display:
+      fullscreenMode: 0
+      aspectRatio: 0
+      resolutionPreset16X9: 2
+      resolutionPreset16X10: 2
+      resolutionPreset21X9: 0
+      <ResolutionCustom>k__BackingField: 0
+      resolutionCustomHeight: 1080
+      resolutionCustomWidth: 1920
+      vSyncMode: 1
+      <FramerateCustomMax>k__BackingField: 0
+      framerateCustomMaxValue: 144
+      <RunInBackground>k__BackingField: 0
+    game:
+      language: 0
+      fieldOfView: 75
+      headBobbingIntensity: 1
+      <InventoryItemScrollLoopsOnEnds>k__BackingField: 1
+    visual:
+      test: 0
+    accessibility:
+      <CursorLockToWindow>k__BackingField: 1
+  temporarySettings:
+    audio:
+      volumeMaster: 100
+      volumeSfx: 80
+      volumeMusic: 80
+      volumeVoice: 80
+      <Subtitles>k__BackingField: 0
+    control:
+      lookSensitivityGeneral: 20
+      <LookSeparateSensitivityAxes>k__BackingField: 0
+      lookSensitivityXAxis: 20
+      lookSensitivityYAxis: 20
+      <LookInvertYAxis>k__BackingField: 0
+      <LookSmoothing>k__BackingField: 1
+      lookSmoothingTime: 0.002
+      <InputCrouchToggle>k__BackingField: 1
+    display:
+      fullscreenMode: 0
+      aspectRatio: 0
+      resolutionPreset16X9: 2
+      resolutionPreset16X10: 2
+      resolutionPreset21X9: 0
+      <ResolutionCustom>k__BackingField: 0
+      resolutionCustomHeight: 1080
+      resolutionCustomWidth: 1920
+      vSyncMode: 1
+      <FramerateCustomMax>k__BackingField: 0
+      framerateCustomMaxValue: 144
+      <RunInBackground>k__BackingField: 0
+    game:
+      language: 0
+      fieldOfView: 75
+      headBobbingIntensity: 1
+      <InventoryItemScrollLoopsOnEnds>k__BackingField: 1
+    visual:
+      test: 0
+    accessibility:
+      <CursorLockToWindow>k__BackingField: 1
+  defaultSettings: {fileID: 11400000, guid: 31bc96b5428df584a84ebc81228a6798, type: 2}
+--- !u!114 &4151915074772349064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110175984143664829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd3179692c6466409c60330133e5c3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NOS.GameManagers::NOS.GameManagers.Input.InputManager
+  <CurrentInput>k__BackingField:
+    inputtingLook: 0
+    inputLook: {x: 0, y: 0}
+    inputtingMove: 0
+    inputMove: {x: 0, y: 0}
+    inputMove3D: {x: 0, y: 0, z: 0}
+    inputtingRun: 0
+    inputtingJump: 0
+    inputtingCrouch: 0
+    inputtingInteract: 0
+    inputtingInventoryScroll: 0
+    inventoryScrollValue: {x: 0, y: 0}
+    inputtingInventoryThrow: 0
+    inputtingInventoryActionMain: 0
+    inputtingInventoryActionSecondary: 0
+--- !u!114 &62021380486163480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110175984143664829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a6e7878ed08cd54e82e765a0a9eff21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NOS.GameManagers::NOS.GameManagers.CursorManager
+--- !u!114 &3348389307028986174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110175984143664829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ca3bcd568e00a42bcb43d8fbf52d09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NOS.GameManagers::NOS.GameManagers.SoundManager
+  sfxInstances: []
+  voiceInstances: []
+  musicInstances: []
+  objects:
+    poolObjectsParent: {fileID: 8069271954818728191}
+    soundInstancePrefab: {fileID: 1554992001678761237, guid: 850494a6eb083cd4f91ff8a7715c068e, type: 3}
+--- !u!1 &3457037490281397465
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8069271954818728191}
+  m_Layer: 0
+  m_Name: AudioPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8069271954818728191
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3457037490281397465}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8677204499945084108}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

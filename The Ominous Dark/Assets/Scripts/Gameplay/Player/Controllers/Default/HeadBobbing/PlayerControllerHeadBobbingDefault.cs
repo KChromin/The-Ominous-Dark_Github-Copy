@@ -10,13 +10,13 @@ namespace NOS.Player.Controller.Default
 
     public class PlayerControllerHeadBobbingDefault : ControllerBase
     {
-        public PlayerControllerHeadBobbingDefault(PlayerReferences references, PlayerControllers.GeneralControllersClass controllers, PlayerConditions conditions, SettingsContainers settings, PlayerActions actions)
+        public PlayerControllerHeadBobbingDefault(PlayerReferences references, PlayerControllers.GeneralControllersClass controllers, PlayerConditions conditions, SettingsManager settingsManager, PlayerActions actions)
         {
             _parameters = references.ScriptableObjects.Default.headBobbing;
             _conditions = conditions.Default;
             _headBobbing = references.Objects.headBobbing.transform;
             _headController = controllers.Head;
-            _gameSettings = settings.game;
+            _settingsManager = settingsManager;
             _actions = actions;
         }
 
@@ -24,7 +24,7 @@ namespace NOS.Player.Controller.Default
 
         private readonly PlayerControllerHeadBobbingDefaultScriptableObject _parameters;
         private readonly PlayerConditions.DefaultConditionsClass _conditions;
-        private readonly SettingsGameContainer _gameSettings;
+        private readonly SettingsManager _settingsManager;
         private readonly PlayerControllerGeneralHead _headController;
         private readonly PlayerActions _actions;
 
@@ -60,14 +60,14 @@ namespace NOS.Player.Controller.Default
             _currentState = headBobbingState;
             SetCurrentStateParameters();
         }
-        
+
         private bool _isMovingAboveMinimalThresholdLastFrame;
         private bool _isRunningAboveMinimalThresholdLastFrame;
 
         public override void Update()
         {
             //When disabled in options, then reset, and don't update//
-            if (_gameSettings.headBobbingIntensity == 0)
+            if (_settingsManager.CurrentSettings.game.HeadBobbingIntensity == 0)
             {
                 if (_needReset)
                 {
@@ -107,6 +107,7 @@ namespace NOS.Player.Controller.Default
                 ResetToDefault();
             }
         }
+        
 
         private void SetCurrentStateParameters()
         {
@@ -187,18 +188,18 @@ namespace NOS.Player.Controller.Default
             if (_currentHeadBobbingParameters.headBobbingMaxWidth == 0)
             {
                 float currentPercentageToMaxRange = Mathf.Abs(currentCos) / 1;
-                headCurrentLocalPosition.y = currentPercentageToMaxRange * (_currentHeadBobbingParameters.headBobbingMaxHeight * _gameSettings.headBobbingIntensity);
+                headCurrentLocalPosition.y = currentPercentageToMaxRange * (_currentHeadBobbingParameters.headBobbingMaxHeight * _settingsManager.CurrentSettings.game.HeadBobbingIntensity);
             }
             else
             {
                 //Width
                 float currentPercentageToMaxRange = Mathf.Abs(currentCos) / 1;
-                headCurrentLocalPosition.x = positiveNegativeMultiplier * currentPercentageToMaxRange * (_currentHeadBobbingParameters.headBobbingMaxWidth * _gameSettings.headBobbingIntensity);
+                headCurrentLocalPosition.x = positiveNegativeMultiplier * currentPercentageToMaxRange * (_currentHeadBobbingParameters.headBobbingMaxWidth * _settingsManager.CurrentSettings.game.HeadBobbingIntensity);
 
                 //Height
-                float currentWidthToMaxPercent = Mathf.Abs(headCurrentLocalPosition.x) / (_currentHeadBobbingParameters.headBobbingMaxWidth * _gameSettings.headBobbingIntensity);
+                float currentWidthToMaxPercent = Mathf.Abs(headCurrentLocalPosition.x) / (_currentHeadBobbingParameters.headBobbingMaxWidth * _settingsManager.CurrentSettings.game.HeadBobbingIntensity);
                 float currentHeightMultiplierValueFromCurve = _currentHeadBobbingParameters.headBobbingHeightCurve.Evaluate(currentWidthToMaxPercent);
-                headCurrentLocalPosition.y = currentHeightMultiplierValueFromCurve * (_currentHeadBobbingParameters.headBobbingMaxHeight * _gameSettings.headBobbingIntensity);
+                headCurrentLocalPosition.y = currentHeightMultiplierValueFromCurve * (_currentHeadBobbingParameters.headBobbingMaxHeight * _settingsManager.CurrentSettings.game.HeadBobbingIntensity);
             }
 
             //Execute smooth transition in position//

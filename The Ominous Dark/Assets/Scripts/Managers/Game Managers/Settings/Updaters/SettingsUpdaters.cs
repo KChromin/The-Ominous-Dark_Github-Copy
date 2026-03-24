@@ -4,10 +4,10 @@ namespace NOS.GameManagers.Settings
 {
     public class SettingsUpdaters
     {
-        public SettingsUpdaters(SettingsManager settingsManager, SettingsContainers currentSettings)
+        public SettingsUpdaters(SettingsManager settingsManager)
         {
-            _display = new SettingsUpdaterDisplay(currentSettings);
-            _game = new SettingsUpdaterGame(currentSettings);
+            _display = new SettingsUpdaterDisplay(settingsManager);
+            _game = new SettingsUpdaterGame(settingsManager);
             _settingsManager = settingsManager;
         }
 
@@ -49,7 +49,7 @@ namespace NOS.GameManagers.Settings
                 case SettingsManager.SettingsType.Audio:
                     _audio.UpdateSettings();
                     break;
-                case SettingsManager.SettingsType.Control:
+                case SettingsManager.SettingsType.Controls:
                     _control.UpdateSettings();
                     break;
                 case SettingsManager.SettingsType.Display:
@@ -58,7 +58,7 @@ namespace NOS.GameManagers.Settings
                 case SettingsManager.SettingsType.Game:
                     _game.UpdateSettings();
                     break;
-                case SettingsManager.SettingsType.Visual:
+                case SettingsManager.SettingsType.Visuals:
                     _visual.UpdateSettings();
                     break;
                 case SettingsManager.SettingsType.Accessibility:

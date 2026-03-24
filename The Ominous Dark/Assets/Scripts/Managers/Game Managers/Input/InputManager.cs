@@ -12,6 +12,11 @@ namespace NOS.GameManagers.Input
 
         private GameInputs _inputs;
 
+        public GameInputs Test_GetInputs()
+        {
+            return _inputs;
+        }
+        
         #region Methodes
 
         protected override void Awake()
